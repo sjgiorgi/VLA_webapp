@@ -1,0 +1,93 @@
+{% extends 'VLA/base.html' %}
+
+{% block title %}VLA: Help{% endblock %}
+
+{% block secondsidetitle %}&nbsp;{% endblock %}
+
+{% block body_block %}
+<div class="hero-unit">
+    <h1>Get help from VLA</h1>
+    <p>Ask questions, get definitions, and watch instructional videos.</p>
+    <form>
+        <label></label>
+        <input  class="search-query span10" type="text" name="suggestion" value="" placeholder="Enter a question or topic you need help with." id="suggestion" />
+    </form>
+</div>
+
+<div class="row-fluid">
+    <div class="span6">
+        <h2>Top Five Questions</h2>
+        {% if courses %}
+        <ul>
+            {% for course in courses %}
+            <li><a href="/VLA/course/{{ course.url }}">{{ course.name }}</a></li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <strong>No questions at present.</strong>
+        {% endif %}
+
+    </div>
+    <!--/span-->
+    <div class="span6">
+        <h2>Top Five Definitions</h2>
+        {% if pages %}
+        <ul>
+            {% for page in pages %}
+            <li><a href="{{ page.url}}">{{ page.title }}</a> - {{ page.course }} ({{ page.views }} view(s))</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <strong>No definitions at present.</strong>
+        {% endif %}
+
+    </div>
+    <!--/span-->
+    
+    
+</div>
+<!--/row-->
+
+<div class="row-fluid">
+    <div class="span6">
+        <h2>Question Categories</h2>
+        {% if question_category %}
+            <ul>
+                {% for category in question_category %}
+                    {% if category.category not in 'Problem Word' %}
+                        <li>{{ category.category }}</li>
+                    {% endif %}
+                {% endfor %}
+            <li>How to use VLA</li>
+            <li>Instructional Videos</li>
+            <li>Theory</li>
+            <li>Safety</li>
+            <li>General</li>
+            <li>How to use Multisim</li>
+            <li>How to use CircuitLab.com</li>
+            <li>All Questions</li>
+            </ul>
+        {% else %}
+            <ul>No categories at present.</ul>
+        {% endif %}
+    </div>
+    <!--/span-->
+    <div class="span6">
+        <h2>Definition Categories</h2>
+        {% if def_topics %}
+            <ul>
+                {% for topic in def_topics %}
+                    {% if topic.topic not in 'Problem Word' %}
+                        <li>{{ topic.topic }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% else %}
+            <ul>No definitions at present.</ul>
+        {% endif %}
+    </div>
+    <!--/span-->    
+</div>
+<!--/row-->
+{% endblock %}
+

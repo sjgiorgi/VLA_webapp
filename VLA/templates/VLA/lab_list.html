@@ -1,0 +1,9 @@
+<ul class="nav nav-list">
+    {% if labs %}
+        {% for lab in labs %}
+            <li><a href="/VLA/course/{{ course_name_url }}/lab/{{ lab.url }}">{{ lab.name }}</a></li>
+        {% endfor %}
+    {% else %}
+        <li>No laboratories at present.</li>
+   {% endif %}
+</ul>

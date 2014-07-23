@@ -1,0 +1,33 @@
+{% extends 'VLA/base.html' %}
+
+{% block title %}VLA: {{ course_name }}{% endblock %}
+{% block sidetitle %}{{ course_name }} Laboratories{% endblock %}
+{% block sidebar %}
+    {% include 'VLA/lab_list.html' with pages=pages %}
+{% endblock %}
+{% block body_block %}
+<div class="hero-unit">
+    <h1>{{ course_name }}</h1>
+    
+    {% if course_name == 'Circuits I' %}
+    <p><br><p><p><b>Course Description:</b> Electric circuit fundamentals including DC and transient circuit analysis are
+    covered in the course. Topics include independent and dependent sources, circuit elements such as resistors,
+    inductors, capacitors and operational amplifiers, linearity, source transformation, Thevenin and Norton
+    equivalent circuits, as well as the analysis and design of first and second order circuits. </p>
+    
+    <p><b>Course Overview:</b> The goal of this course is NOT to teach you the intracies of circuit analysis as
+    though it is some art. Circuit analysis is a topic that applies to many fields beyond electrical engineering
+    (e.g. acoustics, fluid flow). This is really a course in linear system theory. Eventually you will learn all
+    the techniques discussed in this class can be replaced with a generalized approach based on state variables. </p>
+
+    <p>However, the specific goals for this course are to teach you the basics on AC and DC circuit analysis. We will
+    build on what you have learned in physics about inductors and capacitors, and what you are learning in match
+    about differential equations, and will develop simple models of these components that allow electrical circuits
+    to be designed and analyzed using some simple theoretical calculations. We will also rely heavily on computer
+    simulation tools such as MutliSim, to handle complex circuits. </p>
+
+    <p>The laboratory experience will teach you how to design, prototype and fabricate simple electrical circuits.
+    Extensive use of simulation tools will be made to debug and verify hardware performance. </p>
+    {% endif %}
+</div>
+{% endblock %}

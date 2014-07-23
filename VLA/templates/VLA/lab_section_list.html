@@ -1,0 +1,19 @@
+<ul class="nav nav-list">
+    <ul class="nav nav-list"class="nav nav-list">
+        {% if theory %}<li><a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/theory/{{ theory.url }}">Theory
+            {% if theory.is_completed %}<font color="#009900"> &#x2713; </font>{% else %}<font color="993333"> &#x2717;</font>{% endif %} </a></li>{% endif %}
+        {% if pretest %}<li><a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/pretest/{{ pretest.url }}">Theory Test
+            {% if pretest.is_completed %}<font color="#009900"> &#x2713; </font>{% else %}<font color="993333"> &#x2717;</font>{% endif %} </a></li>{% endif %}
+        {% if prelab %}<li><a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/prelab/{{ prelab.url }}">Simulation
+            {% if prelab.is_completed %}<font color="#009900"> &#x2713; </font>{% else %}<font color="993333"> &#x2717;</font>{% endif %} </a></li>{% endif %}
+        {% if prelabtest %}<li><a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/prelabtest/{{ prelabtest.url }}">Simulation Test
+            {% if prelabtest.is_completed %}<font color="#009900"> &#x2713; </font>{% else %}<font color="993333"> &#x2717;</font>{% endif %} </a></li>{% endif %}
+        {% if hardware %}<li><a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/hardware/{{ hardware.url }}">Hardware
+            {% if hardware.is_completed %}<font color="#009900"> &#x2713; </font>{% else %}<font color="993333"> &#x2717;</font>{% endif %} </a></li>{% endif %}
+        {% if results %}<li><a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/results/{{ results.url }}">Results
+            {% if results.is_completed %}<font color="#009900"> &#x2713; </font>{% else %}<font color="993333"> &#x2717;</font>{% endif %} </a></li>{% endif %}
+        {% if results_questions %}<li><a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/resultsquestions/{{ results_questions.url }}">Questions
+            {% if results_questions.is_completed %}<font color="#009900"> &#x2713; </font>{% else %}<font color="993333"> &#x2717;</font>{% endif %} </a></li>{% endif %}
+        
+    </ul>
+</ul>

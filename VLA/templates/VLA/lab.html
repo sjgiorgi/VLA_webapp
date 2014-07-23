@@ -1,0 +1,34 @@
+{% extends 'VLA/base.html' %}
+
+{% block title %}VLA: {{ lab_name }}{% endblock %}
+{% block sidetitle %}{{ lab_name }} Sections{% endblock %}
+
+{% block sidebar %}
+    {% include 'VLA/lab_section_list.html' with labs=labs %}
+{% endblock %}
+
+
+{% block body_block %}
+<div class="hero-unit">
+    <h1>{{ course.subj }} {{ course.course_number }}: {{ course.name }}</h1>
+    <h2>Lab {{ lab.lab_number }}: {{ lab.name }}</h2>
+    
+    {% if lab.start_date %}
+    <p><b>Assigned date:</b> {{ lab.start_date }}
+    {% endif %}
+    {% if lab.due_date %}
+    <br><b>Due Date:</b> {{ lab.due_date }}
+    {% endif %}
+    
+    {% if objectives %}<p><b>Objectives:</b>
+        <ul>
+        {% for objective in objectives %}
+            <li>{{ objective.objective }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    <ul class="nav nav-list">
+        <li><a href="/VLA/course/{{ course.url }}/">Return to Lab list</a></li>
+    </ul>
+</div>
+{% endblock %}
