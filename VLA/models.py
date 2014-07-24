@@ -80,15 +80,15 @@ class TheoryElement(models.Model):
     def __unicode__(self):
         return self.name
     
-class Pretest(models.Model):
+class TheoryTest(models.Model):
     lab = models.ForeignKey(Laboratory)
     name = models.CharField(max_length=128)
     is_completed = models.BooleanField(default=False)
     def __unicode__(self):
         return self.name
     
-class PretestQuestion(models.Model):
-    pretest = models.ForeignKey(Pretest)
+class TheoryTestQuestion(models.Model):
+    theorytest = models.ForeignKey(TheoryTest)
     question = models.CharField(max_length=128)
     answer_one = models.CharField(max_length=128)
     answer_two = models.CharField(max_length=128)
@@ -101,15 +101,15 @@ class PretestQuestion(models.Model):
     def __unicode__(self):
         return self.question
     
-class Prelab(models.Model):
+class Simulation(models.Model):
     lab = models.ForeignKey(Laboratory)
     name = models.CharField(max_length=128)
     is_completed = models.BooleanField(default=False)
     def __unicode__(self):
         return self.name
 
-class PrelabElement(models.Model):
-    prelab = models.ForeignKey(Prelab)
+class SimulationElement(models.Model):
+    simulation = models.ForeignKey(Simulation)
     name = models.CharField(max_length=128)
     number = models.IntegerField(default=0)
     text_input = models.TextField(blank=True)
@@ -122,15 +122,15 @@ class PrelabElement(models.Model):
     def __unicode__(self):
         return self.name
     
-class PrelabTest(models.Model):
+class SimulationTest(models.Model):
     lab = models.ForeignKey(Laboratory)
     name = models.CharField(max_length=128, unique=True)
     is_completed = models.BooleanField(default=False)
     def __unicode__(self):
         return self.name
 
-class PrelabTestQuestion(models.Model):
-    prelabtest = models.ForeignKey(PrelabTest)
+class SimulationTestQuestion(models.Model):
+    simulationtest = models.ForeignKey(SimulationTest)
     question = models.CharField(max_length=128)
     answer_one = models.CharField(max_length=128)
     answer_two = models.CharField(max_length=128)
@@ -186,7 +186,9 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.username
     
-    
+### Help Module classes
+
+# Vocab Domain
 class VocabDomain(models.Model):
     name = models.CharField(max_length=128)
     def __unicode__(self):
@@ -209,7 +211,24 @@ class Node(models.Model):
 class Synonym(models.Model):
     word = models.CharField(max_length=128)
     Node = models.ForeignKey(Node)
+    
     def __unicode__(self):
         return self.word
 
+# Rulebase
+class Rulebase(models.Model):
+    name = models.CharField(max_length=128)
+    
+    def __unicode__(self):
+        return self.name
+    
+class QuestionWithAnswer(models.Model):
+    rulebase = models.ForeignKey(Rulebase)
+    question = models.CharField(max_length=128)
+    
+    def __unicode__(self):
+        return self.question
+
+class Rule(models.Model):
+    question = models.ForeignKey(QuestionWithAnswer)
     

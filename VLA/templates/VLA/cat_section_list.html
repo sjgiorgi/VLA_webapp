@@ -1,0 +1,12 @@
+<ul class="nav nav-list">
+    {% if topics %}
+        {% for topic in topics %}
+            {% for topic in topics %}
+                <li><a href="/VLA/help/{{ topic.url }}/">{{ topic.topic }}</a></li>
+            {% endfor %}
+            <li><a href="/VLA/help/definitionlist/">All Definitions</a></li>
+        {% endfor %}
+    {% else %}
+        <li>No categories at present.</li>
+   {% endif %}
+</ul>

@@ -60,16 +60,21 @@
                                     <li class="nav-header">Ask a Question</li>
                                     <form>
                                         <label></label>
-                                        <li><input  class="search-query span10" type="text" name="suggestion" value="" id="suggestion" /></li>
+                                        <li><input  class="search-query span10" type="text" name="question_suggestion" value="" id="question_suggestion" /></li>
                                     </form>
                                 </ul>
                                 <ul class="nav nav-list">
                                     <li class="nav-header">Get a Definition</li>
                                     <form>
-                                        <label></label>
-                                        <li><input  class="search-query span10" type="text" name="suggestion" value="" id="suggestion" /></li>
+                                    
+                                    <li><input  class="search-query span10" type="text" name="definition_suggestion" value="" id="definition_suggestion" /></li>
                                     </form>
                                 </ul>
+                                {% if def_list %}
+                                    <div id="defs">
+                                        {% include 'VLA/definition_list.html' with def_list=def_list %}
+                                    </div>
+                                {% endif %}
                                 {% block return %}{% endblock %}
                             {% endif %}
                         </div>
@@ -100,6 +105,8 @@
         </footer>
     <script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery-2.1.1.js' %}"></script>
+    <script src="{% static 'js/VLA-ajax.js' %}"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </body>
 </html>

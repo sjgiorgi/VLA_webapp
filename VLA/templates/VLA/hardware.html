@@ -19,11 +19,11 @@
         {% elif element.is_image %}
             <p><center><img src="{% static element.image_input %}"></center></p>
         {% elif element.is_equation %}
-            {% elif element.is_latex %}
+            {% if element.is_latex %}
                 <p><center>$${{ element.equation_input}}$$</center></p>
             {% else %}
                 <p><center>{{ element.equation_input}}</center></p>
-            {% endif% }
+            {% endif %}
         {% endif %}
     {% endfor %}
     {% endif %}

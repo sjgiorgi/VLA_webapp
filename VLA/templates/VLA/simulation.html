@@ -1,7 +1,7 @@
 {% extends 'VLA/base.html' %}
 {% load staticfiles %}
 
-{% block title %}VLA: {{ lab_name }} Theory{% endblock %}
+{% block title %}VLA: {{ lab_name }} Simulation{% endblock %}
 
 {% block sidetitle %}{{ lab_name }} Sections{% endblock %}
 {% block sidebar %}
@@ -11,9 +11,9 @@
 {% block body_block %}
 <div class="hero-unit">
     <h1>{{ course.subj }} {{ course.course_number }}: {{ course.name }}</h1>
-    <h2>Lab {{ lab.lab_number }}: {{ theory.name }}</h2>
-    {% if theory_elements %}
-    {% for element in theory_elements %}
+    <h2>Lab {{ lab.lab_number }}: {{ simulation.name }}</h2>
+    {% if simulation_elements %}
+    {% for element in simulation_elements %}
         {% if element.is_text %}
             <p>{{ element.text_input}}</p>
         {% elif element.is_image %}
@@ -28,12 +28,12 @@
     {% endfor %}
     {% endif %}
     
-    {% if not theory.is_completed %}
-        <h2>Are you finished with the Theory? <input class="btn btn-primary" type="submit" name="submit" value="Yes"/></h2>
+    {% if not psimulation.is_completed %}
+        <h2>Are you finished with the Simulation? <input class="btn btn-primary" type="submit" name="submit" value="Yes"/></h2>
     {% endif %}
-    <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/">Go to Lab Overview</a>
+    <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/pretest/{{ pretest.url }}">Go to Theory Test</a>
     <ul class="nav pull-right">
-        <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/pretest/{{ pretest.url }}">Go to Theory Test</a>
+        <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/simulationtest/{{ simulationtest.url }}">Go to Simulation Test</a>
     </ul>
 </div>
 

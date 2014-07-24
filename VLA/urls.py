@@ -13,10 +13,15 @@ urlpatterns = patterns('',
         url(r'^logout/$', views.user_logout, name='logout'),
         url(r'^help/$', views.help, name='help'),
         
+        url(r'^help/(?P<vocab_topic_name_url>\w+)/$', views.vocab_topic, name='vocab_topic'),
+        url(r'^help/definition/(?P<definition_name_url>\w+)/$', views.definition, name='definition'),
+        url(r'^suggest_definition/$', views.suggest_definition, name='suggest_definition'),
+        
+        
         url(r'^course/(?P<course_name_url>\w+)/lab/(?P<lab_name_url>\w+)/theory/(?P<theory_name_url>\w+)/$', views.theory, name='theory'),
-        url(r'^course/(?P<course_name_url>\w+)/lab/(?P<lab_name_url>\w+)/pretest/(?P<pretest_name_url>\w+)/$', views.pretest, name='pretest'),
-        url(r'^course/(?P<course_name_url>\w+)/lab/(?P<lab_name_url>\w+)/prelab/(?P<prelab_name_url>\w+)$', views.prelab, name='prelab'),
-        url(r'^course/(?P<course_name_url>\w+)/lab/(?P<lab_name_url>\w+)/prelabtest/(?P<prelabtest_name_url>\w+)$', views.prelabtest, name='prelabtest'),
+        url(r'^course/(?P<course_name_url>\w+)/lab/(?P<lab_name_url>\w+)/theorytest/(?P<theorytest_name_url>\w+)/$', views.theorytest, name='theorytest'),
+        url(r'^course/(?P<course_name_url>\w+)/lab/(?P<lab_name_url>\w+)/simulation/(?P<simulation_name_url>\w+)$', views.simulation, name='simulation'),
+        url(r'^course/(?P<course_name_url>\w+)/lab/(?P<lab_name_url>\w+)/simulationtest/(?P<simulationtest_name_url>\w+)$', views.simulationtest, name='simulationtest'),
         url(r'^course/(?P<course_name_url>\w+)/lab/(?P<lab_name_url>\w+)/hardware/(?P<hardware_name_url>\w+)$', views.hardware, name='hardware'),
         url(r'^course/(?P<course_name_url>\w+)/lab/(?P<lab_name_url>\w+)/results/(?P<results_name_url>\w+)$', views.results, name='results'),
         url(r'^course/(?P<course_name_url>\w+)/lab/(?P<lab_name_url>\w+)/resultsquestions/(?P<resultsquestions_name_url>\w+)$', views.resultsquestions, name='resultsquestions'),

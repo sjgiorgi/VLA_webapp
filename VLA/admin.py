@@ -1,6 +1,6 @@
 from django.contrib import admin
-from VLA.models import Course, Laboratory, Theory, TheoryElement, LabObjective, PretestQuestion
-from VLA.models import Pretest, Prelab, PrelabElement, PrelabTest, PrelabTestQuestion, Hardware, HardwareElement, Results, ResultsQuestions, UserProfile
+from VLA.models import Course, Laboratory, Theory, TheoryElement, LabObjective, TheoryTestQuestion
+from VLA.models import TheoryTest, Simulation, SimulationElement, SimulationTest, SimulationTestQuestion, Hardware, HardwareElement, Results, ResultsQuestions, UserProfile
 from VLA.models import VocabDomain, VocabTopic, Node, Synonym
 
 class SynonymInline(admin.StackedInline):
@@ -24,12 +24,12 @@ class TheoryElementInline(admin.StackedInline):
 class TheoryAdmin(admin.ModelAdmin):
     inlines = [TheoryElementInline]
     
-class PrelabElementInline(admin.StackedInline):
-    model = PrelabElement
+class SimulationElementInline(admin.StackedInline):
+    model = SimulationElement
     extra = 3
 
-class PrelabAdmin(admin.ModelAdmin):
-    inlines = [PrelabElementInline]
+class SimulationAdmin(admin.ModelAdmin):
+    inlines = [SimulationElementInline]
     
 class HardwareElementInline(admin.StackedInline):
     model = HardwareElement
@@ -38,30 +38,30 @@ class HardwareElementInline(admin.StackedInline):
 class HardwareAdmin(admin.ModelAdmin):
     inlines = [HardwareElementInline]
 
-class PretestQuestionInline(admin.StackedInline):
-    model = PretestQuestion
+class TheoryTestQuestionInline(admin.StackedInline):
+    model = TheoryTestQuestion
     extra = 4
 
-class PretestAdmin(admin.ModelAdmin):
-    inlines = [PretestQuestionInline]
+class TheoryTestAdmin(admin.ModelAdmin):
+    inlines = [TheoryTestQuestionInline]
     
-class PrelabQuestionInline(admin.StackedInline):
-    model = PrelabTestQuestion
+class SimulationQuestionInline(admin.StackedInline):
+    model = SimulationTestQuestion
     extra = 4
 
-class PrelabTestAdmin(admin.ModelAdmin):
-    inlines = [PrelabQuestionInline]
+class SimulationTestAdmin(admin.ModelAdmin):
+    inlines = [SimulationQuestionInline]
 
 admin.site.register(Course)
 admin.site.register(Laboratory, LabAdmin)
 admin.site.register(LabObjective)
 admin.site.register(TheoryElement)
 admin.site.register(Theory, TheoryAdmin)
-admin.site.register(Pretest, PretestAdmin)
-admin.site.register(PretestQuestion)
-admin.site.register(PrelabTestQuestion)
-admin.site.register(Prelab, PrelabAdmin)
-admin.site.register(PrelabTest, PrelabTestAdmin)
+admin.site.register(TheoryTest, TheoryTestAdmin)
+admin.site.register(TheoryTestQuestion)
+admin.site.register(SimulationTestQuestion)
+admin.site.register(Simulation, SimulationAdmin)
+admin.site.register(SimulationTest, SimulationTestAdmin)
 admin.site.register(Hardware, HardwareAdmin)
 admin.site.register(HardwareElement)
 admin.site.register(Results)
