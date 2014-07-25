@@ -3,7 +3,7 @@
 {% block title %}VLA: {{ course_name }}{% endblock %}
 {% block sidetitle %}{{ course_name }} Laboratories{% endblock %}
 {% block sidebar %}
-    {% include 'VLA/lab_list.html' with labs=labs %}
+    {% include 'VLA/lab_list.html' with labs=labs course=course%}
 {% endblock %}
 
 

@@ -34,10 +34,12 @@
             <h2>Are you finished with the Theory? <input class="btn btn-primary" type="submit" name="submit" value="Yes"/></h2>
         </form>
     {% endif %}
-    <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/">Go to Lab Overview</a>
-    <ul class="nav pull-right">
-        <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/theorytest/{{ theorytest.url }}">Go to Theory Test</a>
-    </ul>
+    <a href="{% url 'lab' course.url lab.url %}">Go to Lab Overview</a>
+    {% if theorytest %}
+        <ul class="nav pull-right">
+            <a href="{% url 'theorytest' course.url lab.url theorytest.url %}">Go to Theory Test</a>
+        </ul>
+    {% endif %}
 </div>
 
 

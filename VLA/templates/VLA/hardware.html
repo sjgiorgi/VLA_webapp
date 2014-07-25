@@ -34,10 +34,14 @@
             <h2>Are you finished with the Hardware? <input class="btn btn-primary" type="submit" name="submit" value="Yes"/></h2>
         </form>
     {% endif %}
-    <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/simulationtest/{{ simulationtest.url }}">Go to Simulation Test</a>
-    <ul class="nav pull-right">
-        <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/results/{{ results.url }}">Go to Hardware Results</a>
-    </ul>
+    {% if simulationtest %}
+        <a href="{% url 'simulationtest' course.url lab.url simulationtest.url %}">Go to Simulation Test</a>
+    {% endif %}
+    {% if results %}
+        <ul class="nav pull-right">
+            <a href="{% url 'results' course.url lab.url results.url %}">Go to Hardware Results</a>
+        </ul>
+    {% endif %}
 </div>
 
 

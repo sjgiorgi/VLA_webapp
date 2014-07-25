@@ -77,9 +77,9 @@
         {% if def_topics %}
             <ul>
                 {% for topic in def_topics %}
-                    <li><a href="/VLA/help/{{ topic.url }}/">{{ topic.topic }}</a></li>
+                    <li><a href="{% url 'vocab_topic' topic.url %}">{{ topic.topic }}</a></li>
                 {% endfor %}
-                <li><a href="/VLA/help/definitionlist/">All Definitions</a></li>
+                <li><a href="{% url 'vocab_topic' 'definitionlist' %}">All Definitions</a></li>
             </ul>
         {% else %}
             <ul>No definitions at present.</ul>

@@ -2,7 +2,7 @@
     {% if def_list %}
         {% if def_searched %}
             {% for definition in def_list %}
-                <li><a href="/VLA/help/definition/{{ definition.url }}">{{ definition.word }}</a></li>
+                <li><a href="{% url 'definition' definition.url %}">{{ definition.word }}</a></li>
             {% endfor %}
         {% endif %}
     {% else %}
