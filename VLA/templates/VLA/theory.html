@@ -29,11 +29,14 @@
     {% endif %}
     
     {% if not theory.is_completed %}
-        <h2>Are you finished with the Theory? <input class="btn btn-primary" type="submit" name="submit" value="Yes"/></h2>
+        <form method="post" action="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/theory/{{ theory.url }}/">
+            {% csrf_token %}
+            <h2>Are you finished with the Theory? <input class="btn btn-primary" type="submit" name="submit" value="Yes"/></h2>
+        </form>
     {% endif %}
     <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/">Go to Lab Overview</a>
     <ul class="nav pull-right">
-        <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/pretest/{{ pretest.url }}">Go to Theory Test</a>
+        <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/theorytest/{{ theorytest.url }}">Go to Theory Test</a>
     </ul>
 </div>
 

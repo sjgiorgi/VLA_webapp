@@ -96,6 +96,9 @@ def theory(request, course_name_url, lab_name_url, theory_name_url):
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:
+        if request.method == 'POST':
+            context_dict['theory'].is_completed = True
+            context_dict['theory'].save()
         return render(request, 'VLA/theory.html', context_dict)
     
 def theorytest(request, course_name_url, lab_name_url, theorytest_name_url):
@@ -107,7 +110,7 @@ def theorytest(request, course_name_url, lab_name_url, theorytest_name_url):
     context_dict['def_list'] = Node.objects.all()
     if request.method == 'POST':
         context_dict['test_complete'] = True
-        context_dict['choice'] = (request.POST['choice1'], request.POST['choice2'], request.POST['choice3'])
+        context_dict['choice'] = (request.POST['choice1'], request.POST['choice2'])
     else:
         context_dict['test_complete'] = False
     try:
@@ -147,8 +150,10 @@ def simulation(request, course_name_url, lab_name_url, simulation_name_url):
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:
+        if request.method == 'POST':
+            context_dict['simulation'].is_completed = True
+            context_dict['simulation'].save()
         return render(request, 'VLA/simulation.html', context_dict)
-
 
 def simulationtest(request, course_name_url, lab_name_url, simulationtest_name_url):
     lab_name = lab_name_url.replace('_', ' ')
@@ -194,6 +199,9 @@ def hardware(request, course_name_url, lab_name_url, hardware_name_url):
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:
+        if request.method == 'POST':
+            context_dict['hardware'].is_completed = True
+            context_dict['hardware'].save()
         return render(request, 'VLA/hardware.html', context_dict)
 
 

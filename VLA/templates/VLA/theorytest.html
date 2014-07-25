@@ -52,13 +52,13 @@
     {% endif %}
     <P>
     {% endif %}
-    {% if not theory.is_completed %}
+    {% if not theorytest.is_completed %}
         <h2>Are you finished with the Theory Test? <input class="btn btn-primary" type="submit" name="submit" value="Yes"/></h2>
     {% endif %}
     
     <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/theory/{{ theory.url }}">Go to Theory</a>
     <ul class="nav pull-right">
-        <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/prelab/{{ prelab.url }}">Go to Simulation</a>
+        <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/simulation/{{ simulation.url }}">Go to Simulation</a>
     </ul>
 </div>
 

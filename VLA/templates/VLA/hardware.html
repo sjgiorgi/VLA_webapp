@@ -20,20 +20,23 @@
             <p><center><img src="{% static element.image_input %}"></center></p>
         {% elif element.is_equation %}
             {% if element.is_latex %}
-                <p><center>$${{ element.equation_input}}$$</center></p>
+                <p><center>$${{ element.equation_input }}$$</center></p>
             {% else %}
-                <p><center>{{ element.equation_input}}</center></p>
+                <p><center>{{ element.equation_input }}</center></p>
             {% endif %}
         {% endif %}
     {% endfor %}
     {% endif %}
     
-    {% if not prelab.is_completed %}
-        <h2>Are you finished with the Hardware? <input class="btn btn-primary" type="submit" name="submit" value="Yes"/></h2>
+    {% if not hardware.is_completed %}
+        <form method="post" action="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/hardware/{{ hardware.url }}/">
+            {% csrf_token %}
+            <h2>Are you finished with the Hardware? <input class="btn btn-primary" type="submit" name="submit" value="Yes"/></h2>
+        </form>
     {% endif %}
-    <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/prelabtest/{{ prelabtest.url }}">Go to Prelab Test</a>
+    <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/simulationtest/{{ simulationtest.url }}">Go to Simulation Test</a>
     <ul class="nav pull-right">
-        <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/resultsquestions/{{ resultsquestions.url }}">Go to Hardware Results</a>
+        <a href="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/results/{{ results.url }}">Go to Hardware Results</a>
     </ul>
 </div>
 

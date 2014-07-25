@@ -146,6 +146,7 @@ class SimulationTestQuestion(models.Model):
 class Hardware(models.Model):
     lab = models.ForeignKey(Laboratory)
     name = models.CharField(max_length=128, unique=True)
+    is_completed = models.BooleanField(default=False)
     def __unicode__(self):
         return self.name
     
