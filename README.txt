@@ -13,8 +13,27 @@
 
   The Latest Version
   ------------------
-
   
+  LASTEST COMMIT:
+  1. finished Theory Test and Simulation Test sections
+  
+  PREVIOUS COMMITS:
+  1. removed hardcoded URLs
+  2. added 'completed section' buttons
+  3. finished Vocab Domain database
+  4. added definition search
+  
+  TODO:
+  1. add password confirmation field on register page
+  2. fix image uploading for 'element' classes
+  3. add Results section
+  4. add Results Questions section
+  5. generate Word file
+  6. make Rulebase database
+  7. add Rulebase search
+  8. create python script for filling Vocab Domain and Rulebase database
+  9. switch database to SQL
+  10. make help module app and VLA app separate
 
   Documentation
   -------------
@@ -31,7 +50,7 @@
 
 
 
-
   Contacts
   --------
-
+  
+  sal.giorgi@gmail.com

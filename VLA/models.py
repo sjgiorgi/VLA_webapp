@@ -71,7 +71,7 @@ class TheoryElement(models.Model):
     name = models.CharField(max_length=128)
     number = models.IntegerField(default=0)
     text_input = models.TextField(blank=True)
-    image_input = models.FileField(upload_to='static/', blank=True)
+    image_input = models.FileField(upload_to='VLA/static/VLA/images/', blank=True)
     equation_input = models.CharField(max_length=64, blank=True)
     is_text = models.BooleanField(default=False)
     is_image = models.BooleanField(default=False)

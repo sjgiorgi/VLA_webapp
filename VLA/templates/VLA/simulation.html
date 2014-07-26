@@ -29,7 +29,7 @@
     {% endif %}
     
     {% if not simulation.is_completed %}
-        <form method="post" action="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/simulation/{{ simulation.url }}/">
+        <form method="post" action="{% url 'theorytest' course.url lab.url simulation.url %}">
             {% csrf_token %}
             <h2>Are you finished with the Simulation? <input class="btn btn-primary" type="submit" name="submit" value="Yes"/></h2>
         </form>

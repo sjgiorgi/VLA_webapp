@@ -108,11 +108,7 @@ def theorytest(request, course_name_url, lab_name_url, theorytest_name_url):
     context_dict = {'lab_name': lab_name}
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
-    if request.method == 'POST':
-        context_dict['test_complete'] = True
-        context_dict['choice'] = (request.POST['choice1'], request.POST['choice2'])
-    else:
-        context_dict['test_complete'] = False
+    context_dict['questions_filled'] = True
     try:
         course = Course.objects.get(name=course_name)
         lab = Laboratory.objects.filter(course=course).get(name=lab_name)
@@ -121,9 +117,29 @@ def theorytest(request, course_name_url, lab_name_url, theorytest_name_url):
         context_dict['lab'] = lab
         context_dict['course'] = course
         context_dict = get_sections(context_dict, lab)
-        context_dict['theorytest_questions'] = TheoryTestQuestion.objects.filter(theorytest=context_dict['theorytest'])
+        theorytest_questions = TheoryTestQuestion.objects.filter(theorytest=context_dict['theorytest'])
+        context_dict['theorytest_questions'] = theorytest_questions
     except Course.DoesNotExist:
         pass
+    if request.method == 'POST':
+        counter = 0
+        for question in theorytest_questions:
+            counter = counter + 1
+            name = 'choice' + str(counter)
+            if name in request.POST:
+                question.given_answer = int(request.POST[name])
+                question.is_answered = True
+                question.save()
+            else:
+                context_dict['questions_filled'] = False
+                context_dict['test_complete'] = False
+                return render(request, 'VLA/theorytest.html', context_dict)
+        context_dict['just_finished'] = True
+        context_dict['theorytest_questions'] = theorytest_questions
+        context_dict['theorytest'].is_completed = True
+        context_dict['theorytest'].save()
+    else:
+        context_dict['just_finished'] = False
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:
@@ -162,6 +178,7 @@ def simulationtest(request, course_name_url, lab_name_url, simulationtest_name_u
     context_dict = {'lab_name': lab_name}
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
+    context_dict['questions_filled'] = True
     try:
         course = Course.objects.get(name=course_name)
         lab = Laboratory.objects.filter(course=course).get(name=lab_name)
@@ -170,9 +187,27 @@ def simulationtest(request, course_name_url, lab_name_url, simulationtest_name_u
         context_dict['lab'] = lab
         context_dict['course'] = course
         context_dict = get_sections(context_dict, lab)
-        context_dict['simulationtest_questions'] = SimulationTestQuestion.objects.filter(simulationtest=context_dict['simulationtest'])
+        simulationtest_questions = SimulationTestQuestion.objects.filter(simulationtest=context_dict['simulationtest'])
+        context_dict['simulationtest_questions'] = simulationtest_questions
     except Course.DoesNotExist:
         pass
+    if request.method == 'POST':
+        counter = 0
+        for question in simulationtest_questions:
+            counter = counter + 1
+            name = 'choice' + str(counter)
+            if name in request.POST:
+                question.given_answer = int(request.POST[name])
+                question.is_answered = True
+                question.save()
+            else:
+                context_dict['questions_filled'] = False
+                context_dict['test_complete'] = False
+                return render(request, 'VLA/simulationtest.html', context_dict)
+        context_dict['just_finished'] = True
+        context_dict['simulationtest_questions'] = simulationtest_questions
+        context_dict['simulationtest'].is_completed = True
+        context_dict['simulationtest'].save()
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:

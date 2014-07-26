@@ -13,47 +13,115 @@
     <h1>{{ course.subj }} {{ course.course_number }}: {{ course.name }}</h1>
     <h2>Lab {{ lab.lab_number }}: {{ theorytest.name }}</h2>
     
-    {% if test_complete %}
-        {% for question in theorytest_questions %}
-            <li>{{ question.question }}</li>
-            {% if question.answer_one %}
-                {% if  forloop.counter == 1 and choice1 and choice1 == corrent_answer_number %}
-                    <input type="radio" name="choice{{ forloop.counter }}" id="1" value="1" checked> {{ question.answer_one }} <br />
-                {% else %}
-                    <input type="radio" name="choice{{ forloop.counter }}" id="1" value="1"> {{ question.answer_one }} <br />
+    {% if not questions_filled %}<h3>You must answer all questions!</h3>{% endif %}
+    {% if theorytest.is_completed and just_finished %}
+        {% if theorytest_questions %}
+            <ol>
+            {% for question in theorytest_questions %}
+                <li>{{ question.question }}</li>
+                {% if question.answer_one %}
+                    {%  if question.corrent_answer_number == 1 and question.given_answer == 1 %}
+                        <font color="#009900" size=6> &#x2713; </font>{{ question.answer_one }}
+                    {% elif question.corrent_answer_number != 1 and question.given_answer == 1 %}
+                        <font color="993333"> &#x2717;</font> {{ question.answer_one }}
+                    {% else %}
+                        &#8226; {{ question.answer_one }}
+                    {% endif %} <br />
                 {% endif %}
-            {% endif %}
-            {% if question.answer_two %}<input type="radio" name="choice{{ forloop.counter }}" id="2" value="2"> {{ question.answer_two }} <br />{% endif %}
-            {% if question.answer_three %}<input type="radio" name="choice{{ forloop.counter }}" id="3" value="3"> {{ question.answer_three }} <br />{% endif %}
-            {% if question.answer_four %}<input type="radio" name="choice{{ forloop.counter }}" id="4" value="4"> {{ question.answer_four }} <br />{% endif %}   
-        {% endfor %}
+                {% if question.answer_two %}
+                    {%  if question.corrent_answer_number == 2 and question.given_answer == 2 %}
+                        <font color="#009900"> &#x2713; </font>{{ question.answer_two }}
+                    {% elif question.corrent_answer_number != 2 and question.given_answer == 2 %}
+                        <font color="993333"> &#x2717;</font> {{ question.answer_two }}
+                    {% else %}
+                        &#8226; {{ question.answer_two }}
+                    {% endif %} <br />
+                {% endif %}
+                {% if question.answer_three %}
+                    {%  if question.corrent_answer_number == 3 and question.given_answer == 3 %}
+                        <font color="#009900"> &#x2713; </font>{{ question.answer_three }}
+                    {% elif question.corrent_answer_number != 3 and question.given_answer == 3 %}
+                        <font color="993333"> &#x2717;</font> {{ question.answer_three }}
+                    {% else %}
+                        &#8226; {{ question.answer_three }}
+                    {% endif %} <br />
+                {% endif %}
+                {% if question.answer_four %}
+                    {%  if question.corrent_answer_number == 4 and question.given_answer == 4 %}
+                        <font color="#009900"> &#x2713; </font>{{ question.answer_four }}
+                    {% elif question.corrent_answer_number != 4 and question.given_answer == 4 %}
+                        <font color="993333"> &#x2717;</font> {{ question.answer_four }}
+                    {% else %}
+                        &#8226; {{ question.answer_four }}
+                    {% endif %} <br />
+                {% endif %}
+                {% if question.corrent_answer_number == question.given_answer %}
+                    {% if question.correct_response %}
+                        <h3>Correct: {{ question.correct_response }}</h3>
+                    {% endif %}
+                {% else %}
+                    {% if question.incorrect_response %}
+                        <h2>Incorrect: {{ question.incorrect_response }}</h2>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            </ol>
+        {% endif %}
+    {% elif theorytest.is_completed and not just_finished %}
+        {% if theorytest_questions %}
+            <ol>
+                {% for question in theorytest_questions %}
+                    <li>{{ question.question }}</li>
+                        {% if question.answer_one %}
+                            {% if question.corrent_answer_number == 1 %}
+                                <font color="#009900"> &#x2713; </font> {{ question.answer_one }} <br />
+                            {% else %}
+                                {{ question.answer_one }} <br />
+                            {% endif %}
+                        {% endif %}
+                        {% if question.answer_two %}
+                            {% if question.corrent_answer_number == 2 %}
+                                <font color="#009900"> &#x2713; </font> {{ question.answer_two }} <br />
+                            {% else %}
+                                {{ question.answer_two }} <br />
+                            {% endif %}
+                        {% endif %}
+                        {% if question.answer_three %}
+                            {% if question.corrent_answer_number == 3 %}
+                                <font color="#009900"> &#x2713; </font> {{ question.answer_three }} <br />
+                            {% else %}
+                                {{ question.answer_three }} <br />
+                            {% endif %}
+                        {% endif %}
+                        {% if question.answer_four %}
+                            {% if question.corrent_answer_number == 4 %}
+                                <font color="#009900"> &#x2713; </font> {{ question.answer_four }} <br />
+                            {% else %}
+                                {{ question.answer_four }} <br />
+                            {% endif %}
+                        {% endif %}
+                        <h3>{% if question.correct_response %}{{ question.correct_response }}{% endif %}</h3>
+                {% endfor %}
+            </ol>
+        {% endif %}
     {% else %}
         {% if theorytest_questions %}
-            <form method="post" action="/VLA/course/{{ course.url }}/lab/{{ lab.url }}/theorytest/{{ theorytest.url }}/">
+            <form method="post" action="{% url 'theorytest' course.url lab.url theorytest.url %}">
             <ol>
                 {% for question in theorytest_questions %}
                     <li>{{ question.question }}</li>
                     
                     {% csrf_token %}
-                    {% if question.answer_one %}
-                        {% if  forloop.counter == 1 and choice1 and choice1 == 'one' %}
-                            <input type="radio" name="choice{{ forloop.counter }}" id="1" value="1" checked> {{ question.answer_one }} <br />
-                        {% else %}
-                            <input type="radio" name="choice{{ forloop.counter }}" id="1" value="1"> {{ question.answer_one }} <br />
-                        {% endif %}
-                    {% endif %}
-                    {% if question.answer_two %}<input type="radio" name="choice{{ forloop.counter }}" id="2" value="2"> {{ question.answer_two }} <br />{% endif %}
-                    {% if question.answer_three %}<input type="radio" name="choice{{ forloop.counter }}" id="3" value="3"> {{ question.answer_three }} <br />{% endif %}
-                    {% if question.answer_four %}<input type="radio" name="choice{{ forloop.counter }}" id="4" value="4"> {{ question.answer_four }} <br />{% endif %}   
+                    {% if question.answer_one %}<input type="radio" name="choice{{ forloop.counter }}" id="1" value=1> {{ question.answer_one }} <br />{% endif %}
+                    {% if question.answer_two %}<input type="radio" name="choice{{ forloop.counter }}" id="2" value=2> {{ question.answer_two }} <br />{% endif %}
+                    {% if question.answer_three %}<input type="radio" name="choice{{ forloop.counter }}" id="3" value=3> {{ question.answer_three }} <br />{% endif %}
+                    {% if question.answer_four %}<input type="radio" name="choice{{ forloop.counter }}" id="4" value=4> {{ question.answer_four }} <br />{% endif %}   
                 {% endfor %}
             </ol>
             <input type="submit" value="Submit Answers" />
             </form>
     {% endif %}
     <P>
-    {% endif %}
-    {% if not theorytest.is_completed %}
-        <h2>Are you finished with the Theory Test? <input class="btn btn-primary" type="submit" name="submit" value="Yes"/></h2>
     {% endif %}
     
     {% if theory %}<a href="{% url 'theory' course.url lab.url theory.url %}">Go to Theory</a>
