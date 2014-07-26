@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class Course(models.Model):
     # course info
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, unique=True)
     crn = models.IntegerField(default=0, blank=True)
     subj = models.CharField(max_length=10)
     course_number = models.IntegerField(default=0)
@@ -94,7 +94,7 @@ class TheoryTestQuestion(models.Model):
     answer_two = models.CharField(max_length=128)
     answer_three = models.CharField(max_length=128, blank=True)
     answer_four = models.CharField(max_length=128, blank=True)
-    corrent_answer_number = models.IntegerField(blank=True)
+    correct_answer_number = models.IntegerField(blank=True)
     correct_response = models.CharField(max_length=128, blank=True)
     incorrect_response = models.CharField(max_length=128, blank=True)
     is_answered = models.BooleanField(default=False)
@@ -124,7 +124,7 @@ class SimulationElement(models.Model):
     
 class SimulationTest(models.Model):
     lab = models.ForeignKey(Laboratory)
-    name = models.CharField(max_length=128, unique=True)
+    name = models.CharField(max_length=128)
     is_completed = models.BooleanField(default=False)
     def __unicode__(self):
         return self.name
@@ -136,7 +136,7 @@ class SimulationTestQuestion(models.Model):
     answer_two = models.CharField(max_length=128)
     answer_three = models.CharField(max_length=128, blank=True)
     answer_four = models.CharField(max_length=128, blank=True)
-    corrent_answer_number = models.IntegerField(blank=True)
+    correct_answer_number = models.IntegerField(blank=True)
     correct_response = models.CharField(max_length=128, blank=True)
     incorrect_response = models.CharField(max_length=128, blank=True)
     is_answered = models.BooleanField(default=False)
@@ -211,7 +211,7 @@ class Node(models.Model):
     
 class Synonym(models.Model):
     word = models.CharField(max_length=128)
-    Node = models.ForeignKey(Node)
+    node = models.ForeignKey(Node)
     
     def __unicode__(self):
         return self.word

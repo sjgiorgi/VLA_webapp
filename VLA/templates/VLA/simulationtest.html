@@ -20,42 +20,42 @@
             {% for question in simulationtest_questions %}
                 <li>{{ question.question }}</li>
                 {% if question.answer_one %}
-                    {%  if question.corrent_answer_number == 1 and question.given_answer == 1 %}
+                    {%  if question.correct_answer_number == 1 and question.given_answer == 1 %}
                         <font color="#009900" size=6> &#x2713; </font>{{ question.answer_one }}
-                    {% elif question.corrent_answer_number != 1 and question.given_answer == 1 %}
+                    {% elif question.correct_answer_number != 1 and question.given_answer == 1 %}
                         <font color="993333"> &#x2717;</font> {{ question.answer_one }}
                     {% else %}
                         &#8226; {{ question.answer_one }}
                     {% endif %} <br />
                 {% endif %}
                 {% if question.answer_two %}
-                    {%  if question.corrent_answer_number == 2 and question.given_answer == 2 %}
+                    {%  if question.correct_answer_number == 2 and question.given_answer == 2 %}
                         <font color="#009900"> &#x2713; </font>{{ question.answer_two }}
-                    {% elif question.corrent_answer_number != 2 and question.given_answer == 2 %}
+                    {% elif question.correct_answer_number != 2 and question.given_answer == 2 %}
                         <font color="993333"> &#x2717;</font> {{ question.answer_two }}
                     {% else %}
                         &#8226; {{ question.answer_two }}
                     {% endif %} <br />
                 {% endif %}
                 {% if question.answer_three %}
-                    {%  if question.corrent_answer_number == 3 and question.given_answer == 3 %}
+                    {%  if question.correct_answer_number == 3 and question.given_answer == 3 %}
                         <font color="#009900"> &#x2713; </font>{{ question.answer_three }}
-                    {% elif question.corrent_answer_number != 3 and question.given_answer == 3 %}
+                    {% elif question.correct_answer_number != 3 and question.given_answer == 3 %}
                         <font color="993333"> &#x2717;</font> {{ question.answer_three }}
                     {% else %}
                         &#8226; {{ question.answer_three }}
                     {% endif %} <br />
                 {% endif %}
                 {% if question.answer_four %}
-                    {%  if question.corrent_answer_number == 4 and question.given_answer == 4 %}
+                    {%  if question.correct_answer_number == 4 and question.given_answer == 4 %}
                         <font color="#009900"> &#x2713; </font>{{ question.answer_four }}
-                    {% elif question.corrent_answer_number != 4 and question.given_answer == 4 %}
+                    {% elif question.correct_answer_number != 4 and question.given_answer == 4 %}
                         <font color="993333"> &#x2717;</font> {{ question.answer_four }}
                     {% else %}
                         &#8226; {{ question.answer_four }}
                     {% endif %} <br />
                 {% endif %}
-                {% if question.corrent_answer_number == question.given_answer %}
+                {% if question.correct_answer_number == question.given_answer %}
                     {% if question.correct_response %}
                         <h3>Correct: {{ question.correct_response }}</h3>
                     {% endif %}
@@ -73,28 +73,28 @@
                 {% for question in simulationtest_questions %}
                     <li>{{ question.question }}</li>
                         {% if question.answer_one %}
-                            {% if question.corrent_answer_number == 1 %}
+                            {% if question.correct_answer_number == 1 %}
                                 <font color="#009900"> &#x2713; </font> {{ question.answer_one }} <br />
                             {% else %}
                                 {{ question.answer_one }} <br />
                             {% endif %}
                         {% endif %}
                         {% if question.answer_two %}
-                            {% if question.corrent_answer_number == 2 %}
+                            {% if question.correct_answer_number == 2 %}
                                 <font color="#009900"> &#x2713; </font> {{ question.answer_two }} <br />
                             {% else %}
                                 {{ question.answer_two }} <br />
                             {% endif %}
                         {% endif %}
                         {% if question.answer_three %}
-                            {% if question.corrent_answer_number == 3 %}
+                            {% if question.correct_answer_number == 3 %}
                                 <font color="#009900"> &#x2713; </font> {{ question.answer_three }} <br />
                             {% else %}
                                 {{ question.answer_three }} <br />
                             {% endif %}
                         {% endif %}
                         {% if question.answer_four %}
-                            {% if question.corrent_answer_number == 4 %}
+                            {% if question.correct_answer_number == 4 %}
                                 <font color="#009900"> &#x2713; </font> {{ question.answer_four }} <br />
                             {% else %}
                                 {{ question.answer_four }} <br />
