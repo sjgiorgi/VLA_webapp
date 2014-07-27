@@ -13,6 +13,10 @@
         <ul class="nav nav-list"class="nav nav-list">
        {{ definition.definition }}
         </ul>
+        {% if synonyms %}
+            <ul class="nav nav-list"class="nav nav-list">&nbsp;</ul>
+            Synonyms: {% for synonym in synonyms %} {{ synonym }} {% endfor %}
+        {% endif %}
     {% else %}
     There definition for this word.
     {% endif %}

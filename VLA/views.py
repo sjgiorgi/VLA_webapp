@@ -284,11 +284,15 @@ def vocab_topic(request, vocab_topic_name_url):
     context_dict['vocab_topic_name'] = vocab_topic_name
     if vocab_topic_name == 'definitionlist':
         context_dict['vocab_topic_name'] = 'Definition List'
-        vocab_topic = VocabTopic.objects.all().order_by('word')
+        vocab_topic = VocabTopic.objects.filter(def_useful=True).order_by('word')
     else:
         vocab_topic = VocabTopic.objects.get(topic=vocab_topic_name)
     context_dict['vocab_topic'] = vocab_topic
-    context_dict['vocab_words'] = Node.objects.filter(topic=vocab_topic).order_by('word')
+    vocab_words = Node.objects.filter(topic=vocab_topic).order_by('word')
+    for words in vocab_words:
+        words.url = words.word.replace(' ', '_')
+        words.synonyms = Synonym.objects.filter(node=words)
+    context_dict['vocab_words'] = vocab_words
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
     if not request.user.is_authenticated():
@@ -300,6 +304,7 @@ def definition(request, definition_name_url):
     definition_name = definition_name_url.replace('_', ' ')
     context_dict = {'definition_name': definition_name}
     definition = Node.objects.get(word=definition_name)
+    context_dict['synonyms'] = Synonym.objects.filter(node=definition)
     context_dict['definition'] = definition
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
@@ -490,10 +495,11 @@ def get_sections(context_dict, lab):
     return context_dict
 
 def get_definition_list(max_results=0, starts_with=''):
+    topic_list = VocabTopic.objects.filter(def_useful=False)
     def_list = []
     if starts_with:
-        def_list = Node.objects.filter(word__istartswith=starts_with)
-
+        def_list = Node.objects.filter(word__istartswith=starts_with).exclude(topic__in=topic_list)
+    
     if max_results > 0:
         if len(def_list) > max_results:
             def_list = def_list[:max_results]

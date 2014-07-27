@@ -12,9 +12,14 @@
     {% if vocab_words %}
         <ul class="nav nav-list"class="nav nav-list">
         {% for word in vocab_words %}
-            <b>{{ word.word }}</b>
+            <b><a href="{% url 'definition' word.url %}">{{ word.word }}</a></b>
             <ul class="nav nav-list"class="nav nav-list">
-                <li>{{ word.definition }}</li>
+                {% if word.definition %}
+                    <li>Definition: {{ word.definition }}</li>
+                {% endif %}
+                {% if word.synonyms %}
+                    <li>Synonyms: {% for synonym in word.synonyms %} {{ synonym }}{% endfor %}</li>
+                {% endif %}
             </ul>
         {% endfor %}
         </ul>
