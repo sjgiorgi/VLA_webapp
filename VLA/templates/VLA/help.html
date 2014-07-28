@@ -16,31 +16,27 @@
 
 <div class="row-fluid">
     <div class="span6">
-        <h2>Top Five Questions</h2>
-        {% if courses %}
-        <ul>
-            {% for course in courses %}
-            <li><a href="/VLA/course/{{ course.url }}">{{ course.name }}</a></li>
-            {% endfor %}
-        </ul>
+        <h2>Recently Added Instructional Videos</h2>
+        {% if videos %}
+            <ul>
+                {% for video in videos %}
+                    <li><a href="{% url 'video' video.url %}">{{ video.name }}</a></li>
+                {% endfor %}
+            </ul>
         {% else %}
-        <strong>No questions at present.</strong>
+            <ul><li>There are no videos present</li></ul>
         {% endif %}
-
     </div>
     <!--/span-->
     <div class="span6">
-        <h2>Top Five Definitions</h2>
-        {% if pages %}
+        <h2>Recently Added Definitions</h2>
         <ul>
-            {% for page in pages %}
-            <li><a href="{{ page.url}}">{{ page.title }}</a> - {{ page.course }} ({{ page.views }} view(s))</li>
-            {% endfor %}
+            <li><a href="/VLA/help/definition/Resistor/">Resistor</a></li>
+            <li><a href="/VLA/help/definition/Inductor/">Inductor</a></li>
+            <li><a href="/VLA/help/definition/Capacitor/">Capacitor</a></li>
+            <li><a href="/VLA/help/definition/Breadboard/">Breadboard</a></li>
+            <li><a href="/VLA/help/definition/Multimeter/">Multimeter</a></li>
         </ul>
-        {% else %}
-        <strong>No definitions at present.</strong>
-        {% endif %}
-
     </div>
     <!--/span-->
     

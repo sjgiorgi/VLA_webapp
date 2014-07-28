@@ -233,3 +233,9 @@ class QuestionWithAnswer(models.Model):
 class Rule(models.Model):
     question = models.ForeignKey(QuestionWithAnswer)
     
+class Video(models.Model):
+    name = models.CharField(max_length=128)
+    video_link = models.CharField(max_length=128)
+    
+    def __unicode__(self):
+        return self.name

@@ -15,10 +15,10 @@
             <b><a href="{% url 'definition' word.url %}">{{ word.word }}</a></b>
             <ul class="nav nav-list"class="nav nav-list">
                 {% if word.definition %}
-                    <li>Definition: {{ word.definition }}</li>
+                    <li>{{ word.definition }}</li>
                 {% endif %}
                 {% if word.synonyms %}
-                    <li>Synonyms: {% for synonym in word.synonyms %} {{ synonym }}{% endfor %}</li>
+                    <li><i>Synonyms:</i> {{ word.synonyms|join:", " }}</li>
                 {% endif %}
             </ul>
         {% endfor %}

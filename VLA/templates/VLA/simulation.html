@@ -12,6 +12,8 @@
 <div class="hero-unit">
     <h1>{{ course.subj }} {{ course.course_number }}: {{ course.name }}</h1>
     <h2>Lab {{ lab.lab_number }}: {{ simulation.name }}</h2>
+    <h4>You must use <a href="http://www.circuitlab.com/" target="new">Circuit Lab</a>, MultiSim, or another
+        external circuit simulator for this assignment.</h4>
     {% if simulation_elements %}
     {% for element in simulation_elements %}
         {% if element.is_text %}

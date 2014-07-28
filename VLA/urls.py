@@ -17,6 +17,7 @@ urlpatterns = patterns('',
         url(r'^help/definition/(?P<definition_name_url>\w+)/$', views.definition, name='definition'),
         url(r'^suggest_definition/$', views.suggest_definition, name='suggest_definition'),
         
+        url(r'^help/video/(?P<video_name_url>\w+)$', views.video, name='video'),
         
         url(r'^course/(?P<course_name_url>\w+)/(?P<lab_name_url>\w+)/theory/(?P<theory_name_url>\w+)/$', views.theory, name='theory'),
         url(r'^course/(?P<course_name_url>\w+)/(?P<lab_name_url>\w+)/theorytest/(?P<theorytest_name_url>\w+)/$', views.theorytest, name='theorytest'),

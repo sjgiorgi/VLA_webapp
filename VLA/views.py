@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from VLA.forms import CourseForm, UserForm
 from VLA.models import Course, Laboratory, Theory, TheoryTest, Simulation, SimulationTest, Hardware, HardwareElement, Results
 from VLA.models import TheoryTestQuestion, ResultsQuestions, TheoryElement, LabObjective, SimulationElement, SimulationTestQuestion
-from VLA.models import VocabDomain, VocabTopic, Node, Synonym
+from VLA.models import VocabDomain, VocabTopic, Node, Synonym, Video
 
 def index(request):
     cour_list = get_course_list()
@@ -270,6 +270,10 @@ def help(request):
     context_dict['def_searched'] = False
     context_dict['def_topics'] = get_vocab_topic_list()
     context_dict['def_list'] = Node.objects.all()
+    videos = Video.objects.all()
+    for video in videos:
+        video.url = video.name.replace(' ', '_')
+    context_dict['videos'] = videos
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:
@@ -313,6 +317,21 @@ def definition(request, definition_name_url):
         return render(request, 'VLA/login.html')
     else:
         return render(request, 'VLA/definition.html', context_dict)
+
+def video(request, video_name_url):
+    video_name = video_name_url.replace('_', ' ')
+    context_dict = {'video_name': video_name}
+    video = Video.objects.get(name=video_name)
+    video.url = video.name.replace(' ', '_')
+    context_dict['video'] = video
+    context_dict['def_searched'] = False
+    context_dict['def_list'] = Node.objects.all()
+    context_dict['vocab_topic_list'] = get_vocab_topic_list()
+    if not request.user.is_authenticated():
+        return render(request, 'VLA/login.html')
+    else:
+        return render(request, 'VLA/video.html', context_dict)
+
 
 ### UNNEEDED VIEWS
 def add_course(request):

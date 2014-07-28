@@ -1,6 +1,6 @@
 {% extends 'VLA/base.html' %}
 
-{% block title %}VLA: Help{% endblock %}
+{% block title %}VLA: Help Videos{% endblock %}
 {% block sidetitle %}Definition Categories{% endblock %}
 {% block sidebar %}
     {% include 'VLA/cat_section_list.html' with topics=vocab_topic_list %}
@@ -8,19 +8,17 @@
 
 {% block body_block %}
 <div class="hero-unit">
-    <h1>{{ definition_name }}</h1><P>
-    {% if definition %}
+    <h1>{{ video_name }}</h1><P>
+    {% if video %}
         <ul class="nav nav-list"class="nav nav-list">
-       {{ definition.definition }}
+            <iframe width="560" height="315" src="{{ video.video_link }}" frameborder="0" allowfullscreen></iframe>
         </ul>
-        {% if synonyms %}
-            <ul class="nav nav-list"class="nav nav-list">&nbsp;</ul>
-            <i>Synonyms:</i> {{ synonyms|join:", " }}
-        {% endif %}
     {% else %}
-    There definition for this word.
+    There is no video.
     {% endif %}
     <ul class="nav nav-list"class="nav nav-list">&nbsp;</ul>
     <a href="/VLA/help/">Go to Help</a>
 </div>
 {% endblock %}
+
+
