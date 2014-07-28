@@ -563,6 +563,16 @@ def populate():
                     topic="Help",
                     def_useful=False)
     n1101 = add_node("Help", definition="", topic=topic_help)
+    
+    # Add videos
+    add_video(name="How to use a Breadboard",
+              video_link="http://www.youtube.com/embed/cf6XZ4gs7Ao")
+    add_video(name="How to use a DC Power Supply",
+              video_link="http://www.youtube.com/embed/mOpCxeqXWEI")
+    add_video(name="How to use a Multimeter",
+              video_link="http://www.youtube.com/embed/_o8M34NbXpk")
+    add_video(name="How to measure Current and Voltage",
+              video_link="http://www.youtube.com/embed/wLA6Wkb-TLQ")
 
     # Print out what we have added to the user.
     for vd in VocabDomain.objects.all():
@@ -585,6 +595,10 @@ def add_node(word, definition, topic):
 def add_synonym(word, node):
     s = Synonym.objects.get_or_create(word=word, node=node)[0]
     return s
+
+def add_video(name, video_link):
+    v = Video.objects.get_or_create(name=name, video_link=video_link)[0]
+    return v
 
 # Start execution here!
 if __name__ == '__main__':
