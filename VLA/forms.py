@@ -30,7 +30,7 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     first_name = forms.CharField(max_length=50, help_text="Please enter your first name.", required=True)
     last_name = forms.CharField(max_length=50, help_text="Please enter your last name.", required=True)
-    TUid = forms.IntegerField(min_value=0, max_value=999999, help_text="Please enter your TUid.", required=True)
+    TUid = forms.IntegerField(min_value=0, max_value=999999999, help_text="Please enter your TUid.", required=True)
     
     class Meta:
         model = UserProfile
