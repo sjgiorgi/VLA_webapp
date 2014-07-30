@@ -37,6 +37,7 @@ class Course(models.Model):
     TA_phone = models.CharField(max_length=128, blank=True)
     views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
+    
     def __unicode__(self):
         return self.name
     
@@ -58,11 +59,13 @@ class LabObjective(models.Model):
     
     def __unicode__(self):
         return self.objective
-     
+
+# The following classes are needed for each Laboratory  
 class Theory(models.Model):
     lab = models.ForeignKey(Laboratory)
     name = models.CharField(max_length=128)
     is_completed = models.BooleanField(default=False)
+    
     def __unicode__(self):
         return self.name
 
@@ -73,10 +76,15 @@ class TheoryElement(models.Model):
     text_input = models.TextField(blank=True)
     image_input = models.FileField(upload_to='VLA/static/VLA/images/', blank=True)
     equation_input = models.CharField(max_length=64, blank=True)
-    is_text = models.BooleanField(default=False)
-    is_image = models.BooleanField(default=False)
-    is_equation = models.BooleanField(default=False)
-    is_latex = models.BooleanField(default=False)
+    TYPE_CHOICES = (
+        ('text', 'text'),
+        ('image', 'image'),
+        ('equation', 'equation'),
+        ('latex', 'latex'),
+        ('table', 'table'),
+    )
+    element_type = models.CharField(choices=TYPE_CHOICES, max_length=8)
+    
     def __unicode__(self):
         return self.name
     
@@ -84,6 +92,7 @@ class TheoryTest(models.Model):
     lab = models.ForeignKey(Laboratory)
     name = models.CharField(max_length=128)
     is_completed = models.BooleanField(default=False)
+    
     def __unicode__(self):
         return self.name
     
@@ -98,6 +107,7 @@ class TheoryTestQuestion(models.Model):
     correct_response = models.CharField(max_length=128, blank=True)
     incorrect_response = models.CharField(max_length=128, blank=True)
     is_answered = models.BooleanField(default=False)
+    
     def __unicode__(self):
         return self.question
     
@@ -105,6 +115,7 @@ class Simulation(models.Model):
     lab = models.ForeignKey(Laboratory)
     name = models.CharField(max_length=128)
     is_completed = models.BooleanField(default=False)
+    
     def __unicode__(self):
         return self.name
 
@@ -115,10 +126,15 @@ class SimulationElement(models.Model):
     text_input = models.TextField(blank=True)
     image_input = models.FileField(upload_to='static/', blank=True)
     equation_input = models.CharField(max_length=256, blank=True)
-    is_text = models.BooleanField(default=False)
-    is_image = models.BooleanField(default=False)
-    is_equation = models.BooleanField(default=False)
-    is_latex = models.BooleanField(default=False)
+    TYPE_CHOICES = (
+        ('text', 'text'),
+        ('image', 'image'),
+        ('equation', 'equation'),
+        ('latex', 'latex'),
+        ('table', 'table'),
+    )
+    element_type = models.CharField(choices=TYPE_CHOICES, max_length=8)
+    
     def __unicode__(self):
         return self.name
     
@@ -126,6 +142,7 @@ class SimulationTest(models.Model):
     lab = models.ForeignKey(Laboratory)
     name = models.CharField(max_length=128)
     is_completed = models.BooleanField(default=False)
+    
     def __unicode__(self):
         return self.name
 
@@ -140,6 +157,7 @@ class SimulationTestQuestion(models.Model):
     correct_response = models.CharField(max_length=128, blank=True)
     incorrect_response = models.CharField(max_length=128, blank=True)
     is_answered = models.BooleanField(default=False)
+    
     def __unicode__(self):
         return self.question
     
@@ -147,6 +165,7 @@ class Hardware(models.Model):
     lab = models.ForeignKey(Laboratory)
     name = models.CharField(max_length=128, unique=True)
     is_completed = models.BooleanField(default=False)
+    
     def __unicode__(self):
         return self.name
     
@@ -157,10 +176,15 @@ class HardwareElement(models.Model):
     text_input = models.TextField(blank=True)
     image_input = models.FileField(upload_to='static/', blank=True)
     equation_input = models.CharField(max_length=64, blank=True)
-    is_text = models.BooleanField(default=False)
-    is_image = models.BooleanField(default=False)
-    is_equation = models.BooleanField(default=False)
-    is_latex = models.BooleanField(default=False)
+    TYPE_CHOICES = (
+        ('text', 'text'),
+        ('image', 'image'),
+        ('equation', 'equation'),
+        ('latex', 'latex'),
+        ('table', 'table'),
+    )
+    element_type = models.CharField(choices=TYPE_CHOICES, max_length=8)
+    
     def __unicode__(self):
         return self.name
 
@@ -168,6 +192,7 @@ class Results(models.Model):
     lab = models.ForeignKey(Laboratory)
     name = models.CharField(max_length=128)
     is_completed = models.BooleanField(default=False)
+    
     def __unicode__(self):
         return self.name
     
@@ -175,11 +200,11 @@ class ResultsQuestions(models.Model):
     lab = models.ForeignKey(Laboratory)
     name = models.CharField(max_length=128)
     is_completed = models.BooleanField(default=False)
+    
     def __unicode__(self):
         return self.name
-    
-#class Question(model.Models):
-    
+
+### User Classes
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
@@ -187,11 +212,12 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.username
     
-### Help Module classes
+### Help Module classes: VocabDomain and Rulebase
 
-# Vocab Domain
+# The following classes are needed for the VocabDomain
 class VocabDomain(models.Model):
     name = models.CharField(max_length=128)
+    
     def __unicode__(self):
         return self.name
 
@@ -199,6 +225,7 @@ class VocabTopic(models.Model):
     topic = models.CharField(max_length=128)
     domain = models.ForeignKey(VocabDomain)
     def_useful = models.BooleanField(default=False)
+    
     def __unicode__(self):
         return self.topic
     
@@ -206,6 +233,7 @@ class Node(models.Model):
     word = models.CharField(max_length=128)
     definition = models.CharField(max_length=256)
     topic = models.ForeignKey(VocabTopic)
+    
     def __unicode__(self):
         return self.word
     
@@ -216,7 +244,7 @@ class Synonym(models.Model):
     def __unicode__(self):
         return self.word
 
-# Rulebase
+# The following classes are for the Rulebase
 class Rulebase(models.Model):
     name = models.CharField(max_length=128)
     
@@ -232,7 +260,9 @@ class QuestionWithAnswer(models.Model):
 
 class Rule(models.Model):
     question = models.ForeignKey(QuestionWithAnswer)
-    
+
+# Temporary class to display videos
+# Will be deleted once Rulebase is completed
 class Video(models.Model):
     name = models.CharField(max_length=128)
     video_link = models.CharField(max_length=128)

@@ -1,51 +1,38 @@
 from django import forms
-from VLA.models import Laboratory, Course, UserProfile
 from django.contrib.auth.models import User
 
-class CourseForm(forms.ModelForm):
-    name = forms.CharField(max_length=128, help_text="Please enter the course name.")
-    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+from VLA.models import Laboratory, Course, UserProfile
 
-    class Meta:
-        model = Course
-
-class LabForm(forms.ModelForm):
-    title = forms.CharField(max_length=128, help_text="Please enter the title of the lab.")
-    url = forms.URLField(max_length=200, help_text="Please enter the URL of the lab.")
-    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    
-    class Meta:
-        model = Laboratory
-        fields = ('title', 'url', 'views')
-        
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        url = cleaned_data.get('url')
-        
-        if url and not url.startswith('http://'):
-            url = 'http://' + url
-            cleaned_data['url'] = url
-        return cleaned_data
-    
+# Creates a User with usermane, email address, and password
 class UserForm(forms.ModelForm):
-    username = forms.CharField(help_text="Please enter a username.")
+    username = forms.CharField(max_length=50, help_text="Please enter a username.")
     email = forms.CharField(help_text="Please enter your email.")
-    password = forms.CharField(widget=forms.PasswordInput(), help_text="Please enter a password.")
-    password_again = forms.CharField(help_text="Please re-enter your password.")
+    password1 = forms.CharField(max_length=50, widget=forms.PasswordInput(), help_text="Please enter a password.")
+    password2 = forms.CharField(max_length=50, widget=forms.PasswordInput(), help_text="Please re-enter your password.")
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'password_again']
-        
-class Help(forms.ModelForm):
-    question = forms.CharField(max_length=200, help_text="Please enter a username.")
-    #class Meta:
-        #model =
+        fields = ['username', 'email', 'password1', 'password2']
+    
+    # Check if password1 and password2 are equal
+    def clean_password2(self):
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
 
-#class UserProfileForm(forms.ModelForm):
-#    website = forms.URLField(help_text="Please enter your website.", required=False)
+        if not password2:
+            raise forms.ValidationError("You must confirm your password")
+        if password1 != password2:
+            raise forms.ValidationError("Your passwords do not match")
+        return password2
 
-#    class Meta:
-#        model = UserProfile
-#        fields = ['website', ]
+# Creates a profile for the User with first name, last name, and TUid.
+# This profile information is used when generating a Word Document to
+# submit for an official Lab Report which is turned in to the TA.
+class UserProfileForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=50, help_text="Please enter your first name.", required=True)
+    last_name = forms.CharField(max_length=50, help_text="Please enter your last name.", required=True)
+    TUid = forms.IntegerField(min_value=0, max_value=999999, help_text="Please enter your TUid.", required=True)
+    
+    class Meta:
+        model = UserProfile
+        fields = ['first_name', 'last_name', 'TUid' ]
     

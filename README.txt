@@ -15,30 +15,46 @@
   ------------------
   
   LASTEST COMMIT:
-  1. added initial script for populating Circuits course and Vocab Domain
+  - changed models for TheoryElement, SimulationElement, and HardwareElement (removed multiple Booleans, added choice list)
+  - added password confirmation field to register page
+  - added first name, last name, TUid field to register page
+  - added instructional videos to help module
+  - added YouTube page link to menu bar
   
   PREVIOUS COMMITS:
-  1. finished Theory Test and Simulation Test sections
-  2. removed hardcoded URLs
-  3. added 'completed section' buttons
-  4. finished Vocab Domain database
-  5. added definition search
+  - added initial script for populating Circuits course and Vocab Domain
+  - finished Theory Test and Simulation Test sections
+  - removed hardcoded URLs
+  - added 'completed section' buttons
+  - finished Vocab Domain database
+  - added definition search
   
   TODO:
-  1. add password confirmation field on register page
-  2. fix image uploading for 'element' classes
-  3. add Results section
-  4. add Results Questions section
-  5. generate Word file
-  6. make Rulebase database
-  7. add Rulebase search
-  8. finish python script for filling Vocab Domain and Rulebase database
-  9. switch database to SQL
-  10. make help module app and VLA app separate
+  - change 'VLA.* import' to more general import (remove VLA)
+  - create user profiles / track user data 
+  - fix image uploading for 'element' classes
+  - add Results section
+  - add Results Questions section
+  - generate Word file
+  - make Rulebase database
+  - add Rulebase search
+  - finish python script for filling Vocab Domain and Rulebase database
+  - finish python script for Ohms Law Lab
+  - switch database to SQL
+  - make help module app and VLA app separate
+  - add 'views' to definitions and track number of times definition is viewed
+  - make 'top 5 viewed definition' list on help page
+  - include mathjax.js instead of url (in base.html)
+  - allow Course, Lab, etc. names to include symbols (example: Ohm's Law)
+  - customize admin panel
+  - create class="nav pull-left" to align Temple and CSNAP logo
+  - add table option to TheoryElement, SimulationElement, and HardwareElement
 
   Documentation
   -------------
-
+  
+  Python version 2.7.1
+  Django version 1.6.5
   
 
   Installation

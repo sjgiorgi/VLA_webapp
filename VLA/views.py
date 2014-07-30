@@ -3,10 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from VLA.forms import CourseForm, UserForm
-from VLA.models import Course, Laboratory, Theory, TheoryTest, Simulation, SimulationTest, Hardware, HardwareElement, Results
-from VLA.models import TheoryTestQuestion, ResultsQuestions, TheoryElement, LabObjective, SimulationElement, SimulationTestQuestion
-from VLA.models import VocabDomain, VocabTopic, Node, Synonym, Video
+from VLA.forms import UserForm, UserProfileForm
+from VLA.models import *
 
 def index(request):
     cour_list = get_course_list()
@@ -18,7 +16,6 @@ def index(request):
     else:
         return render(request, 'VLA/index.html', context_dict)
 
-
 def about(request):
     cour_list = get_course_list()
     context_dict = {'cour_list': cour_list}
@@ -29,7 +26,6 @@ def about(request):
     else:
         context_dict['logged_in'] = True
     return render(request, 'VLA/about.html', context_dict)
-
 
 def course(request, course_name_url):
     course_name = course_name_url.replace('_', ' ')
@@ -239,7 +235,6 @@ def hardware(request, course_name_url, lab_name_url, hardware_name_url):
             context_dict['hardware'].save()
         return render(request, 'VLA/hardware.html', context_dict)
 
-
 def results(request, course_name_url, lab_name_url):
     lab_name = lab_name_url.replace('_', ' ')
     course_name = course_name_url.replace('_', ' ')
@@ -262,8 +257,6 @@ def resultsquestions(request, course_name_url, lab_name_url):
     else:
         return render(request, 'VLA/resultsquestions.html', context_dict)
     
-
-### HELP VIEWS
 def help(request):
     cour_list = get_course_list()
     context_dict = {'cour_list': cour_list}
@@ -279,7 +272,6 @@ def help(request):
     else:
         context_dict['logged_in'] = True
         return render(request, 'VLA/help.html', context_dict)
-
 
 def vocab_topic(request, vocab_topic_name_url):
     vocab_topic_list = get_vocab_topic_list()
@@ -332,24 +324,6 @@ def video(request, video_name_url):
     else:
         return render(request, 'VLA/video.html', context_dict)
 
-
-### UNNEEDED VIEWS
-def add_course(request):
-    if request.method == 'POST':
-        form = CourseForm(request.POST)
-        if form.is_valid():
-            form.save(commit=True)
-            return index(request)
-        else:
-            print form.errors
-    else:
-        form = CourseForm()
-    if not request.user.is_authenticated():
-        return render(request, 'VLA/login.html')
-    else:
-        return render(request, 'VLA/add_course.html', {'form': form})
-
-### REGISTER / LOGIN VIEWS
 def register(request):
     # A boolean value for telling the template whether the registration was successful.
     # Set to False initially. Code changes value to True when registration succeeds.
@@ -360,7 +334,7 @@ def register(request):
         # Attempt to grab information from the raw form information.
         # Note that we make use of both UserForm and UserProfileForm.
         user_form = UserForm(data=request.POST)
-        #profile_form = UserProfileForm(data=request.POST)
+        profile_form = UserProfileForm(data=request.POST)
 
         # If the two forms are valid...
         if user_form.is_valid(): #and profile_form.is_valid():
@@ -375,8 +349,8 @@ def register(request):
             # Now sort out the UserProfile instance.
             # Since we need to set the user attribute ourselves, we set commit=False.
             # This delays saving the model until we're ready to avoid integrity problems.
-            #profile = profile_form.save(commit=False)
-            #profile.user = user
+            profile = profile_form.save(commit=False)
+            profile.user = user
 
             # Did the user provide a profile picture?
             # If so, we need to get it from the input form and put it in the UserProfile model.
@@ -384,7 +358,7 @@ def register(request):
             #    profile.picture = request.FILES['picture']
 
             # Now we save the UserProfile model instance.
-            #profile.save()
+            profile.save()
 
             # Update our variable to tell the template registration was successful.
             registered = True
@@ -399,14 +373,13 @@ def register(request):
     # These forms will be blank, ready for user input.
     else:
         user_form = UserForm()
-        #profile_form = UserProfileForm()
+        profile_form = UserProfileForm()
 
     # Render the template depending on the context.
     return render(request,
             'VLA/register.html',
-            {'user_form': user_form, 'registered': registered})
-            #{'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
-
+            #{'user_form': user_form, 'registered': registered})
+            {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
 def user_login(request):
     # If the request is a HTTP POST, try to pull out the relevant information.
@@ -453,6 +426,41 @@ def restricted(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/VLA')
+
+###
+#def GenerateDocument(request):
+#    
+#    document = Document()
+#    docx_title="TEST_DOCUMENT.docx"
+#    # ---- Cover Letter ----
+#    document.add_picture((r'%s/static/images/my-header.png' % (settings.PROJECT_PATH)), width=Inches(4))
+#    document.add_paragraph()
+#    document.add_paragraph("%s" % date.today().strftime('%B %d, %Y'))
+#
+#    document.add_paragraph('Dear Sir or Madam:')
+#    document.add_paragraph('We are pleased to help you with your widgets.')
+#    document.add_paragraph('Please feel free to contact me for any additional information.')
+#    document.add_paragraph('I look forward to assisting you in this project.')
+#
+#    document.add_paragraph()
+#    document.add_paragraph('Best regards,')
+#    document.add_paragraph('Acme Specialist 1]')
+#    document.add_page_break()
+#
+#    # Prepare document for download        
+#    # -----------------------------
+#    f = StringIO()
+#    document.save(f)
+#    length = f.tell()
+#    f.seek(0)
+#    response = HttpResponse(
+#        f.getvalue(),
+#        content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+#    )
+#    response['Content-Disposition'] = 'attachment; filename=' + docx_title
+#    response['Content-Length'] = length
+#    return response
+
 
 def get_course_list():
     cour_list = Course.objects.all().order_by('subj', 'course_number')

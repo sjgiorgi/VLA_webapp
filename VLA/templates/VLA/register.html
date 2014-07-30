@@ -19,13 +19,13 @@
             <h2 class="form-signin-heading">Sign up Here</h2>
             <!-- Display each form here -->
 
-            {% for field in user_form.visible_fields %}
+            {% for field in profile_form.visible_fields %}
             {{ field.errors }}
             {{ field.help_text }}<br />
             {{ field }}<br />
             {% endfor %}
-
-            {% for field in profile_form.visible_fields %}
+            
+            {% for field in user_form.visible_fields %}
             {{ field.errors }}
             {{ field.help_text }}<br />
             {{ field }}<br />

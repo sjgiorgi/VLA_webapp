@@ -1,5 +1,23 @@
 import os
 
+'''
+Script to populate the complete Vocabulary Domain Database for Circuits
+
+Creates one VocabDomain, 11 VocabTopics:
+1.  Circuit elements and equipment (resistor, breadboard, dc source)
+2.  Action word (compute, change, use)
+3.  Question word (why, what, how)
+4.  Problem word (wrong, don't, cannot)
+5.  Circuit concepts (resistance, power, energy)
+6.  Other (positive, gain, division, unit)
+7.  Circuit Laws (thevenin, conservation, superposition)
+8.  Circuit diagram and measurements (series, parallel, rms, ground)
+9.  Math words (sum, difference, equivalent)
+10. Units (ohm, watt, joule)
+11. Help
+
+Also adds Synonyms, Defintions, and current list of instructional Videos
+'''
 
 def populate():
     
@@ -11,44 +29,44 @@ def populate():
                     def_useful=True)
     
     n101 = add_node("Resistor",
-            definition="A resistor is a passive two-terminal electrical component that implements electrical resistance " +
-            "as a circuit element. Resistors act to reduce current flow, and, at the same time, act to lower voltage " +
-            "levels within circuits. Resistors may have fixed resistances or variable resistances, such as those found " +
-            "in thermistors, varistors, trimmers, photoresistors, humistors, piezoresistors and potentiometers.",
-            topic=topic_elements)
+                    definition="A resistor is a passive two-terminal electrical component that implements electrical resistance " +
+                    "as a circuit element. Resistors act to reduce current flow, and, at the same time, act to lower voltage " +
+                    "levels within circuits. Resistors may have fixed resistances or variable resistances, such as those found " +
+                    "in thermistors, varistors, trimmers, photoresistors, humistors, piezoresistors and potentiometers.",
+                    topic=topic_elements)
     add_synonym("Res", node=n101)
     add_synonym("R", node=n101)
     add_synonym("Ohm", node=n101)
     add_synonym("Conductor", node=n101)
     
     n102 = add_node("Capacitor",
-            definition="A capacitor (originally known as a condenser) is a passive two-terminal electrical component used " +
-            "to store energy electrostatically in an electric field. The forms of practical capacitors vary widely, " +
-            "but all contain at least two electrical conductors (plates) separated by a dielectric (i.e., insulator). " +
-            "The conductors can be thin films of metal, aluminum foil or disks, etc. The 'nonconducting' dielectric acts to " +
-            "increase the capacitor's charge capacity. A dielectric can be glass, ceramic, plastic film, air, paper, mica, etc. " +
-            "Capacitors are widely used as parts of electrical circuits in many common electrical devices. Unlike a " +
-            "resistor, an ideal capacitor does not dissipate energy. Instead, a capacitor stores energy in the form of an electrostatic field between its plates.",
-            topic=topic_elements)
+                    definition="A capacitor (originally known as a condenser) is a passive two-terminal electrical component used " +
+                    "to store energy electrostatically in an electric field. The forms of practical capacitors vary widely, " +
+                    "but all contain at least two electrical conductors (plates) separated by a dielectric (i.e., insulator). " +
+                    "The conductors can be thin films of metal, aluminum foil or disks, etc. The 'nonconducting' dielectric acts to " +
+                    "increase the capacitor's charge capacity. A dielectric can be glass, ceramic, plastic film, air, paper, mica, etc. " +
+                    "Capacitors are widely used as parts of electrical circuits in many common electrical devices. Unlike a " +
+                    "resistor, an ideal capacitor does not dissipate energy. Instead, a capacitor stores energy in the form of an electrostatic field between its plates.",
+                    topic=topic_elements)
     add_synonym("Cap", node=n102)
     add_synonym("F", node=n102)
     add_synonym("Farad", node=n102)
     
     n103 = add_node("Inductor",
-            definition="An inductor, also called a coil or reactor, is a passive two-terminal electrical component which " +
-            "resists changes in electric current passing through it. It consists of a conductor such as a wire, usually " +
-            "wound into a coil. When a current flows through it, energy is stored temporarily in a magnetic field in the " +
-            "coil. When the current flowing through an inductor changes, the time-varying magnetic field induces a voltage " +
-            "in the conductor, according to Faraday's law of electromagnetic induction, which opposes the change in current that created it.",
-            topic=topic_elements)
+                    definition="An inductor, also called a coil or reactor, is a passive two-terminal electrical component which " +
+                    "resists changes in electric current passing through it. It consists of a conductor such as a wire, usually " +
+                    "wound into a coil. When a current flows through it, energy is stored temporarily in a magnetic field in the " +
+                    "coil. When the current flowing through an inductor changes, the time-varying magnetic field induces a voltage " +
+                    "in the conductor, according to Faraday's law of electromagnetic induction, which opposes the change in current that created it.",
+                    topic=topic_elements)
     add_synonym("Ind", node=n103)
     add_synonym("L", node=n103)
     add_synonym("Henry", node=n103)
     add_synonym("H", node=n103)
     
     n104 = add_node("DC Source",
-            definition="",
-            topic=topic_elements)
+                    definition="",
+                    topic=topic_elements)
     add_synonym("DC Supply", node=n104)
     add_synonym("Supply", node=n104)
     add_synonym("Source", node=n104)
@@ -57,14 +75,14 @@ def populate():
     add_synonym("Cell", node=n104)
     
     n105 = add_node("Multimeter",
-            definition="A multimeter or a multitester, also known as a VOM (Volt-Ohm meter), is an electronic measuring instrument " +
-            "that combines several measurement functions in one unit. A typical multimeter would include basic features such " +
-            "as the ability to measure voltage, current, and resistance. Analog multimeters use a microammeter whose pointer moves " +
-            "over a scale calibrated for all the different measurements that can be made. Digital multimeters (DMM, DVOM) display the " +
-            "measured value in numerals, and may also display a bar of a length proportional to the quantity being measured. Digital " +
-            "multimeters are now far more common than analog ones, but analog multimeters are still preferable in some cases, for " +
-            "example when monitoring a rapidly varying value.",
-            topic=topic_elements)
+                    definition="A multimeter or a multitester, also known as a VOM (Volt-Ohm meter), is an electronic measuring instrument " +
+                    "that combines several measurement functions in one unit. A typical multimeter would include basic features such " +
+                    "as the ability to measure voltage, current, and resistance. Analog multimeters use a microammeter whose pointer moves " +
+                    "over a scale calibrated for all the different measurements that can be made. Digital multimeters (DMM, DVOM) display the " +
+                    "measured value in numerals, and may also display a bar of a length proportional to the quantity being measured. Digital " +
+                    "multimeters are now far more common than analog ones, but analog multimeters are still preferable in some cases, for " +
+                    "example when monitoring a rapidly varying value.",
+                    topic=topic_elements)
     add_synonym("Voltmeter", node=n105)
     add_synonym("Ammeter", node=n105)
     add_synonym("Ohmmeter", node=n105)
@@ -72,126 +90,126 @@ def populate():
     add_synonym("Multim", node=n105)
     
     n106 = add_node("Function Generator",
-            definition="A function generator is usually a piece of electronic test equipment or software used to generate different " +
-            "types of electrical waveforms over a wide range of frequencies. Some of the most common waveforms produced by the " +
-            "function generator are the sine, square, triangular and sawtooth shapes. These waveforms can be either repetitive or " +
-            "single-shot (which requires an internal or external trigger source). Integrated circuits used to generate waveforms " +
-            "may also be described as function generator ICs.",
-            topic=topic_elements)
+                    definition="A function generator is usually a piece of electronic test equipment or software used to generate different " +
+                    "types of electrical waveforms over a wide range of frequencies. Some of the most common waveforms produced by the " +
+                    "function generator are the sine, square, triangular and sawtooth shapes. These waveforms can be either repetitive or " +
+                    "single-shot (which requires an internal or external trigger source). Integrated circuits used to generate waveforms " +
+                    "may also be described as function generator ICs.",
+                    topic=topic_elements)
     add_synonym("AC Supply", node=n106)
     add_synonym("Generator", node=n106)
     add_synonym("AC Source", node=n106)
     add_synonym("Func Gen", node=n106)
     
     n107 = add_node("Oscilloscope",
-            definition="An oscilloscope, previously called an oscillograph, and informally known as a scope, CRO (for " +
-            "cathode-ray oscilloscope), or DSO (for the more modern digital storage oscilloscope), is a type of " +
-            "electronic test instrument that allows observation of constantly varying signal voltages, usually as a " +
-            "two-dimensional plot of one or more signals as a function of time. Non-electrical signals (such as sound " +
-            "or vibration) can be converted to voltages and displayed.",
-            topic=topic_elements)
+                    definition="An oscilloscope, previously called an oscillograph, and informally known as a scope, CRO (for " +
+                    "cathode-ray oscilloscope), or DSO (for the more modern digital storage oscilloscope), is a type of " +
+                    "electronic test instrument that allows observation of constantly varying signal voltages, usually as a " +
+                    "two-dimensional plot of one or more signals as a function of time. Non-electrical signals (such as sound " +
+                    "or vibration) can be converted to voltages and displayed.",
+                    topic=topic_elements)
     add_synonym("Oscope", node=n107)
     add_synonym("Display", node=n107)
     add_synonym("CRT", node=n107)
     add_synonym("Cathode", node=n107)
     
     n108 = add_node("Spectrum Analyzer",
-            definition="A spectrum analyzer measures the magnitude of an input signal versus frequency within the full " +
-            "frequency range of the instrument. The primary use is to measure the power of the spectrum of known and " +
-            "unknown signals. The input signal that a spectrum analyzer measures is electrical, however, spectral " +
-            "compositions of other signals, such as acoustic pressure waves and optical light waves, can be considered " +
-            "through the use of an appropriate transducer. Optical spectrum analyzers also exist, which use direct optical " +
-            "techniques such as a monochromator to make measurements.",
-            topic=topic_elements)
+                    definition="A spectrum analyzer measures the magnitude of an input signal versus frequency within the full " +
+                    "frequency range of the instrument. The primary use is to measure the power of the spectrum of known and " +
+                    "unknown signals. The input signal that a spectrum analyzer measures is electrical, however, spectral " +
+                    "compositions of other signals, such as acoustic pressure waves and optical light waves, can be considered " +
+                    "through the use of an appropriate transducer. Optical spectrum analyzers also exist, which use direct optical " +
+                    "techniques such as a monochromator to make measurements.",
+                    topic=topic_elements)
     add_synonym("Spectrum", node=n108)
     add_synonym("Analyzer", node=n108)
     add_synonym("Sweep", node=n108)
     add_synonym("SA", node=n108)
     
     n109 = add_node("Diode",
-            definition="In electronics, a diode is a two-terminal electronic component with asymmetric conductance; it has " +
-            "low (ideally zero) resistance to current in one direction, and high (ideally infinite) resistance in the other. " +
-            "A semiconductor diode, the most common type today, is a crystalline piece of semiconductor material with a p-n " +
-            "junction connected to two electrical terminals. A vacuum tube diode has two electrodes, a plate (anode) and a " +
-            "heated cathode. Semiconductor diodes were the first semiconductor electronic devices. The discovery of crystals' " +
-            "rectifying abilities was made by German physicist Ferdinand Braun in 1874. The first semiconductor diodes, " +
-            "called cat's whisker diodes, developed around 1906, were made of mineral crystals such as galena. Today, most " +
-            "diodes are made of silicon, but other semiconductors such as selenium or germanium are sometimes used.",
-            topic=topic_elements)
+                    definition="In electronics, a diode is a two-terminal electronic component with asymmetric conductance; it has " +
+                    "low (ideally zero) resistance to current in one direction, and high (ideally infinite) resistance in the other. " +
+                    "A semiconductor diode, the most common type today, is a crystalline piece of semiconductor material with a p-n " +
+                    "junction connected to two electrical terminals. A vacuum tube diode has two electrodes, a plate (anode) and a " +
+                    "heated cathode. Semiconductor diodes were the first semiconductor electronic devices. The discovery of crystals' " +
+                    "rectifying abilities was made by German physicist Ferdinand Braun in 1874. The first semiconductor diodes, " +
+                    "called cat's whisker diodes, developed around 1906, were made of mineral crystals such as galena. Today, most " +
+                    "diodes are made of silicon, but other semiconductors such as selenium or germanium are sometimes used.",
+                    topic=topic_elements)
     add_synonym("Rectifier", node=n109)
     add_synonym("Semiconductor", node=n109)
     add_synonym("Junction", node=n109)
     
     n110 = add_node("Wire",
-            definition="",
-            topic=topic_elements)
+                    definition="",
+                    topic=topic_elements)
     add_synonym("Cable", node=n110)
     add_synonym("Line", node=n110)
     add_synonym("Short", node=n110)
     add_synonym("Connector", node=n110)
     
     n111 = add_node("Potentiometer",
-            definition="A potentiometer, informally a pot, is a three-terminal resistor with a sliding or rotating contact " +
-            "that forms an adjustable voltage divider. If only two terminals are used, one end and the wiper, it acts as a " +
-            "variable resistor or rheostat.",
-            topic=topic_elements)
+                    definition="A potentiometer, informally a pot, is a three-terminal resistor with a sliding or rotating contact " +
+                    "that forms an adjustable voltage divider. If only two terminals are used, one end and the wiper, it acts as a " +
+                    "variable resistor or rheostat.",
+                    topic=topic_elements)
     
     n112 = add_node("Element",
-            definition="Electrical elements are conceptual abstractions representing idealized electrical components, such as " +
-            "resistors, capacitors, and inductors, used in the analysis of electrical networks. Any electrical network can " +
-            "be analysed as multiple, interconnected electrical elements in a schematic diagram or circuit diagram, each of " +
-            "which affects the voltage in the network or current through the network. These ideal electrical elements represent " +
-            "real, physical electrical or electronic components but they do not exist physically and they are assumed to have " +
-            "ideal properties according to a lumped element model, while components are objects with less than ideal properties, " +
-            "a degree of uncertainty in their values and some degree of nonlinearity, each of which may require a combination of " +
-            "multiple electrical elements in order to approximate its function.",
-            topic=topic_elements)
+                    definition="Electrical elements are conceptual abstractions representing idealized electrical components, such as " +
+                    "resistors, capacitors, and inductors, used in the analysis of electrical networks. Any electrical network can " +
+                    "be analysed as multiple, interconnected electrical elements in a schematic diagram or circuit diagram, each of " +
+                    "which affects the voltage in the network or current through the network. These ideal electrical elements represent " +
+                    "real, physical electrical or electronic components but they do not exist physically and they are assumed to have " +
+                    "ideal properties according to a lumped element model, while components are objects with less than ideal properties, " +
+                    "a degree of uncertainty in their values and some degree of nonlinearity, each of which may require a combination of " +
+                    "multiple electrical elements in order to approximate its function.",
+                    topic=topic_elements)
     add_synonym("Component", node=n112)
     add_synonym("Entity", node=n112)
     add_synonym("Instrument", node=n112)
     add_synonym("Device", node=n112)
     
     n113 = add_node("Breadboard",
-            definition="A breadboard (or protoboard) is usually a construction base for prototyping of electronics. The term " +
-            "'breadboard' is commonly used to refer to a solderless breadboard (plugboard).",
-            topic=topic_elements)
+                    definition="A breadboard (or protoboard) is usually a construction base for prototyping of electronics. The term " +
+                    "'breadboard' is commonly used to refer to a solderless breadboard (plugboard).",
+                    topic=topic_elements)
     add_synonym("Board", node=n113)
     
     n114 = add_node("Switch",
-            definition="In electrical engineering, a switch is an electrical component that can break an electrical circuit, interrupting the current or diverting it from one conductor to another.",
-            topic=topic_elements)
+                    definition="In electrical engineering, a switch is an electrical component that can break an electrical circuit, interrupting the current or diverting it from one conductor to another.",
+                    topic=topic_elements)
     
     n115 = add_node("Transistor",
-            definition="A transistor is a semiconductor device used to amplify and switch electronic signals and electrical power. " +
-            "It is composed of semiconductor material with at least three terminals for connection to an external circuit. A " +
-            "voltage or current applied to one pair of the transistor's terminals changes the current through another pair of " +
-            "terminals. Because the controlled (output) power can be higher than the controlling (input) power, a transistor " +
-            "can amplify a signal. Today, some transistors are packaged individually, but many more are found embedded in " +
-            "integrated circuits.",
-            topic=topic_elements)
+                    definition="A transistor is a semiconductor device used to amplify and switch electronic signals and electrical power. " +
+                    "It is composed of semiconductor material with at least three terminals for connection to an external circuit. A " +
+                    "voltage or current applied to one pair of the transistor's terminals changes the current through another pair of " +
+                    "terminals. Because the controlled (output) power can be higher than the controlling (input) power, a transistor " +
+                    "can amplify a signal. Today, some transistors are packaged individually, but many more are found embedded in " +
+                    "integrated circuits.",
+                    topic=topic_elements)
     add_synonym("BJT", node=n115)
     
     n116 = add_node("Ammeter",
-            definition="An ammeter is a measuring instrument used to measure the electric current in a circuit. Electric " +
-            "currents are measured in amperes (A), hence the name. Instruments used to measure smaller currents, in the " +
-            "milliampere or microampere range, are designated as milliammeters or microammeters. Early ammeters were laboratory " +
-            "instruments which relied on the Earth's magnetic field for operation. By the late 19th century, improved " +
-            "instruments were designed which could be mounted in any position and allowed accurate measurements in electric " +
-            "power systems.",
-            topic=topic_elements)
+                    definition="An ammeter is a measuring instrument used to measure the electric current in a circuit. Electric " +
+                    "currents are measured in amperes (A), hence the name. Instruments used to measure smaller currents, in the " +
+                    "milliampere or microampere range, are designated as milliammeters or microammeters. Early ammeters were laboratory " +
+                    "instruments which relied on the Earth's magnetic field for operation. By the late 19th century, improved " +
+                    "instruments were designed which could be mounted in any position and allowed accurate measurements in electric " +
+                    "power systems.",
+                    topic=topic_elements)
     
     n117 = add_node("Voltmeter",
-            definition="A voltmeter is an instrument used for measuring electrical potential difference between two points in " +
-            "an electric circuit. Analog voltmeters move a pointer across a scale in proportion to the voltage of the " +
-            "circuit; digital voltmeters give a numerical display of voltage by use of an analog to digital converter.",
-            topic=topic_elements)
+                    definition="A voltmeter is an instrument used for measuring electrical potential difference between two points in " +
+                    "an electric circuit. Analog voltmeters move a pointer across a scale in proportion to the voltage of the " +
+                    "circuit; digital voltmeters give a numerical display of voltage by use of an analog to digital converter.",
+                    topic=topic_elements)
     
     n118 = add_node("Ohmmeter",
-            definition="An ohmmeter is an electrical instrument that measures electrical resistance, the opposition to an " +
-            "electric current. Micro-ohmmeters (microhmmeter or microohmmeter) make low resistance measurements. Megohmmeters " +
-            "(aka megaohmmeter or in the case of a trademarked device Megger) measure large values of resistance. The " +
-            "unit of measurement for resistance is ohms.",
-            topic=topic_elements)
+                    definition="An ohmmeter is an electrical instrument that measures electrical resistance, the opposition to an " +
+                    "electric current. Micro-ohmmeters (microhmmeter or microohmmeter) make low resistance measurements. Megohmmeters " +
+                    "(aka megaohmmeter or in the case of a trademarked device Megger) measure large values of resistance. The " +
+                    "unit of measurement for resistance is ohms.",
+                    topic=topic_elements)
     
     # Action Words
     topic_action = add_vocab_topic(domain=circuits_domain,
@@ -261,8 +279,8 @@ def populate():
     
     # Question Words
     topic_question = add_vocab_topic(domain=circuits_domain,
-                    topic="Question Words",
-                    def_useful=False)
+                                    topic="Question Words",
+                                    def_useful=False)
     n301 = add_node("How", definition="", topic=topic_question)
     add_synonym("Hows", node=n301)
     add_synonym("Howz", node=n301)
@@ -281,8 +299,8 @@ def populate():
     
     # Problem Words
     topic_problems = add_vocab_topic(domain=circuits_domain,
-                    topic="Problem Words",
-                    def_useful=False)
+                                    topic="Problem Words",
+                                    def_useful=False)
     n401 = add_node("Wrong", definition="", topic=topic_problems)
     add_synonym("Incorrect", node=n401)
     add_synonym("Not Correct", node=n401)
@@ -301,8 +319,8 @@ def populate():
     
     # Circuit Concepts
     topic_concepts = add_vocab_topic(domain=circuits_domain,
-                    topic="Circuit Concepts",
-                    def_useful=True)
+                                    topic="Circuit Concepts",
+                                    def_useful=True)
     n501 = add_node("Voltage", definition="", topic=topic_concepts)
     add_synonym("Volt", node=n501)
     add_synonym("Volts", node=n501)
@@ -398,8 +416,8 @@ def populate():
     
     # Other
     topic_other = add_vocab_topic(domain=circuits_domain,
-                    topic="Other",
-                    def_useful=True)
+                                  topic="Other",
+                                  def_useful=True)
     n601 = add_node("Positive", definition="", topic=topic_other)
     
     n602 = add_node("Negative", definition="", topic=topic_other)
@@ -422,8 +440,8 @@ def populate():
     
     # Circuit Laws
     topic_laws = add_vocab_topic(domain=circuits_domain,
-                    topic="Circuit Laws",
-                    def_useful=True)
+                                 topic="Circuit Laws",
+                                 def_useful=True)
     n701 = add_node("Ohms Law", definition="", topic=topic_laws)
     add_synonym("Ohmic", node=n701)
     
@@ -474,8 +492,8 @@ def populate():
     
     # Circuit Diagrams and Measurement
     topic_diagrams = add_vocab_topic(domain=circuits_domain,
-                    topic="Circuit Diagrams and Measurement",
-                    def_useful=True)
+                                     topic="Circuit Diagrams and Measurement",
+                                     def_useful=True)
     n801 = add_node("Series Parallel Combination", definition="", topic=topic_diagrams)
     add_synonym("Combination", node=n801)
     add_synonym("Bill", node=n801)
@@ -507,8 +525,8 @@ def populate():
     
     # Math words
     topic_math = add_vocab_topic(domain=circuits_domain,
-                    topic="Math",
-                    def_useful=True)
+                                 topic="Math",
+                                 def_useful=True)
     n901 = add_node("Net", definition="", topic=topic_math)
     add_synonym("Total", node=n901)
     add_synonym("Overall", node=n901)
@@ -519,8 +537,8 @@ def populate():
     
     # Units
     topic_units = add_vocab_topic(domain=circuits_domain,
-                    topic="Units",
-                    def_useful=True)
+                                  topic="Units",
+                                  def_useful=True)
     n1001 = add_node("Ohm", definition="", topic=topic_units)
     add_synonym("Ohms", node=n1001)
     
@@ -560,8 +578,8 @@ def populate():
     
     # Help
     topic_help = add_vocab_topic(domain=circuits_domain,
-                    topic="Help",
-                    def_useful=False)
+                                 topic="Help",
+                                 def_useful=False)
     n1101 = add_node("Help", definition="", topic=topic_help)
     
     # Add videos
@@ -573,6 +591,11 @@ def populate():
               video_link="http://www.youtube.com/embed/_o8M34NbXpk")
     add_video(name="How to measure Current and Voltage",
               video_link="http://www.youtube.com/embed/wLA6Wkb-TLQ")
+    add_video(name="How to measure Function Generator and Oscilloscope",
+              video_link="http://www.youtube.com/embed/uBm7veURIFk")
+    add_video(name="Safety Measures",
+              video_link="http://www.youtube.com/embed/Uck73jLjy7E")
+
 
     # Print out what we have added to the user.
     for vd in VocabDomain.objects.all():
@@ -585,11 +608,13 @@ def add_vocab_domain(name):
     return vd
 
 def add_vocab_topic(topic, domain, def_useful):
-    vt = VocabTopic.objects.get_or_create(topic=topic, domain=domain, def_useful=def_useful)[0]
+    vt = VocabTopic.objects.get_or_create(topic=topic, domain=domain,
+                                          def_useful=def_useful)[0]
     return vt
 
 def add_node(word, definition, topic):
-    n = Node.objects.get_or_create(word=word, definition=definition, topic=topic)[0]
+    n = Node.objects.get_or_create(word=word, definition=definition,
+                                   topic=topic)[0]
     return n
 
 def add_synonym(word, node):
@@ -604,5 +629,5 @@ def add_video(name, video_link):
 if __name__ == '__main__':
     print "Starting VOCAB DOMAIN population script..."
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'VLA_project.settings')
-    from VLA.models import *
+    from VLA.models import VocabDomain, VocabTopic, Node, Synonym, Video
     populate()
