@@ -1,7 +1,5 @@
 from django.contrib import admin
-from VLA.models import Course, Laboratory, Theory, TheoryElement, LabObjective, TheoryTestQuestion
-from VLA.models import TheoryTest, Simulation, SimulationElement, SimulationTest, SimulationTestQuestion, Hardware, HardwareElement, Results, ResultsQuestions, UserProfile
-from VLA.models import VocabDomain, VocabTopic, Node, Synonym, Video
+from VLA.models import *
 
 class SynonymInline(admin.StackedInline):
     model = Synonym
@@ -51,6 +49,13 @@ class SimulationQuestionInline(admin.StackedInline):
 
 class SimulationTestAdmin(admin.ModelAdmin):
     inlines = [SimulationQuestionInline]
+    
+class AnswerKeywordInline(admin.StackedInline):
+    model = AnswerKeyword
+    extra = 5
+
+class AnswerWithQuestionAdmin(admin.ModelAdmin):
+    inlines = [AnswerKeywordInline]
 
 admin.site.register(Course)
 admin.site.register(Laboratory, LabAdmin)
@@ -71,6 +76,11 @@ admin.site.register(VocabDomain)
 admin.site.register(VocabTopic)
 admin.site.register(Node,NodeAdmin)
 admin.site.register(Synonym)
+
+admin.site.register(Rulebase)
+admin.site.register(AnswerWithQuestion, AnswerWithQuestionAdmin)
+admin.site.register(AnswerElement)
+admin.site.register(AnswerKeyword)
 
 admin.site.register(Video)
 

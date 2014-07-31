@@ -7,22 +7,23 @@ from VLA.models import Laboratory, Course, UserProfile
 class UserForm(forms.ModelForm):
     username = forms.CharField(max_length=50, help_text="Please enter a username.")
     email = forms.CharField(help_text="Please enter your email.")
-    password1 = forms.CharField(max_length=50, widget=forms.PasswordInput(), help_text="Please enter a password.")
-    password2 = forms.CharField(max_length=50, widget=forms.PasswordInput(), help_text="Please re-enter your password.")
+    password = forms.CharField(max_length=50, widget=forms.PasswordInput(), help_text="Please enter a password.")
+    #password2 = forms.CharField(max_length=50, widget=forms.PasswordInput(), help_text="Please re-enter your password.")
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'password']
+        #fields = ['username', 'email', 'password1', 'password2']
     
     # Check if password1 and password2 are equal
-    def clean_password2(self):
-        password1 = self.cleaned_data.get('password1')
-        password2 = self.cleaned_data.get('password2')
+    #def clean_password2(self):
+    #    password1 = self.cleaned_data.get('password1')
+    #    password2 = self.cleaned_data.get('password2')
 
-        if not password2:
-            raise forms.ValidationError("You must confirm your password")
-        if password1 != password2:
-            raise forms.ValidationError("Your passwords do not match")
-        return password2
+    #    if not password2:
+    #        raise forms.ValidationError("You must confirm your password")
+    #    if password1 != password2:
+    #        raise forms.ValidationError("Your passwords do not match")
+    #    return password1
 
 # Creates a profile for the User with first name, last name, and TUid.
 # This profile information is used when generating a Word Document to

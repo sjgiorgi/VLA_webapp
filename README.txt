@@ -15,29 +15,26 @@
   ------------------
   
   LASTEST COMMIT:
+  - built Rulebase database
+  - implemented initial question search
+  
+  PREVIOUS COMMITS:
   - changed models for TheoryElement, SimulationElement, and HardwareElement (removed multiple Booleans, added choice list)
   - added password confirmation field to register page
   - added first name, last name, TUid field to register page
   - added instructional videos to help module
   - added YouTube page link to menu bar
   
-  PREVIOUS COMMITS:
-  - added initial script for populating Circuits course and Vocab Domain
-  - finished Theory Test and Simulation Test sections
-  - removed hardcoded URLs
-  - added 'completed section' buttons
-  - finished Vocab Domain database
-  - added definition search
-  
   TODO:
   - change 'VLA.* import' to more general import (remove VLA)
+  - fix password confirmation field
   - create user profiles / track user data 
   - fix image uploading for 'element' classes
   - add Results section
   - add Results Questions section
   - generate Word file
-  - make Rulebase database
-  - add Rulebase search
+  - add 'question category' to Rulebase 
+  - finish Rulebase search
   - finish python script for filling Vocab Domain and Rulebase database
   - finish python script for Ohms Law Lab
   - switch database to SQL
@@ -49,6 +46,8 @@
   - customize admin panel
   - create class="nav pull-left" to align Temple and CSNAP logo
   - add table option to TheoryElement, SimulationElement, and HardwareElement
+  - use South for porting databases
+  - 
 
   Documentation
   -------------

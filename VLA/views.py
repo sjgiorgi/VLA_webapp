@@ -1,3 +1,5 @@
+import re
+
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
@@ -11,6 +13,8 @@ def index(request):
     context_dict = {'cour_list': cour_list}
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
+    context_dict['question_searched'] = False
+    context_dict['question_list'] = AnswerWithQuestion.objects.all()
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:
@@ -21,6 +25,8 @@ def about(request):
     context_dict = {'cour_list': cour_list}
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
+    context_dict['question_searched'] = False
+    context_dict['question_list'] = AnswerWithQuestion.objects.all()
     if not request.user.is_authenticated():
         context_dict['logged_in'] = False
     else:
@@ -32,6 +38,8 @@ def course(request, course_name_url):
     context_dict = {'course_name': course_name, 'course_name_url': course_name_url}
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
+    context_dict['question_searched'] = False
+    context_dict['question_list'] = AnswerWithQuestion.objects.all()
     try:
         course = Course.objects.get(name=course_name)
         context_dict['course'] = course
@@ -55,6 +63,8 @@ def lab(request, course_name_url, lab_name_url):
     context_dict = {'lab_name': lab_name}
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
+    context_dict['question_searched'] = False
+    context_dict['question_list'] = AnswerWithQuestion.objects.all()
     try:
         course = Course.objects.get(name=course_name)
         lab = Laboratory.objects.filter(course=course).get(name=lab_name)
@@ -71,31 +81,7 @@ def lab(request, course_name_url, lab_name_url):
     else:
         return render(request, 'VLA/lab.html', context_dict)
 
-def theory(request, course_name_url, lab_name_url, theory_name_url):
-    lab_name = lab_name_url.replace('_', ' ')
-    course_name = course_name_url.replace('_', ' ')
-    theory_name = theory_name_url.replace('_', ' ')
-    context_dict = {'lab_name': lab_name}
-    context_dict['def_searched'] = False
-    context_dict['def_list'] = Node.objects.all()
-    try:
-        course = Course.objects.get(name=course_name)
-        lab = Laboratory.objects.filter(course=course).get(name=lab_name)
-        lab.url = lab_name_url
-        course.url = course_name_url
-        context_dict['lab'] = lab
-        context_dict['course'] = course
-        context_dict = get_sections(context_dict, lab)
-        context_dict['theory_elements'] = TheoryElement.objects.filter(theory=context_dict['theory'])
-    except Course.DoesNotExist:
-        pass
-    if not request.user.is_authenticated():
-        return render(request, 'VLA/login.html')
-    else:
-        if request.method == 'POST':
-            context_dict['theory'].is_completed = True
-            context_dict['theory'].save()
-        return render(request, 'VLA/theory.html', context_dict)
+
     
 def theorytest(request, course_name_url, lab_name_url, theorytest_name_url):
     lab_name = lab_name_url.replace('_', ' ')
@@ -104,6 +90,8 @@ def theorytest(request, course_name_url, lab_name_url, theorytest_name_url):
     context_dict = {'lab_name': lab_name}
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
+    context_dict['question_searched'] = False
+    context_dict['question_list'] = AnswerWithQuestion.objects.all()
     context_dict['questions_filled'] = True
     try:
         course = Course.objects.get(name=course_name)
@@ -117,6 +105,7 @@ def theorytest(request, course_name_url, lab_name_url, theorytest_name_url):
         context_dict['theorytest_questions'] = theorytest_questions
     except Course.DoesNotExist:
         pass
+    # If request is a POST, try to pull out relevant information.
     if request.method == 'POST':
         counter = 0
         for question in theorytest_questions:
@@ -148,6 +137,8 @@ def simulation(request, course_name_url, lab_name_url, simulation_name_url):
     context_dict = {'lab_name': lab_name}
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
+    context_dict['question_searched'] = False
+    context_dict['question_list'] = AnswerWithQuestion.objects.all()
     try:
         course = Course.objects.get(name=course_name)
         lab = Laboratory.objects.filter(course=course).get(name=lab_name)
@@ -162,6 +153,7 @@ def simulation(request, course_name_url, lab_name_url, simulation_name_url):
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:
+        # If request is a POST, try to pull out relevant information.
         if request.method == 'POST':
             context_dict['simulation'].is_completed = True
             context_dict['simulation'].save()
@@ -174,6 +166,8 @@ def simulationtest(request, course_name_url, lab_name_url, simulationtest_name_u
     context_dict = {'lab_name': lab_name}
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
+    context_dict['question_searched'] = False
+    context_dict['question_list'] = AnswerWithQuestion.objects.all()
     context_dict['questions_filled'] = True
     try:
         course = Course.objects.get(name=course_name)
@@ -187,6 +181,7 @@ def simulationtest(request, course_name_url, lab_name_url, simulationtest_name_u
         context_dict['simulationtest_questions'] = simulationtest_questions
     except Course.DoesNotExist:
         pass
+    # If request is a POST, try to pull out relevant information.
     if request.method == 'POST':
         counter = 0
         for question in simulationtest_questions:
@@ -216,6 +211,8 @@ def hardware(request, course_name_url, lab_name_url, hardware_name_url):
     context_dict = {'lab_name': lab_name}
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
+    context_dict['question_searched'] = False
+    context_dict['question_list'] = AnswerWithQuestion.objects.all()
     try:
         course = Course.objects.get(name=course_name)
         lab = Laboratory.objects.filter(course=course).get(name=lab_name)
@@ -230,6 +227,7 @@ def hardware(request, course_name_url, lab_name_url, hardware_name_url):
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:
+        # If request is a POST, try to pull out relevant information.
         if request.method == 'POST':
             context_dict['hardware'].is_completed = True
             context_dict['hardware'].save()
@@ -241,6 +239,8 @@ def results(request, course_name_url, lab_name_url):
     context_dict = {'lab_name': lab_name}
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
+    context_dict['question_searched'] = False
+    context_dict['question_list'] = AnswerWithQuestion.objects.all()
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:
@@ -252,6 +252,8 @@ def resultsquestions(request, course_name_url, lab_name_url):
     context_dict = {'lab_name': lab_name}
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
+    context_dict['question_searched'] = False
+    context_dict['question_list'] = AnswerWithQuestion.objects.all()
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:
@@ -263,6 +265,9 @@ def help(request):
     context_dict['def_searched'] = False
     context_dict['def_topics'] = get_vocab_topic_list()
     context_dict['def_list'] = Node.objects.all()
+    context_dict['question_searched'] = False
+    context_dict['question_topics'] = get_question_topic_list()
+    context_dict['question_list'] = AnswerWithQuestion.objects.all()
     videos = Video.objects.all()
     for video in videos:
         video.url = video.name.replace(' ', '_')
@@ -291,10 +296,32 @@ def vocab_topic(request, vocab_topic_name_url):
     context_dict['vocab_words'] = vocab_words
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
+    context_dict['question_searched'] = False
+    context_dict['question_list'] = AnswerWithQuestion.objects.all()
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:
         return render(request, 'VLA/vocabtopic.html', context_dict)
+    
+def question_topic(request, question_topic_name_url):
+    question_topic_list = get_question_topic_list()
+    context_dict = {'question_topic_list': question_topic_list}
+    question_topic_name = question_topic_name_url.replace('_', ' ')
+    context_dict['question_topic_name'] = question_topic_name
+    if question_topic_name == 'questionlist':
+        context_dict['question_topic_name'] = 'Question List'
+        question_topic = AnswerWithQuestion.objects.all().order_by('question')
+        for question in question_topic:
+            question.url = re.sub(r'([^\s\w]|_)+','', question.question).replace(' ', '_')
+        context_dict['question_topic'] = question_topic
+    context_dict['def_searched'] = False
+    context_dict['def_list'] = Node.objects.all()
+    context_dict['question_searched'] = False
+    context_dict['question_list'] = AnswerWithQuestion.objects.all()
+    if not request.user.is_authenticated():
+        return render(request, 'VLA/login.html')
+    else:
+        return render(request, 'VLA/questiontopic.html', context_dict)
 
 def definition(request, definition_name_url):
     definition_name = definition_name_url.replace('_', ' ')
@@ -304,11 +331,25 @@ def definition(request, definition_name_url):
     context_dict['definition'] = definition
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
+    context_dict['question_searched'] = False
+    context_dict['question_list'] = AnswerWithQuestion.objects.all()
     context_dict['vocab_topic_list'] = get_vocab_topic_list()
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:
         return render(request, 'VLA/definition.html', context_dict)
+    
+def question(request, question_name_url):
+    question_name = question_name_url.replace('_', ' ')
+    context_dict = {'question_name': question_name}
+    context_dict['def_searched'] = False
+    context_dict['def_list'] = Node.objects.all()
+    context_dict['question_searched'] = False
+    context_dict['question_list'] = AnswerWithQuestion.objects.all()
+    if not request.user.is_authenticated():
+        return render(request, 'VLA/login.html')
+    else:
+        return render(request, 'VLA/question.html', context_dict)
 
 def video(request, video_name_url):
     video_name = video_name_url.replace('_', ' ')
@@ -318,6 +359,8 @@ def video(request, video_name_url):
     context_dict['video'] = video
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
+    context_dict['question_searched'] = False
+    context_dict['question_list'] = AnswerWithQuestion.objects.all()
     context_dict['vocab_topic_list'] = get_vocab_topic_list()
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
@@ -329,7 +372,7 @@ def register(request):
     # Set to False initially. Code changes value to True when registration succeeds.
     registered = False
 
-    # If it's a HTTP POST, we're interested in processing form data.
+    # If request is a POST, try to pull out relevant information.
     if request.method == 'POST':
         # Attempt to grab information from the raw form information.
         # Note that we make use of both UserForm and UserProfileForm.
@@ -337,7 +380,7 @@ def register(request):
         profile_form = UserProfileForm(data=request.POST)
 
         # If the two forms are valid...
-        if user_form.is_valid(): #and profile_form.is_valid():
+        if user_form.is_valid() and profile_form.is_valid():
             # Save the user's form data to the database.
             user = user_form.save()
 
@@ -378,11 +421,10 @@ def register(request):
     # Render the template depending on the context.
     return render(request,
             'VLA/register.html',
-            #{'user_form': user_form, 'registered': registered})
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
 def user_login(request):
-    # If the request is a HTTP POST, try to pull out the relevant information.
+    # If request is a POST, try to pull out relevant information.
     if request.method == 'POST':
         # Gather the username and password provided by the user.
         # This information is obtained from the login form.
@@ -417,10 +459,6 @@ def user_login(request):
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render(request, 'VLA/login.html')
-
-@login_required
-def restricted(request):
-    return render(request, 'VLA/restricted.html')
 
 @login_required
 def user_logout(request):
@@ -468,6 +506,10 @@ def get_course_list():
     for cour in cour_list:
         cour.url = cour.name.replace(' ', '_')
     return cour_list
+
+def get_question_topic_list():
+    question_topic_list = []
+    return question_topic_list
 
 def get_vocab_topic_list():
     vocab_topic_list = VocabTopic.objects.filter(def_useful=True).order_by('topic')
@@ -535,7 +577,46 @@ def get_definition_list(max_results=0, starts_with=''):
         definition.url = definition.word.replace(' ', '_')
     
     return def_list
+
+def get_question_list(max_results=0, starts_with=''):
+    node_list = Node.objects.all()
+    exact_question = []
+    #suggested_question_list = []
+    def_list = []
+    keyword_node_list = []
+    for node in node_list:
+        def_list.append(node.word.lower())
     
+    if starts_with:
+        keywords = re.sub(r'[^a-zA-Z0-9]',' ', starts_with).lower().split()
+        for word in keywords:
+            if word in def_list:
+                keyword_node_list.append(word.lower())
+    
+    for answer in AnswerWithQuestion.objects.all():
+        answer_keywords = []
+        for keyword in AnswerKeyword.objects.filter(answer_with_question=answer):
+            answer_keywords.append(keyword.node.word.lower())
+        if set(answer_keywords) == set(keyword_node_list):
+            exact_question.append(answer)
+    
+    for answer in exact_question:
+        answer.url = re.sub(r'([^\s\w]|_)+','', answer.question).replace(' ', '_')
+        
+    return exact_question
+
+def suggest_question(request):
+    question_list = []
+    context_dict = {'question_searched': True}
+    #context_dict['question_list'] = question_list
+    starts_with = ''
+    if request.method == 'GET':
+        starts_with = request.GET['question_suggestion']
+
+    context_dict['question_list'] = get_question_list(8, starts_with)
+        
+    return render(request, 'VLA/question_list.html', context_dict)
+
 def suggest_definition(request):
     def_list = []
     context_dict = {'def_searched': True}
@@ -546,3 +627,49 @@ def suggest_definition(request):
     context_dict['def_list'] = get_definition_list(8, starts_with)
         
     return render(request, 'VLA/definition_list.html', context_dict)
+
+def replace_with_definitions(elements):
+    # get all useful definitions
+    topic_list = VocabTopic.objects.filter(def_useful=False)
+    def_list = Node.objects.all().exclude(topic__in=topic_list)
+    
+    # split text into list of words
+    for element in elements:
+        if element.element_type == 'text':
+            words = element.text_input.split()
+            for definition in def_list:
+                if definition.word in words:
+                    words = [w.replace(definition.word, definition.word) for w in words]
+                #words = [word.replace(word, 'aaa')]
+        # join words
+        joined_words = '--'.join(words)
+        element.text_input = joined_words
+    
+    return elements
+
+def theory(request, course_name_url, lab_name_url, theory_name_url):
+    lab_name = lab_name_url.replace('_', ' ')
+    course_name = course_name_url.replace('_', ' ')
+    theory_name = theory_name_url.replace('_', ' ')
+    context_dict = {'lab_name': lab_name}
+    context_dict['def_searched'] = False
+    context_dict['def_list'] = Node.objects.all()
+    try:
+        course = Course.objects.get(name=course_name)
+        lab = Laboratory.objects.filter(course=course).get(name=lab_name)
+        lab.url = lab_name_url
+        course.url = course_name_url
+        context_dict['lab'] = lab
+        context_dict['course'] = course
+        context_dict = get_sections(context_dict, lab)
+        context_dict['theory_elements'] = TheoryElement.objects.filter(theory=context_dict['theory'])
+    except Course.DoesNotExist:
+        pass
+    if not request.user.is_authenticated():
+        return render(request, 'VLA/login.html')
+    else:
+        # If request is a POST, try to pull out relevant information.
+        if request.method == 'POST':
+            context_dict['theory'].is_completed = True
+            context_dict['theory'].save()
+        return render(request, 'VLA/theory.html', context_dict)

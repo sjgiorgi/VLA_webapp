@@ -1,24 +1,20 @@
 {% extends 'VLA/base.html' %}
 
 {% block title %}VLA: Help{% endblock %}
-{% block sidetitle %}Definition Categories{% endblock %}
+{% block sidetitle %}Question Categories{% endblock %}
 {% block sidebar %}
-    {% include 'VLA/cat_section_list.html' with topics=vocab_topic_list %}
+    {% include 'VLA/question_section_list.html' with topics=vocab_topic_list %}
 {% endblock %}
 
 {% block body_block %}
 <div class="hero-unit">
-    <h1>{{ definition_name }}</h1><P>
+    <h1>{{ question_name }}?</h1><P>
     {% if definition %}
         <ul class="nav nav-list"class="nav nav-list">
        {{ definition.definition }}
         </ul>
-        {% if synonyms %}
-            <ul class="nav nav-list"class="nav nav-list">&nbsp;</ul>
-            <i>Synonyms:</i> {{ synonyms|join:", " }}
-        {% endif %}
     {% else %}
-    There is no definition for this word.
+    There is no answer for this question.
     {% endif %}
     <ul class="nav nav-list"class="nav nav-list">&nbsp;</ul>
     <a href="/VLA/help/">Go to Help</a>

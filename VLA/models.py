@@ -230,9 +230,9 @@ class VocabTopic(models.Model):
         return self.topic
     
 class Node(models.Model):
+    topic = models.ForeignKey(VocabTopic)
     word = models.CharField(max_length=128)
     definition = models.CharField(max_length=256)
-    topic = models.ForeignKey(VocabTopic)
     
     def __unicode__(self):
         return self.word
@@ -251,21 +251,50 @@ class Rulebase(models.Model):
     def __unicode__(self):
         return self.name
     
-class QuestionWithAnswer(models.Model):
+class AnswerWithQuestion(models.Model):
     rulebase = models.ForeignKey(Rulebase)
     question = models.CharField(max_length=128)
     
     def __unicode__(self):
         return self.question
-
-class Rule(models.Model):
-    question = models.ForeignKey(QuestionWithAnswer)
+    
+class AnswerElement(models.Model):
+    answer_with_question = models.ForeignKey(AnswerWithQuestion)
+    text_input = models.TextField(blank=True)
+    image_input = models.FileField(upload_to='static/', blank=True)
+    equation_input = models.CharField(max_length=64, blank=True)
+    TYPE_CHOICES = (
+        ('text', 'text'),
+        ('image', 'image'),
+        ('equation', 'equation'),
+        ('latex', 'latex'),
+        ('table', 'table'),
+    )
+    element_type = models.CharField(choices=TYPE_CHOICES, max_length=8)
+    
+    def __unicode__(self):
+        return self.answer_with_question.question
+    
+class AnswerKeyword(models.Model):
+    answer_with_question = models.ForeignKey(AnswerWithQuestion)
+    node = models.ForeignKey(Node)
+    
+    def __unicode__(self):
+        return self.node.word
 
 # Temporary class to display videos
 # Will be deleted once Rulebase is completed
 class Video(models.Model):
     name = models.CharField(max_length=128)
     video_link = models.CharField(max_length=128)
+    description = models.CharField(max_length=256)
     
     def __unicode__(self):
         return self.name
+    
+# Class for storing User Test answers
+#class StudentSitting(models.Model):
+#    user = models.ForeignKey(User)
+#    
+#    def __unicode__(self):
+#        return self.name

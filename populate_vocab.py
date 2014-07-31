@@ -584,17 +584,23 @@ def populate():
     
     # Add videos
     add_video(name="How to use a Breadboard",
-              video_link="http://www.youtube.com/embed/cf6XZ4gs7Ao")
+              video_link="http://www.youtube.com/embed/cf6XZ4gs7Ao",
+              description="")
     add_video(name="How to use a DC Power Supply",
-              video_link="http://www.youtube.com/embed/mOpCxeqXWEI")
+              video_link="http://www.youtube.com/embed/mOpCxeqXWEI",
+              description="")
     add_video(name="How to use a Multimeter",
-              video_link="http://www.youtube.com/embed/_o8M34NbXpk")
+              video_link="http://www.youtube.com/embed/_o8M34NbXpk",
+              description="")
     add_video(name="How to measure Current and Voltage",
-              video_link="http://www.youtube.com/embed/wLA6Wkb-TLQ")
+              video_link="http://www.youtube.com/embed/wLA6Wkb-TLQ",
+              description="")
     add_video(name="How to measure Function Generator and Oscilloscope",
-              video_link="http://www.youtube.com/embed/uBm7veURIFk")
+              video_link="http://www.youtube.com/embed/uBm7veURIFk",
+              description="")
     add_video(name="Safety Measures",
-              video_link="http://www.youtube.com/embed/Uck73jLjy7E")
+              video_link="http://www.youtube.com/embed/Uck73jLjy7E",
+              description="")
 
 
     # Print out what we have added to the user.
@@ -621,8 +627,9 @@ def add_synonym(word, node):
     s = Synonym.objects.get_or_create(word=word, node=node)[0]
     return s
 
-def add_video(name, video_link):
-    v = Video.objects.get_or_create(name=name, video_link=video_link)[0]
+def add_video(name, video_link, description):
+    v = Video.objects.get_or_create(name=name, video_link=video_link,
+                                    description=description)[0]
     return v
 
 # Start execution here!

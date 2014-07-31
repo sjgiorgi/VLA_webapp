@@ -11,9 +11,12 @@ urlpatterns = patterns('',
         url(r'^help/$', views.help, name='help'),
         
         # help module URLS
-        url(r'^help/(?P<vocab_topic_name_url>\w+)/$', views.vocab_topic, name='vocab_topic'),
+        url(r'^help/vocabtopic/(?P<vocab_topic_name_url>\w+)/$', views.vocab_topic, name='vocab_topic'),
+        url(r'^help/questiontopic/(?P<question_topic_name_url>\w+)/$', views.question_topic, name='question_topic'),
         url(r'^help/definition/(?P<definition_name_url>\w+)/$', views.definition, name='definition'),
+        url(r'^help/question/(?P<question_name_url>\w+)/$', views.question, name='question'),
         url(r'^suggest_definition/$', views.suggest_definition, name='suggest_definition'),
+        url(r'^suggest_question/$', views.suggest_question, name='suggest_question'),
         
         # temporary URL for adding videos
         url(r'^help/video/(?P<video_name_url>\w+)$', views.video, name='video'),

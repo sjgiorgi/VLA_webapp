@@ -47,24 +47,15 @@
 <div class="row-fluid">
     <div class="span6">
         <h2>Question Categories</h2>
-        {% if question_category %}
+        {% if question_topics %}
             <ul>
-                {% for category in question_category %}
-                    {% if category.category not in 'Problem Word' %}
-                        <li>{{ category.category }}</li>
-                    {% endif %}
+                {% for topic in question_topics %}
+                    <li><a href="{% url 'question_topic' topic.url %}">{{ topic.topic }}</a></li>
                 {% endfor %}
-            <li>How to use VLA</li>
-            <li>Instructional Videos</li>
-            <li>Theory</li>
-            <li>Safety</li>
-            <li>General</li>
-            <li>How to use Multisim</li>
-            <li>How to use CircuitLab.com</li>
-            <li>All Questions</li>
+                <li><a href="{% url 'question_topic' 'questionlist' %}">All Questions</a></li>
             </ul>
         {% else %}
-            <ul>No categories at present.</ul>
+            <ul><li><a href="{% url 'question_topic' 'questionlist' %}">All Questions</a></li></ul>
         {% endif %}
     </div>
     <!--/span-->
