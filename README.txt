@@ -35,9 +35,12 @@
   - generate Word file
   - add 'question category' to Rulebase 
   - finish Rulebase search
+    - include synonyms in search
+    - search for all subsets of input keywords
+    - search substrings of keywords (ex: 'res' for 'resistor')
   - finish python script for filling Vocab Domain and Rulebase database
   - finish python script for Ohms Law Lab
-  - switch database to SQL
+  - switch database to PostgreSQL
   - make help module app and VLA app separate
   - add 'views' to definitions and track number of times definition is viewed
   - make 'top 5 viewed definition' list on help page
@@ -47,7 +50,6 @@
   - create class="nav pull-left" to align Temple and CSNAP logo
   - add table option to TheoryElement, SimulationElement, and HardwareElement
   - use South for porting databases
-  - 
 
   Documentation
   -------------
