@@ -81,6 +81,7 @@ admin.site.register(Rulebase)
 admin.site.register(AnswerWithQuestion, AnswerWithQuestionAdmin)
 admin.site.register(AnswerElement)
 admin.site.register(AnswerKeyword)
+admin.site.register(AnswerTopic)
 
 admin.site.register(Video)
 

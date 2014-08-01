@@ -264,7 +264,24 @@ def help(request):
     context_dict = {'cour_list': cour_list}
     context_dict['def_searched'] = False
     context_dict['def_topics'] = get_vocab_topic_list()
-    context_dict['def_list'] = Node.objects.all()
+    
+    # get most viewed definitions and questions
+    top_def_list = Node.objects.order_by('-views')[:5]
+    for definition in top_def_list:
+        definition.url = definition.word.replace(' ', '_')
+    context_dict['top_def_list'] = top_def_list
+    top_question_list = AnswerWithQuestion.objects.order_by('-views')[:5]
+    for question in top_question_list:
+        question.url = re.sub(r'([^\s\w]|_)+','', question.question).replace(' ', '_')
+    context_dict['top_question_list'] = top_question_list
+    
+    # get recently added definitions and questions
+    topic_list = VocabTopic.objects.filter(def_useful=False)
+    recent_def_list = Node.objects.all().exclude(topic__in=topic_list).order_by('-date_added')[:5]
+    for definition in recent_def_list:
+        definition.url = definition.word.replace(' ', '_')
+    context_dict['recent_def_list'] = recent_def_list
+    
     context_dict['question_searched'] = False
     context_dict['question_topics'] = get_question_topic_list()
     context_dict['question_list'] = AnswerWithQuestion.objects.all()
@@ -314,6 +331,24 @@ def question_topic(request, question_topic_name_url):
         for question in question_topic:
             question.url = re.sub(r'([^\s\w]|_)+','', question.question).replace(' ', '_')
         context_dict['question_topic'] = question_topic
+    else:
+        if question_topic_name == 'General':
+            question_topic = AnswerWithQuestion.objects.filter(topic=1).order_by('question')
+        elif question_topic_name == 'Safety':
+            question_topic = AnswerWithQuestion.objects.filter(topic=2).order_by('question')
+        elif question_topic_name == 'Equipment':
+            question_topic = AnswerWithQuestion.objects.filter(topic=3).order_by('question')
+        elif question_topic_name == 'VLA':
+            question_topic = AnswerWithQuestion.objects.filter(topic=4).order_by('question')
+        elif question_topic_name == 'Simulation':
+            question_topic = AnswerWithQuestion.objects.filter(topic=5).order_by('question')
+        elif question_topic_name == 'Hardware':
+            question_topic = AnswerWithQuestion.objects.filter(topic=6).order_by('question')
+        elif question_topic_name == 'Theory':
+            question_topic = AnswerWithQuestion.objects.filter(topic=7).order_by('question')
+        for question in question_topic:
+            question.url = re.sub(r'([^\s\w]|_)+','', question.question).replace(' ', '_')
+        context_dict['question_topic'] = question_topic
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
     context_dict['question_searched'] = False
@@ -334,6 +369,9 @@ def definition(request, definition_name_url):
     context_dict['question_searched'] = False
     context_dict['question_list'] = AnswerWithQuestion.objects.all()
     context_dict['vocab_topic_list'] = get_vocab_topic_list()
+    if request.method == 'GET':
+        definition.views = definition.views + 1
+        definition.save()
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:
@@ -342,10 +380,15 @@ def definition(request, definition_name_url):
 def question(request, question_name_url):
     question_name = question_name_url.replace('_', ' ')
     context_dict = {'question_name': question_name}
+    question = AnswerWithQuestion.objects.get(question=question_name+'?')
+    context_dict['question'] = question
     context_dict['def_searched'] = False
     context_dict['def_list'] = Node.objects.all()
     context_dict['question_searched'] = False
     context_dict['question_list'] = AnswerWithQuestion.objects.all()
+    if request.method == 'GET':
+        question.views = question.views + 1
+        question.save()
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:
@@ -366,6 +409,23 @@ def video(request, video_name_url):
         return render(request, 'VLA/login.html')
     else:
         return render(request, 'VLA/video.html', context_dict)
+    
+def track_url(request):
+    context = RequestContext(request)
+    page_id = None
+    url = '/VLA/'
+    if request.method == 'GET':
+        if 'page_id' in request.GET:
+            page_id = request.GET['page_id']
+            try:
+                page = Page.objects.get(id=page_id)
+                page.views = page.views + 1
+                page.save()
+                url = page.url
+            except:
+                pass
+
+    return redirect(url)
 
 def register(request):
     # A boolean value for telling the template whether the registration was successful.
@@ -508,14 +568,17 @@ def get_course_list():
     return cour_list
 
 def get_question_topic_list():
-    question_topic_list = []
+    question_topic_list = AnswerTopic.objects.all().order_by('topic')
+    for topic in question_topic_list:
+        topic.url = topic.topic.replace(' ', '_')
+        
     return question_topic_list
 
 def get_vocab_topic_list():
     vocab_topic_list = VocabTopic.objects.filter(def_useful=True).order_by('topic')
-
     for topic in vocab_topic_list:
         topic.url = topic.topic.replace(' ', '_')
+        
     return vocab_topic_list
 
 def get_sections(context_dict, lab):

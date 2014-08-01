@@ -1,4 +1,5 @@
 import os
+from django.utils import timezone
 
 '''
 Script to populate the complete Vocabulary Domain Database for Circuits
@@ -449,9 +450,9 @@ def populate():
     add_synonym("Kirchoffs", node=n702)
     add_synonym("Kircho", node=n702)
     
-    n703 = add_node("Thevenin Law", definition="", topic=topic_laws)
+    n703 = add_node("Thevenins Law", definition="", topic=topic_laws)
     
-    n704 = add_node("Norton Law", definition="", topic=topic_laws)
+    n704 = add_node("Nortons Law", definition="", topic=topic_laws)
     
     n705 = add_node("Max Power Transfer", definition="", topic=topic_laws)
     add_synonym("Power Transfer", node=n705)
@@ -602,7 +603,61 @@ def populate():
               video_link="http://www.youtube.com/embed/Uck73jLjy7E",
               description="")
 
-
+    # add rulebase
+    rb = add_rulebase(name='Circuits')
+    
+    # add answer topics
+    general = add_answer_topic(rulebase=rb, topic='General')
+    safety = add_answer_topic(rulebase=rb, topic='Safety')
+    equipment = add_answer_topic(rulebase=rb, topic='Equipment')
+    VLA = add_answer_topic(rulebase=rb, topic='VLA')
+    simulation = add_answer_topic(rulebase=rb, topic='Simulation')
+    hardware = add_answer_topic(rulebase=rb, topic='Hardware')
+    theory = add_answer_topic(rulebase=rb, topic='Theory')
+    
+    # add answers with questions
+    awq1 = add_answer_with_question(rulebase=rb,
+                                    topic=theory,
+                                    question="What is a capacitor?")
+    add_answer_keyword(answer_with_question=awq1,
+                       node=n302)
+    add_answer_keyword(answer_with_question=awq1,
+                       node=n102)
+    
+    awq2 = add_answer_with_question(rulebase=rb,
+                                    topic=theory,
+                                    question="What is a resistor?")
+    add_answer_keyword(answer_with_question=awq2,
+                       node=n302)
+    add_answer_keyword(answer_with_question=awq2,
+                       node=n101)
+    
+    awq3 = add_answer_with_question(rulebase=rb,
+                                    topic=theory,
+                                    question="What is an inductor?")
+    add_answer_keyword(answer_with_question=awq3,
+                       node=n302)
+    add_answer_keyword(answer_with_question=awq3,
+                       node=n103)
+    
+    awq4 = add_answer_with_question(rulebase=rb,
+                                    topic=equipment,
+                                    question="How to use a multimeter?")
+    add_answer_keyword(answer_with_question=awq4,
+                       node=n301)
+    add_answer_keyword(answer_with_question=awq4,
+                       node=n204)
+    add_answer_keyword(answer_with_question=awq4,
+                       node=n105)
+    
+    awq5 = add_answer_with_question(rulebase=rb,
+                                    topic=theory,
+                                    question="What is a superposition?")
+    add_answer_keyword(answer_with_question=awq5,
+                       node=n302)
+    add_answer_keyword(answer_with_question=awq5,
+                       node=n709)
+    
     # Print out what we have added to the user.
     for vd in VocabDomain.objects.all():
         for vt in VocabTopic.objects.filter(domain=vd):
@@ -618,9 +673,10 @@ def add_vocab_topic(topic, domain, def_useful):
                                           def_useful=def_useful)[0]
     return vt
 
-def add_node(word, definition, topic):
+def add_node(word, definition, topic, views=0):
     n = Node.objects.get_or_create(word=word, definition=definition,
-                                   topic=topic)[0]
+                                   topic=topic, views=views,
+                                   date_added=timezone.now())[0]
     return n
 
 def add_synonym(word, node):
@@ -632,9 +688,33 @@ def add_video(name, video_link, description):
                                     description=description)[0]
     return v
 
+# Add Rulebase, answers, answer topics, etc.
+def add_rulebase(name):
+    rb = Rulebase.objects.get_or_create(name=name)[0]
+    return rb
+
+def add_answer_with_question(rulebase, topic, question, views=0):
+    awq = AnswerWithQuestion.objects.get_or_create(rulebase=rulebase,
+                                                   topic=topic,
+                                                   question=question,
+                                                   views=views,
+                                                   date_added=timezone.now())[0]
+    return awq
+
+def add_answer_topic(rulebase, topic):
+    at = AnswerTopic.objects.get_or_create(rulebase=rulebase,
+                                           topic=topic)[0]
+    return at
+
+def add_answer_keyword(answer_with_question, node):
+    ak = AnswerKeyword.objects.get_or_create(answer_with_question=answer_with_question,
+                                             node=node)[0]
+    return ak
+
 # Start execution here!
 if __name__ == '__main__':
     print "Starting VOCAB DOMAIN population script..."
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'VLA_project.settings')
     from VLA.models import VocabDomain, VocabTopic, Node, Synonym, Video
+    from VLA.models import Rulebase, AnswerWithQuestion, AnswerTopic, AnswerElement, AnswerKeyword
     populate()

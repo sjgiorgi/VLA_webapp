@@ -17,6 +17,11 @@
   LASTEST COMMIT:
   - built Rulebase database
   - implemented initial question search
+  - added 'views' to definitions/questions
+  - track number of times definition/question is viewed and present top 5 on Help page
+  - added 'date_added' to definitions/questions
+  - present top 5 recent definitions/questions on Help page
+  - added Answer topics
   
   PREVIOUS COMMITS:
   - changed models for TheoryElement, SimulationElement, and HardwareElement (removed multiple Booleans, added choice list)
@@ -42,7 +47,6 @@
   - finish python script for Ohms Law Lab
   - switch database to PostgreSQL
   - make help module app and VLA app separate
-  - add 'views' to definitions and track number of times definition is viewed
   - make 'top 5 viewed definition' list on help page
   - include mathjax.js instead of url (in base.html)
   - allow Course, Lab, etc. names to include symbols (example: Ohm's Law)

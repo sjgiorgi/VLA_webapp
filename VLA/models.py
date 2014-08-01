@@ -233,6 +233,8 @@ class Node(models.Model):
     topic = models.ForeignKey(VocabTopic)
     word = models.CharField(max_length=128)
     definition = models.CharField(max_length=256)
+    views = models.IntegerField(default=0)
+    date_added = models.DateTimeField('date added')
     
     def __unicode__(self):
         return self.word
@@ -250,10 +252,29 @@ class Rulebase(models.Model):
     
     def __unicode__(self):
         return self.name
+  
+class AnswerTopic(models.Model):
+    rulebase = models.ForeignKey(Rulebase)
+    TYPE_CHOICES = (
+        ('Safety', 'Safety'),
+        ('Equipment', 'Equipment'),
+        ('VLA', 'VLA'),
+        ('Simulation', 'Simulation'),
+        ('Hardware', 'Hardware'),
+        ('Theory', 'Theory'),
+        ('General', 'General'),
+    )
+    topic = models.CharField(choices=TYPE_CHOICES, max_length=10)
     
+    def __unicode__(self):
+        return self.topic
+  
 class AnswerWithQuestion(models.Model):
     rulebase = models.ForeignKey(Rulebase)
+    topic = models.ManyToManyField(AnswerTopic)
     question = models.CharField(max_length=128)
+    views = models.IntegerField(default=0)
+    date_added = models.DateTimeField('date added')
     
     def __unicode__(self):
         return self.question
@@ -269,6 +290,7 @@ class AnswerElement(models.Model):
         ('equation', 'equation'),
         ('latex', 'latex'),
         ('table', 'table'),
+        ('video', 'video'),
     )
     element_type = models.CharField(choices=TYPE_CHOICES, max_length=8)
     

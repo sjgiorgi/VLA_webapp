@@ -15,6 +15,14 @@ $(document).ready(function() {
          $('#ques').html(data);
         });
     });
+    
+    $('#question_suggestion2').keyup(function(){
+        var query;
+        query = $(this).val();
+        $.get('/VLA/suggest_question/', {question_suggestion: query}, function(data){
+         $('#ques2').html(data);
+        });
+    });
 
 });
 
