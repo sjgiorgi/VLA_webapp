@@ -15,6 +15,12 @@
   ------------------
   
   LASTEST COMMIT:
+  - fully commented views.py
+  - fixed bugs found by Zach
+    - Size of green check marks
+    - Selecting 'Yes' at end of Theory, Simulation, and Hardware sections now working
+  
+  PREVIOUS COMMITS:
   - built Rulebase database
   - implemented initial question search
   - added 'views' to definitions/questions
@@ -23,14 +29,8 @@
   - present top 5 recent definitions/questions on Help page
   - added Answer topics
   
-  PREVIOUS COMMITS:
-  - changed models for TheoryElement, SimulationElement, and HardwareElement (removed multiple Booleans, added choice list)
-  - added password confirmation field to register page
-  - added first name, last name, TUid field to register page
-  - added instructional videos to help module
-  - added YouTube page link to menu bar
-  
   TODO:
+  - add 'video' option for TheoryElement, SimulationElement, and HardElement
   - change 'VLA.* import' to more general import (remove VLA)
   - fix password confirmation field
   - create user profiles / track user data 
@@ -54,6 +54,18 @@
   - create class="nav pull-left" to align Temple and CSNAP logo
   - add table option to TheoryElement, SimulationElement, and HardwareElement
   - use South for porting databases
+  - add user panel
+
+USABILITY IMPROVEMENTS:
+  - Do something to fill white space on larger pages (Consider having the side bar scroll down with the page)
+  - Make about page better (Add pictures, change formatting)
+  - Fix alignment along top bar
+  - Redirect /vla/ to /VLA/ to reduce 404s
+  - Reduce uneven or unsymmetrical white space
+  - Analyze good ranking websites to get a good idea of what constitutes good design
+    - See: BitBucket top bar, Facebook/YouTube white space management, icon placement, etc. 
+    - List of high ranking websites: http://www.alexa.com/topsites
+
 
   Documentation
   -------------

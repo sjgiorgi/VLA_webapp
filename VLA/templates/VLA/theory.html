@@ -27,7 +27,7 @@
     {% endif %}
     
     {% if not theory.is_completed %}
-        <form method="post" action="{% url 'theorytest' course.url lab.url theory.url %}">
+        <form method="post" action="{% url 'theory' course.url lab.url theory.url %}">
             {% csrf_token %}
             <h2>Are you finished with the Theory? <input class="btn btn-primary" type="submit" name="submit" value="Yes"/></h2>
         </form>

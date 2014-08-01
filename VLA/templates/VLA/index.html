@@ -10,7 +10,7 @@
     {% else %}
         <h1>Hello, please log in.</h1>
     {% endif %}
-    
+    <ul class="nav nav-list">&nbsp;</ul>
     <img src="{% static 'VLA/images/main_image.jpg' %}"><br>
     {% if user.is_authenticated %}
         Please select a course from the list on the left.

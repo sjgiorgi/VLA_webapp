@@ -21,7 +21,7 @@
                 <li>{{ question.question }}</li>
                 {% if question.answer_one %}
                     {%  if question.correct_answer_number == 1 and question.given_answer == 1 %}
-                        <font color="#009900" size=6> &#x2713; </font>{{ question.answer_one }}
+                        <font color="#009900"> &#x2713; </font>{{ question.answer_one }}
                     {% elif question.correct_answer_number != 1 and question.given_answer == 1 %}
                         <font color="993333"> &#x2717;</font> {{ question.answer_one }}
                     {% else %}
@@ -61,7 +61,7 @@
                     {% endif %}
                 {% else %}
                     {% if question.incorrect_response %}
-                        <h2>Incorrect: {{ question.incorrect_response }}</h2>
+                        <h3>Incorrect: {{ question.incorrect_response }}</h3>
                     {% endif %}
                 {% endif %}
             {% endfor %}
