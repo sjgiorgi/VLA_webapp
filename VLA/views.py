@@ -262,8 +262,6 @@ def resultsquestions(request, course_name_url, lab_name_url):
 def help(request):
     cour_list = get_course_list()
     context_dict = {'cour_list': cour_list}
-    context_dict['def_searched'] = False
-    context_dict['def_topics'] = get_vocab_topic_list()
     
     # get most viewed definitions and questions
     top_def_list = Node.objects.order_by('-views')[:5]
@@ -282,6 +280,9 @@ def help(request):
         definition.url = definition.word.replace(' ', '_')
     context_dict['recent_def_list'] = recent_def_list
     
+    context_dict['def_searched'] = False
+    context_dict['def_list'] = Node.objects.all()
+    context_dict['def_topics'] = get_vocab_topic_list()
     context_dict['question_searched'] = False
     context_dict['question_topics'] = get_question_topic_list()
     context_dict['question_list'] = AnswerWithQuestion.objects.all()
@@ -380,6 +381,7 @@ def definition(request, definition_name_url):
 def question(request, question_name_url):
     question_name = question_name_url.replace('_', ' ')
     context_dict = {'question_name': question_name}
+    context_dict['question_topic_list'] = get_question_topic_list()
     question = AnswerWithQuestion.objects.get(question=question_name+'?')
     context_dict['question'] = question
     context_dict['def_searched'] = False
