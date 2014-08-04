@@ -634,6 +634,11 @@ def populate():
                        node=what_node)
     add_answer_keyword(answer_with_question=awq1,
                        node=capacitor_node)
+    add_answer_element(answer_with_question=awq1,
+                       text_input="",
+                       image_input=None,
+                       equation_input="",
+                       element_type="")
     
     awq2 = add_answer_with_question(rulebase=rb,
                                     question="What is a resistor?")
@@ -730,6 +735,16 @@ def add_answer_keyword(answer_with_question, node):
     ak = AnswerKeyword.objects.get_or_create(answer_with_question=answer_with_question,
                                              node=node)[0]
     return ak
+
+# element_type must be one of: 'text', 'image', 'equation', 'latex', 'video', 'table'
+def add_answer_element(answer_with_question, name, number, text_input, image_input,
+                         equation_input, element_type):
+    ae = AnswerElement.objects.get_or_create(answer_with_question=answer_with_question,
+                                             text_input=text_input,
+                                             image_input=image_input,
+                                             equation_input=equation_input,
+                                             element_type=element_type)[0]
+    return ae
 
 # Start execution here!
 if __name__ == '__main__':

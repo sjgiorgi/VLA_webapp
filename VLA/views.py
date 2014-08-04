@@ -102,6 +102,7 @@ def lab(request, course_name_url, lab_name_url):
         lab.url = lab_name_url
         context_dict['lab'] = lab
         context_dict['objectives'] = LabObjective.objects.filter(lab=lab)
+        context_dict['equipment'] = LabEquipment.objects.filter(lab=lab)
         
         # Display lab sections in sidebar
         context_dict = get_sections(context_dict, lab)

@@ -60,6 +60,7 @@ class AnswerWithQuestionAdmin(admin.ModelAdmin):
 admin.site.register(Course)
 admin.site.register(Laboratory, LabAdmin)
 admin.site.register(LabObjective)
+admin.site.register(LabEquipment)
 admin.site.register(TheoryElement)
 admin.site.register(Theory, TheoryAdmin)
 admin.site.register(TheoryTest, TheoryTestAdmin)

@@ -62,6 +62,17 @@ def populate():
                       objective="Determine the slope of an IV curve.")
     add_lab_objective(lab=ohms_law,
                       objective="Become more familiar with the use of the analog VOM and digital DMM.")
+    
+    add_lab_equipment(lab=ohms_law,
+                      equipment="1 - 1 k&#937; Resistor")
+    add_lab_equipment(lab=ohms_law,
+                      equipment="1 - 3.3 k&#937; Resistor")
+    add_lab_equipment(lab=ohms_law,
+                      equipment="Digital Multimeter (DMM)")
+    add_lab_equipment(lab=ohms_law,
+                      equipment="DC Power Supply")
+    add_lab_equipment(lab=ohms_law,
+                      equipment="Volt-Ohm-Milliampere Meter (VOM)")
 
     # Ohms law theory
     ohms_law_theory = add_theory(lab=ohms_law, name="Ohms Law Theory")
@@ -197,6 +208,10 @@ def add_lab(course, name, start_date, due_date, lab_number):
 def add_lab_objective(lab, objective):
     lo = LabObjective.objects.get_or_create(lab=lab, objective=objective)[0]
     return lo
+
+def add_lab_equipment(lab, equipment):
+    le = LabEquipment.objects.get_or_create(lab=lab, equipment=equipment)[0]
+    return le
 
 def add_theory(lab, name):
     t = Theory.objects.get_or_create(lab=lab, name=name)[0]

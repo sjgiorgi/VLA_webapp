@@ -59,6 +59,13 @@ class LabObjective(models.Model):
     
     def __unicode__(self):
         return self.objective
+    
+class LabEquipment(models.Model):
+    lab = models.ForeignKey(Laboratory)
+    equipment = models.CharField(max_length=128)
+    
+    def __unicode__(self):
+        return self.equipment
 
 # The following classes are needed for each Laboratory  
 class Theory(models.Model):

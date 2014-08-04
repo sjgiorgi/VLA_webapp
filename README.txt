@@ -15,19 +15,14 @@
   ------------------
   
   LASTEST COMMIT:
+  - added equipment to Laboratory
+  - added powerset search for Q&A
+  
+  PREVIOUS COMMITS:
   - fully commented views.py
   - fixed bugs found by Zach
     - Size of green check marks
     - Selecting 'Yes' at end of Theory, Simulation, and Hardware sections now working
-  
-  PREVIOUS COMMITS:
-  - built Rulebase database
-  - implemented initial question search
-  - added 'views' to definitions/questions
-  - track number of times definition/question is viewed and present top 5 on Help page
-  - added 'date_added' to definitions/questions
-  - present top 5 recent definitions/questions on Help page
-  - added Answer topics
   
   TODO:
   - add 'video' option for TheoryElement, SimulationElement, and HardElement
