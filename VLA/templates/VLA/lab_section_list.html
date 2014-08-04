@@ -1,5 +1,5 @@
-<ul class="nav nav-list">
-    <ul class="nav nav-list"class="nav nav-list">
+
+    <ul class="nav nav-list">
         {% if theory %}<li><a href="{% url 'theory' course.url lab.url theory.url %}">Theory
             {% if theory.is_completed %}<font color="#009900"> &#x2713; </font>{% else %}<font color="993333"> &#x2717;</font>{% endif %} </a></li>{% endif %}
         {% if theorytest %}<li><a href="{% url 'theorytest' course.url lab.url theorytest.url %}">Theory Test
@@ -16,4 +16,12 @@
             {% if results_questions.is_completed %}<font color="#009900"> &#x2713; </font>{% else %}<font color="993333"> &#x2717;</font>{% endif %} </a></li>{% endif %}
         
     </ul>
-</ul>
+    {% if lab.start_date %}
+    <ul class="nav nav-list">&nbsp;</ul>
+    <b>Assigned date:</b><ul class="nav nav-list">{{ lab.start_date }}</ul>
+    {% endif %}
+    {% if lab.due_date %}
+    <b>Due Date:</b><ul class="nav nav-list"> {{ lab.due_date }}</ul>
+    {% endif %}
+    <ul class="nav nav-list">&nbsp;</ul>
+    <a href="/VLA/course/{{ course.url }}/">Return to Lab list</a>

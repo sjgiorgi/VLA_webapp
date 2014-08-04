@@ -123,14 +123,20 @@
     {% endif %}
     <P>
     {% endif %}
-    
-    {% if theory %}<a href="{% url 'theory' course.url lab.url theory.url %}">Go to Theory</a>
-    {% endif %}
-    {% if simulation %}
-        <ul class="nav pull-right">
-            <a href="{% url 'simulation' course.url lab.url simulation.url %}">Go to Simulation</a>
-        </ul>
-    {% endif %}
+    <div class="row-fluid">
+        {% if theory %}
+            <div class="span6">
+                <a class="btn" href="{% url 'theory' course.url lab.url theory.url %}">Go to Theory</a>
+            </div>
+        {% endif %}
+        {% if simulation %}
+            <div class="span6">
+                <ul class="nav pull-right">
+                    <a class="btn" href="{% url 'simulation' course.url lab.url simulation.url %}">Go to Simulation</a>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
 </div>
 
 

@@ -141,7 +141,7 @@ def theory(request, course_name_url, lab_name_url, theory_name_url):
     
     # Get Laboratory, lab sections, and theory elements
     try:
-        lab = Laboratory.objects.filter(course=course).order_by('lab_number')
+        lab = Laboratory.objects.filter(course=course).get(name=lab_name)
         lab.url = lab_name_url
         context_dict['lab'] = lab
         context_dict = get_sections(context_dict, lab)
@@ -524,20 +524,7 @@ def question_topic(request, question_topic_name_url):
             question.url = re.sub(r'([^\s\w]|_)+','', question.question).replace(' ', '_')
         context_dict['question_topic'] = question_topic
     else:
-        if question_topic_name == 'General':
-            question_topic = AnswerWithQuestion.objects.filter(topic=1).order_by('question')
-        elif question_topic_name == 'Safety':
-            question_topic = AnswerWithQuestion.objects.filter(topic=2).order_by('question')
-        elif question_topic_name == 'Equipment':
-            question_topic = AnswerWithQuestion.objects.filter(topic=3).order_by('question')
-        elif question_topic_name == 'VLA':
-            question_topic = AnswerWithQuestion.objects.filter(topic=4).order_by('question')
-        elif question_topic_name == 'Simulation':
-            question_topic = AnswerWithQuestion.objects.filter(topic=5).order_by('question')
-        elif question_topic_name == 'Hardware':
-            question_topic = AnswerWithQuestion.objects.filter(topic=6).order_by('question')
-        elif question_topic_name == 'Theory':
-            question_topic = AnswerWithQuestion.objects.filter(topic=7).order_by('question')
+        question_topic = AnswerWithQuestion.objects.filter(topic__topic=question_topic_name).order_by('question')
         for question in question_topic:
             question.url = re.sub(r'([^\s\w]|_)+','', question.question).replace(' ', '_')
         context_dict['question_topic'] = question_topic
@@ -728,6 +715,7 @@ def user_login(request):
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render(request, 'VLA/login.html')
+    
 
 @login_required
 def user_logout(request):
@@ -836,6 +824,7 @@ def get_definition_list(max_results=0, starts_with=''):
 def get_question_list(max_results=0, starts_with=''):
     node_list = Node.objects.all()
     exact_question = []
+    possible_questions = []
     #suggested_question_list = []
     def_list = []
     keyword_node_list = []
@@ -854,11 +843,22 @@ def get_question_list(max_results=0, starts_with=''):
             answer_keywords.append(keyword.node.word.lower())
         if set(answer_keywords) == set(keyword_node_list):
             exact_question.append(answer)
+        power = powerset(keyword_node_list)
+        for subset in power:
+            if subset and (set(answer_keywords) != set(keyword_node_list)) and set(subset).issubset(set(answer_keywords)):
+                possible_questions.append(answer)
+    
+     # Use set() to remove duplicates
+    possible_questions = set(possible_questions)
     
     for answer in exact_question:
         answer.url = re.sub(r'([^\s\w]|_)+','', answer.question).replace(' ', '_')
         
-    return exact_question
+    for answer in possible_questions:
+        answer.url = re.sub(r'([^\s\w]|_)+','', answer.question).replace(' ', '_')
+        
+    return {'exact_question': exact_question,
+            'possible_questions': possible_questions}
 
 # Used in definition search
 # Set searched flag to True
@@ -909,6 +909,16 @@ def replace_with_definitions(elements):
         element.text_input = joined_words
     
     return elements
+
+# Returns all the subsets of the generator
+def powerset(generator):
+    if len(generator) <= 1:
+        yield generator
+        yield []
+    else:
+        for item in powerset(generator[1:]):
+            yield [generator[0]]+item
+            yield item
 
 ###
 #def GenerateDocument(request):

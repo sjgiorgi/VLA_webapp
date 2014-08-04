@@ -315,8 +315,8 @@ class Video(models.Model):
         return self.name
     
 # Class for storing User Test answers
-#class StudentSitting(models.Model):
-#    user = models.ForeignKey(User)
-#    
-#    def __unicode__(self):
-#        return self.name
+class StudentSitting(models.Model):
+    user = models.ForeignKey(User)
+    
+    def __unicode__(self):
+        return self.name

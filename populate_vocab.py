@@ -29,18 +29,18 @@ def populate():
                     topic="Circuit Elements and Equipment",
                     def_useful=True)
     
-    n101 = add_node("Resistor",
+    resistor_node = add_node("Resistor",
                     definition="A resistor is a passive two-terminal electrical component that implements electrical resistance " +
                     "as a circuit element. Resistors act to reduce current flow, and, at the same time, act to lower voltage " +
                     "levels within circuits. Resistors may have fixed resistances or variable resistances, such as those found " +
                     "in thermistors, varistors, trimmers, photoresistors, humistors, piezoresistors and potentiometers.",
                     topic=topic_elements)
-    add_synonym("Res", node=n101)
-    add_synonym("R", node=n101)
-    add_synonym("Ohm", node=n101)
-    add_synonym("Conductor", node=n101)
+    add_synonym("Res", node=resistor_node)
+    add_synonym("R", node=resistor_node)
+    add_synonym("Ohm", node=resistor_node)
+    add_synonym("Conductor", node=resistor_node)
     
-    n102 = add_node("Capacitor",
+    capacitor_node = add_node("Capacitor",
                     definition="A capacitor (originally known as a condenser) is a passive two-terminal electrical component used " +
                     "to store energy electrostatically in an electric field. The forms of practical capacitors vary widely, " +
                     "but all contain at least two electrical conductors (plates) separated by a dielectric (i.e., insulator). " +
@@ -49,33 +49,33 @@ def populate():
                     "Capacitors are widely used as parts of electrical circuits in many common electrical devices. Unlike a " +
                     "resistor, an ideal capacitor does not dissipate energy. Instead, a capacitor stores energy in the form of an electrostatic field between its plates.",
                     topic=topic_elements)
-    add_synonym("Cap", node=n102)
-    add_synonym("F", node=n102)
-    add_synonym("Farad", node=n102)
+    add_synonym("Cap", node=capacitor_node)
+    add_synonym("F", node=capacitor_node)
+    add_synonym("Farad", node=capacitor_node)
     
-    n103 = add_node("Inductor",
+    inductor_node = add_node("Inductor",
                     definition="An inductor, also called a coil or reactor, is a passive two-terminal electrical component which " +
                     "resists changes in electric current passing through it. It consists of a conductor such as a wire, usually " +
                     "wound into a coil. When a current flows through it, energy is stored temporarily in a magnetic field in the " +
                     "coil. When the current flowing through an inductor changes, the time-varying magnetic field induces a voltage " +
                     "in the conductor, according to Faraday's law of electromagnetic induction, which opposes the change in current that created it.",
                     topic=topic_elements)
-    add_synonym("Ind", node=n103)
-    add_synonym("L", node=n103)
-    add_synonym("Henry", node=n103)
-    add_synonym("H", node=n103)
+    add_synonym("Ind", node=inductor_node)
+    add_synonym("L", node=inductor_node)
+    add_synonym("Henry", node=inductor_node)
+    add_synonym("H", node=inductor_node)
     
-    n104 = add_node("DC Source",
-                    definition="",
-                    topic=topic_elements)
-    add_synonym("DC Supply", node=n104)
-    add_synonym("Supply", node=n104)
-    add_synonym("Source", node=n104)
-    add_synonym("DCS", node=n104)
-    add_synonym("Battery", node=n104)
-    add_synonym("Cell", node=n104)
+    dc_source_node = add_node("DC Source",
+                              definition="",
+                              topic=topic_elements)
+    add_synonym("DC Supply", node=dc_source_node)
+    add_synonym("Supply", node=dc_source_node)
+    add_synonym("Source", node=dc_source_node)
+    add_synonym("DCS", node=dc_source_node)
+    add_synonym("Battery", node=dc_source_node)
+    add_synonym("Cell", node=dc_source_node)
     
-    n105 = add_node("Multimeter",
+    multimeter_node = add_node("Multimeter",
                     definition="A multimeter or a multitester, also known as a VOM (Volt-Ohm meter), is an electronic measuring instrument " +
                     "that combines several measurement functions in one unit. A typical multimeter would include basic features such " +
                     "as the ability to measure voltage, current, and resistance. Analog multimeters use a microammeter whose pointer moves " +
@@ -84,37 +84,37 @@ def populate():
                     "multimeters are now far more common than analog ones, but analog multimeters are still preferable in some cases, for " +
                     "example when monitoring a rapidly varying value.",
                     topic=topic_elements)
-    add_synonym("Voltmeter", node=n105)
-    add_synonym("Ammeter", node=n105)
-    add_synonym("Ohmmeter", node=n105)
-    add_synonym("Meter", node=n105)
-    add_synonym("Multim", node=n105)
+    add_synonym("Voltmeter", node=multimeter_node)
+    add_synonym("Ammeter", node=multimeter_node)
+    add_synonym("Ohmmeter", node=multimeter_node)
+    add_synonym("Meter", node=multimeter_node)
+    add_synonym("Multim", node=multimeter_node)
     
-    n106 = add_node("Function Generator",
+    func_gen_node = add_node("Function Generator",
                     definition="A function generator is usually a piece of electronic test equipment or software used to generate different " +
                     "types of electrical waveforms over a wide range of frequencies. Some of the most common waveforms produced by the " +
                     "function generator are the sine, square, triangular and sawtooth shapes. These waveforms can be either repetitive or " +
                     "single-shot (which requires an internal or external trigger source). Integrated circuits used to generate waveforms " +
                     "may also be described as function generator ICs.",
                     topic=topic_elements)
-    add_synonym("AC Supply", node=n106)
-    add_synonym("Generator", node=n106)
-    add_synonym("AC Source", node=n106)
-    add_synonym("Func Gen", node=n106)
+    add_synonym("AC Supply", node=func_gen_node)
+    add_synonym("Generator", node=func_gen_node)
+    add_synonym("AC Source", node=func_gen_node)
+    add_synonym("Func Gen", node=func_gen_node)
     
-    n107 = add_node("Oscilloscope",
+    oscilloscope_node = add_node("Oscilloscope",
                     definition="An oscilloscope, previously called an oscillograph, and informally known as a scope, CRO (for " +
                     "cathode-ray oscilloscope), or DSO (for the more modern digital storage oscilloscope), is a type of " +
                     "electronic test instrument that allows observation of constantly varying signal voltages, usually as a " +
                     "two-dimensional plot of one or more signals as a function of time. Non-electrical signals (such as sound " +
                     "or vibration) can be converted to voltages and displayed.",
                     topic=topic_elements)
-    add_synonym("Oscope", node=n107)
-    add_synonym("Display", node=n107)
-    add_synonym("CRT", node=n107)
-    add_synonym("Cathode", node=n107)
+    add_synonym("Oscope", node=oscilloscope_node)
+    add_synonym("Display", node=oscilloscope_node)
+    add_synonym("CRT", node=oscilloscope_node)
+    add_synonym("Cathode", node=oscilloscope_node)
     
-    n108 = add_node("Spectrum Analyzer",
+    spect_anal_node = add_node("Spectrum Analyzer",
                     definition="A spectrum analyzer measures the magnitude of an input signal versus frequency within the full " +
                     "frequency range of the instrument. The primary use is to measure the power of the spectrum of known and " +
                     "unknown signals. The input signal that a spectrum analyzer measures is electrical, however, spectral " +
@@ -122,12 +122,12 @@ def populate():
                     "through the use of an appropriate transducer. Optical spectrum analyzers also exist, which use direct optical " +
                     "techniques such as a monochromator to make measurements.",
                     topic=topic_elements)
-    add_synonym("Spectrum", node=n108)
-    add_synonym("Analyzer", node=n108)
-    add_synonym("Sweep", node=n108)
-    add_synonym("SA", node=n108)
+    add_synonym("Spectrum", node=spect_anal_node)
+    add_synonym("Analyzer", node=spect_anal_node)
+    add_synonym("Sweep", node=spect_anal_node)
+    add_synonym("SA", node=spect_anal_node)
     
-    n109 = add_node("Diode",
+    diode_node = add_node("Diode",
                     definition="In electronics, a diode is a two-terminal electronic component with asymmetric conductance; it has " +
                     "low (ideally zero) resistance to current in one direction, and high (ideally infinite) resistance in the other. " +
                     "A semiconductor diode, the most common type today, is a crystalline piece of semiconductor material with a p-n " +
@@ -137,25 +137,25 @@ def populate():
                     "called cat's whisker diodes, developed around 1906, were made of mineral crystals such as galena. Today, most " +
                     "diodes are made of silicon, but other semiconductors such as selenium or germanium are sometimes used.",
                     topic=topic_elements)
-    add_synonym("Rectifier", node=n109)
-    add_synonym("Semiconductor", node=n109)
-    add_synonym("Junction", node=n109)
+    add_synonym("Rectifier", node=diode_node)
+    add_synonym("Semiconductor", node=diode_node)
+    add_synonym("Junction", node=diode_node)
     
-    n110 = add_node("Wire",
+    wire_node = add_node("Wire",
                     definition="",
                     topic=topic_elements)
-    add_synonym("Cable", node=n110)
-    add_synonym("Line", node=n110)
-    add_synonym("Short", node=n110)
-    add_synonym("Connector", node=n110)
+    add_synonym("Cable", node=wire_node)
+    add_synonym("Line", node=wire_node)
+    add_synonym("Short", node=wire_node)
+    add_synonym("Connector", node=wire_node)
     
-    n111 = add_node("Potentiometer",
+    potentiometer_node = add_node("Potentiometer",
                     definition="A potentiometer, informally a pot, is a three-terminal resistor with a sliding or rotating contact " +
                     "that forms an adjustable voltage divider. If only two terminals are used, one end and the wiper, it acts as a " +
                     "variable resistor or rheostat.",
                     topic=topic_elements)
     
-    n112 = add_node("Element",
+    element_node = add_node("Element",
                     definition="Electrical elements are conceptual abstractions representing idealized electrical components, such as " +
                     "resistors, capacitors, and inductors, used in the analysis of electrical networks. Any electrical network can " +
                     "be analysed as multiple, interconnected electrical elements in a schematic diagram or circuit diagram, each of " +
@@ -165,22 +165,22 @@ def populate():
                     "a degree of uncertainty in their values and some degree of nonlinearity, each of which may require a combination of " +
                     "multiple electrical elements in order to approximate its function.",
                     topic=topic_elements)
-    add_synonym("Component", node=n112)
-    add_synonym("Entity", node=n112)
-    add_synonym("Instrument", node=n112)
-    add_synonym("Device", node=n112)
+    add_synonym("Component", node=element_node)
+    add_synonym("Entity", node=element_node)
+    add_synonym("Instrument", node=element_node)
+    add_synonym("Device", node=element_node)
     
-    n113 = add_node("Breadboard",
+    breadboard_node = add_node("Breadboard",
                     definition="A breadboard (or protoboard) is usually a construction base for prototyping of electronics. The term " +
                     "'breadboard' is commonly used to refer to a solderless breadboard (plugboard).",
                     topic=topic_elements)
-    add_synonym("Board", node=n113)
+    add_synonym("Board", node=breadboard_node)
     
-    n114 = add_node("Switch",
+    switch_node = add_node("Switch",
                     definition="In electrical engineering, a switch is an electrical component that can break an electrical circuit, interrupting the current or diverting it from one conductor to another.",
                     topic=topic_elements)
     
-    n115 = add_node("Transistor",
+    transistor_node = add_node("Transistor",
                     definition="A transistor is a semiconductor device used to amplify and switch electronic signals and electrical power. " +
                     "It is composed of semiconductor material with at least three terminals for connection to an external circuit. A " +
                     "voltage or current applied to one pair of the transistor's terminals changes the current through another pair of " +
@@ -188,9 +188,9 @@ def populate():
                     "can amplify a signal. Today, some transistors are packaged individually, but many more are found embedded in " +
                     "integrated circuits.",
                     topic=topic_elements)
-    add_synonym("BJT", node=n115)
+    add_synonym("BJT", node=transistor_node)
     
-    n116 = add_node("Ammeter",
+    ammeter_node = add_node("Ammeter",
                     definition="An ammeter is a measuring instrument used to measure the electric current in a circuit. Electric " +
                     "currents are measured in amperes (A), hence the name. Instruments used to measure smaller currents, in the " +
                     "milliampere or microampere range, are designated as milliammeters or microammeters. Early ammeters were laboratory " +
@@ -199,13 +199,13 @@ def populate():
                     "power systems.",
                     topic=topic_elements)
     
-    n117 = add_node("Voltmeter",
+    voltmeter_node = add_node("Voltmeter",
                     definition="A voltmeter is an instrument used for measuring electrical potential difference between two points in " +
                     "an electric circuit. Analog voltmeters move a pointer across a scale in proportion to the voltage of the " +
                     "circuit; digital voltmeters give a numerical display of voltage by use of an analog to digital converter.",
                     topic=topic_elements)
     
-    n118 = add_node("Ohmmeter",
+    ohmmeter_node = add_node("Ohmmeter",
                     definition="An ohmmeter is an electrical instrument that measures electrical resistance, the opposition to an " +
                     "electric current. Micro-ohmmeters (microhmmeter or microohmmeter) make low resistance measurements. Megohmmeters " +
                     "(aka megaohmmeter or in the case of a trademarked device Megger) measure large values of resistance. The " +
@@ -216,372 +216,383 @@ def populate():
     topic_action = add_vocab_topic(domain=circuits_domain,
                     topic="Action Words",
                     def_useful=False)
-    n201 = add_node("Measure", definition="", topic=topic_action)
-    add_synonym("Know", node=n201)
-    add_synonym("Get", node=n201)
-    add_synonym("See", node=n201)
-    add_synonym("Take", node=n201)
-    add_synonym("Find", node=n201)
-    add_synonym("Quantify", node=n201)
-    add_synonym("Need", node=n201)
-    add_synonym("Bill", node=n201)
+    measure_node = add_node("Measure", definition="", topic=topic_action)
+    add_synonym("Know", node=measure_node)
+    add_synonym("Get", node=measure_node)
+    add_synonym("See", node=measure_node)
+    add_synonym("Take", node=measure_node)
+    add_synonym("Find", node=measure_node)
+    add_synonym("Quantify", node=measure_node)
+    add_synonym("Need", node=measure_node)
+    add_synonym("Bill", node=measure_node)
     
-    n202 = add_node("Compute", definition="", topic=topic_action)
-    add_synonym("Calculate", node=n202)
-    add_synonym("Evaluate", node=n202)
-    add_synonym("Build", node=n202)
-    add_synonym("Verify", node=n202)
-    add_synonym("Formula", node=n202)
+    compute_node = add_node("Compute", definition="", topic=topic_action)
+    add_synonym("Calculate", node=compute_node)
+    add_synonym("Evaluate", node=compute_node)
+    add_synonym("Build", node=compute_node)
+    add_synonym("Verify", node=compute_node)
+    add_synonym("Formula", node=compute_node)
     
-    n203 = add_node("Change", definition="", topic=topic_action)
-    add_synonym("Set", node=n203)
-    add_synonym("Reverse", node=n203)
-    add_synonym("Tune", node=n203)
-    add_synonym("Vary", node=n203)
+    change_node = add_node("Change", definition="", topic=topic_action)
+    add_synonym("Set", node=change_node)
+    add_synonym("Reverse", node=change_node)
+    add_synonym("Tune", node=change_node)
+    add_synonym("Vary", node=change_node)
     
-    n204 = add_node("Use", definition="", topic=topic_action)
-    add_synonym("Place", node=n204)
-    add_synonym("Connect", node=n204)
-    add_synonym("Create", node=n204)
-    add_synonym("Drag Drop", node=n204)
-    add_synonym("Bill", node=n204)
+    use_node = add_node("Use", definition="", topic=topic_action)
+    add_synonym("Place", node=use_node)
+    add_synonym("Connect", node=use_node)
+    add_synonym("Create", node=use_node)
+    add_synonym("Drag Drop", node=use_node)
+    add_synonym("Bill", node=use_node)
     
-    n205 = add_node("Move", definition="", topic=topic_action)
+    move_node = add_node("Move", definition="", topic=topic_action)
     
-    n206 = add_node("Remove", definition="", topic=topic_action)
-    add_synonym("Erase", node=n206)
-    add_synonym("Delete", node=n206)
-    add_synonym("Take Off", node=n206)
-    add_synonym("Eliminate", node=n206)
-    add_synonym("Clear", node=n206)
+    remove_node = add_node("Remove", definition="", topic=topic_action)
+    add_synonym("Erase", node=remove_node)
+    add_synonym("Delete", node=remove_node)
+    add_synonym("Take Off", node=remove_node)
+    add_synonym("Eliminate", node=remove_node)
+    add_synonym("Clear", node=remove_node)
     
-    n207 = add_node("Save", definition="", topic=topic_action)
+    save_node = add_node("Save", definition="", topic=topic_action)
     
-    n208 = add_node("Open", definition="", topic=topic_action)
+    open_node = add_node("Open", definition="", topic=topic_action)
     
-    n209 = add_node("Work", definition="", topic=topic_action)
-    add_synonym("Does", node=n209)
-    add_synonym("Define", node=n209)
-    add_synonym("Definition", node=n209)
-    add_synonym("Mean", node=n209)
-    add_synonym("Signify", node=n209)
-    add_synonym("Understand", node=n209)
-    add_synonym("Whats", node=n209)
-    add_synonym("Whys", node=n209)
-    add_synonym("Hows", node=n209)
-    add_synonym("Wheres", node=n209)
-    add_synonym("Do", node=n209)
-    add_synonym("Is", node=n209)
-    add_synonym("Be", node=n209)
-    add_synonym("Are", node=n209)
-    add_synonym("This", node=n209)
-    add_synonym("That", node=n209)
-    add_synonym("Bill", node=n209)
+    work_node = add_node("Work", definition="", topic=topic_action)
+    add_synonym("Does", node=work_node)
+    add_synonym("Define", node=work_node)
+    add_synonym("Definition", node=work_node)
+    add_synonym("Mean", node=work_node)
+    add_synonym("Signify", node=work_node)
+    add_synonym("Understand", node=work_node)
+    add_synonym("Whats", node=work_node)
+    add_synonym("Whys", node=work_node)
+    add_synonym("Hows", node=work_node)
+    add_synonym("Wheres", node=work_node)
+    add_synonym("Do", node=work_node)
+    add_synonym("Is", node=work_node)
+    add_synonym("Be", node=work_node)
+    add_synonym("Are", node=work_node)
+    add_synonym("This", node=work_node)
+    add_synonym("That", node=work_node)
+    add_synonym("Bill", node=work_node)
+    
+    read_node = add_node("Read", definition="", topic=topic_action)
     
     # Question Words
     topic_question = add_vocab_topic(domain=circuits_domain,
                                     topic="Question Words",
                                     def_useful=False)
-    n301 = add_node("How", definition="", topic=topic_question)
-    add_synonym("Hows", node=n301)
-    add_synonym("Howz", node=n301)
+    how_node = add_node("How", definition="", topic=topic_question)
+    add_synonym("Hows", node=how_node)
+    add_synonym("Howz", node=how_node)
     
-    n302 = add_node("What", definition="", topic=topic_question)
-    add_synonym("Whats", node=n302)
-    add_synonym("Whatz", node=n302)
+    what_node = add_node("What", definition="", topic=topic_question)
+    add_synonym("Whats", node=what_node)
+    add_synonym("Whatz", node=what_node)
     
-    n303 = add_node("Why", definition="", topic=topic_question)
-    add_synonym("Whys", node=n303)
-    add_synonym("Whyz", node=n303)
+    why_node = add_node("Why", definition="", topic=topic_question)
+    add_synonym("Whys", node=why_node)
+    add_synonym("Whyz", node=why_node)
     
-    n304 = add_node("When", definition="", topic=topic_question)
-    add_synonym("Whens", node=n304)
-    add_synonym("Whenz", node=n304)
+    when_node = add_node("When", definition="", topic=topic_question)
+    add_synonym("Whens", node=when_node)
+    add_synonym("Whenz", node=when_node)
     
     # Problem Words
     topic_problems = add_vocab_topic(domain=circuits_domain,
                                     topic="Problem Words",
                                     def_useful=False)
-    n401 = add_node("Wrong", definition="", topic=topic_problems)
-    add_synonym("Incorrect", node=n401)
-    add_synonym("Not Correct", node=n401)
-    add_synonym("Error", node=n401)
-    add_synonym("Mistake", node=n401)
-    add_synonym("Not Right", node=n401)
-    add_synonym("Not", node=n401)
-    add_synonym("Fault", node=n401)
-    add_synonym("Do Not", node=n401)
-    add_synonym("Dont", node=n401)
-    add_synonym("Cant", node=n401)
-    add_synonym("Cannot", node=n401)
-    add_synonym("Cant", node=n401)
-    add_synonym("Doesnt", node=n401)
-    add_synonym("Isnt", node=n401)
+    wrong_node = add_node("Wrong", definition="", topic=topic_problems)
+    add_synonym("Incorrect", node=wrong_node)
+    add_synonym("Not Correct", node=wrong_node)
+    add_synonym("Error", node=wrong_node)
+    add_synonym("Mistake", node=wrong_node)
+    add_synonym("Not Right", node=wrong_node)
+    add_synonym("Not", node=wrong_node)
+    add_synonym("Fault", node=wrong_node)
+    add_synonym("Do Not", node=wrong_node)
+    add_synonym("Dont", node=wrong_node)
+    add_synonym("Cant", node=wrong_node)
+    add_synonym("Cannot", node=wrong_node)
+    add_synonym("Cant", node=wrong_node)
+    add_synonym("Doesnt", node=wrong_node)
+    add_synonym("Isnt", node=wrong_node)
     
     # Circuit Concepts
     topic_concepts = add_vocab_topic(domain=circuits_domain,
                                     topic="Circuit Concepts",
                                     def_useful=True)
-    n501 = add_node("Voltage", definition="", topic=topic_concepts)
-    add_synonym("Volt", node=n501)
-    add_synonym("Volts", node=n501)
-    add_synonym("V", node=n501)
-    add_synonym("Potential", node=n501)
-    add_synonym("PD", node=n501)
-    add_synonym("KVL", node=n501)
+    voltage_node = add_node("Voltage", definition="", topic=topic_concepts)
+    add_synonym("Volt", node=voltage_node)
+    add_synonym("Volts", node=voltage_node)
+    add_synonym("V", node=voltage_node)
+    add_synonym("Potential", node=voltage_node)
+    add_synonym("PD", node=voltage_node)
+    add_synonym("KVL", node=voltage_node)
     
-    n502 = add_node("Current", definition="", topic=topic_concepts)
-    add_synonym("Amp", node=n502)
-    add_synonym("Amps", node=n502)
-    add_synonym("Ampere", node=n502)
-    add_synonym("KCL", node=n502)
-    add_synonym("DC", node=n502)
-    add_synonym("AC", node=n502)
+    current_node = add_node("Current", definition="", topic=topic_concepts)
+    add_synonym("Amp", node=current_node)
+    add_synonym("Amps", node=current_node)
+    add_synonym("Ampere", node=current_node)
+    add_synonym("KCL", node=current_node)
+    add_synonym("DC", node=current_node)
+    add_synonym("AC", node=current_node)
     
-    n503 = add_node("Resistance", definition="", topic=topic_concepts)
-    add_synonym("Ohm", node=n503)
-    add_synonym("Ohms", node=n503)
+    resistance_node = add_node("Resistance", definition="", topic=topic_concepts)
+    add_synonym("Ohm", node=resistance_node)
+    add_synonym("Ohms", node=resistance_node)
     
-    n504 = add_node("Capacitance", definition="", topic=topic_concepts)
-    add_synonym("Farad", node=n504)
-    add_synonym("F", node=n504)
+    capacitance_node = add_node("Capacitance", definition="", topic=topic_concepts)
+    add_synonym("Farad", node=capacitance_node)
+    add_synonym("F", node=capacitance_node)
     
-    n505 = add_node("Inductance", definition="", topic=topic_concepts)
-    add_synonym("Henry", node=n505)
-    add_synonym("H", node=n505)
+    inductance_node = add_node("Inductance", definition="", topic=topic_concepts)
+    add_synonym("Henry", node=inductance_node)
+    add_synonym("H", node=inductance_node)
     
-    n506 = add_node("Power", definition="", topic=topic_concepts)
-    add_synonym("Watt", node=n506)
-    add_synonym("W", node=n506)
+    power_node = add_node("Power", definition="", topic=topic_concepts)
+    add_synonym("Watt", node=power_node)
+    add_synonym("W", node=power_node)
     
-    n507 = add_node("Time", definition="", topic=topic_concepts)
-    add_synonym("Term", node=n507)
-    add_synonym("Second", node=n507)
-    add_synonym("MS", node=n507)
-    add_synonym("S", node=n507)
+    time_node = add_node("Time", definition="", topic=topic_concepts)
+    add_synonym("Term", node=time_node)
+    add_synonym("Second", node=time_node)
+    add_synonym("MS", node=time_node)
+    add_synonym("S", node=time_node)
     
-    n508 = add_node("Frequency", definition="", topic=topic_concepts)
-    add_synonym("Hetz", node=n508)
-    add_synonym("CPS", node=n508)
-    add_synonym("Hz", node=n508)
+    frequency_node = add_node("Frequency", definition="", topic=topic_concepts)
+    add_synonym("Hetz", node=frequency_node)
+    add_synonym("CPS", node=frequency_node)
+    add_synonym("Hz", node=frequency_node)
     
-    n509 = add_node("Waveform", definition="", topic=topic_concepts)
-    add_synonym("Wave", node=n509)
-    add_synonym("Crest", node=n509)
-    add_synonym("Trough", node=n509)
-    add_synonym("Sine", node=n509)
-    add_synonym("Sinusoid", node=n509)
-    add_synonym("Square", node=n509)
+    waveform_node = add_node("Waveform", definition="", topic=topic_concepts)
+    add_synonym("Wave", node=waveform_node)
+    add_synonym("Crest", node=waveform_node)
+    add_synonym("Trough", node=waveform_node)
+    add_synonym("Sine", node=waveform_node)
+    add_synonym("Sinusoid", node=waveform_node)
+    add_synonym("Square", node=waveform_node)
     
-    n510 = add_node("Amplitude", definition="", topic=topic_concepts)
-    add_synonym("Value", node=n510)
-    add_synonym("Magnitude", node=n510)
-    add_synonym("Reading", node=n510)
-    add_synonym("Entry", node=n510)
-    add_synonym("Meter", node=n510)
-    add_synonym("Metre", node=n510)
-    add_synonym("Y", node=n510)
+    amplitude_node = add_node("Amplitude", definition="", topic=topic_concepts)
+    add_synonym("Value", node=amplitude_node)
+    add_synonym("Magnitude", node=amplitude_node)
+    add_synonym("Reading", node=amplitude_node)
+    add_synonym("Entry", node=amplitude_node)
+    add_synonym("Meter", node=amplitude_node)
+    add_synonym("Metre", node=amplitude_node)
+    add_synonym("Y", node=amplitude_node)
     
-    n511 = add_node("Reactance", definition="", topic=topic_concepts)
-    add_synonym("XC", node=n511)
-    add_synonym("XL", node=n511)
+    reactance_node = add_node("Reactance", definition="", topic=topic_concepts)
+    add_synonym("XC", node=reactance_node)
+    add_synonym("XL", node=reactance_node)
     
-    n512 = add_node("Impedance", definition="", topic=topic_concepts)
-    add_synonym("Z", node=n512)
+    impedance_node = add_node("Impedance", definition="", topic=topic_concepts)
+    add_synonym("Z", node=impedance_node)
     
-    n513 = add_node("Conductance", definition="", topic=topic_concepts)
-    add_synonym("G", node=n513)
-    add_synonym("Mho", node=n513)
-    add_synonym("Mhos", node=n513)
+    conductance_node = add_node("Conductance", definition="", topic=topic_concepts)
+    add_synonym("G", node=conductance_node)
+    add_synonym("Mho", node=conductance_node)
+    add_synonym("Mhos", node=conductance_node)
     
-    n514 = add_node("Energy", definition="", topic=topic_concepts)
-    add_synonym("Joule", node=n514)
-    add_synonym("J", node=n514)
+    energy_node = add_node("Energy", definition="", topic=topic_concepts)
+    add_synonym("Joule", node=energy_node)
+    add_synonym("J", node=energy_node)
     
-    n515 = add_node("Cycle", definition="", topic=topic_concepts)
+    cycle_node = add_node("Cycle", definition="", topic=topic_concepts)
     
-    n516 = add_node("Period", definition="", topic=topic_concepts)
+    period_node = add_node("Period", definition="", topic=topic_concepts)
     
-    n517 = add_node("Wavelength", definition="", topic=topic_concepts)
-    add_synonym("Wave Length", node=n517)
+    wabelength_node = add_node("Wavelength", definition="", topic=topic_concepts)
+    add_synonym("Wave Length", node=wabelength_node)
     
-    n518 = add_node("Circuit", definition="", topic=topic_concepts)
-    add_synonym("Loop", node=n518)
+    circuit_node = add_node("Circuit", definition="", topic=topic_concepts)
+    add_synonym("Loop", node=circuit_node)
     
-    n519 = add_node("Button", definition="", topic=topic_concepts)
+    button_node = add_node("Button", definition="", topic=topic_concepts)
     
-    n520 = add_node("Phasor", definition="", topic=topic_concepts)
+    phasor_node = add_node("Phasor", definition="", topic=topic_concepts)
     
-    n521 = add_node("Phase", definition="", topic=topic_concepts)
-    add_synonym("Angle", node=n521)
+    phase_node = add_node("Phase", definition="", topic=topic_concepts)
+    add_synonym("Angle", node=phase_node)
     
     # Other
     topic_other = add_vocab_topic(domain=circuits_domain,
                                   topic="Other",
                                   def_useful=True)
-    n601 = add_node("Positive", definition="", topic=topic_other)
+    positive_node = add_node("Positive", definition="", topic=topic_other)
     
-    n602 = add_node("Negative", definition="", topic=topic_other)
+    negative_node = add_node("Negative", definition="", topic=topic_other)
     
-    n603 = add_node("Polarity", definition="", topic=topic_other)
-    add_synonym("Sign", node=n603)
+    polarity_node = add_node("Polarity", definition="", topic=topic_other)
+    add_synonym("Sign", node=polarity_node)
     
-    n604 = add_node("Law", definition="", topic=topic_other)
-    add_synonym("Rule", node=n603)
-    add_synonym("Principle", node=n603)
-    add_synonym("Theorem", node=n603)
+    law_node = add_node("Law", definition="", topic=topic_other)
+    add_synonym("Rule", node=law_node)
+    add_synonym("Principle", node=law_node)
+    add_synonym("Theorem", node=law_node)
     
-    n605 = add_node("Gain", definition="", topic=topic_other)
+    gain_node = add_node("Gain", definition="", topic=topic_other)
     
-    n606 = add_node("Loss", definition="", topic=topic_other)
+    loss_node = add_node("Loss", definition="", topic=topic_other)
     
-    n607 = add_node("Division", definition="", topic=topic_other)
+    division_node = add_node("Division", definition="", topic=topic_other)
     
-    n608 = add_node("Unit", definition="", topic=topic_other)
+    unit_node = add_node("Unit", definition="", topic=topic_other)
+    
+    color_code_node = add_node("Color Code", definition="", topic=topic_other)
+    add_synonym("Colorcode", node=color_code_node)
+    add_synonym("Color", node=color_code_node)
     
     # Circuit Laws
     topic_laws = add_vocab_topic(domain=circuits_domain,
                                  topic="Circuit Laws",
                                  def_useful=True)
-    n701 = add_node("Ohms Law", definition="", topic=topic_laws)
-    add_synonym("Ohmic", node=n701)
+    ohms_law_node = add_node("Ohms Law", definition="", topic=topic_laws)
+    add_synonym("Ohmic", node=ohms_law_node)
     
-    n702 = add_node("Kirchoffs Law", definition="", topic=topic_laws)
-    add_synonym("Kirchoffs", node=n702)
-    add_synonym("Kircho", node=n702)
+    kirchoffs_node = add_node("Kirchoffs Law", definition="", topic=topic_laws)
+    add_synonym("Kirchoffs", node=kirchoffs_node)
+    add_synonym("Kirchoff", node=kirchoffs_node)
+    add_synonym("Kircho", node=kirchoffs_node)
     
-    n703 = add_node("Thevenins Law", definition="", topic=topic_laws)
+    thevenin_node = add_node("Thevenins Law", definition="", topic=topic_laws)
+    add_synonym("Thevenins", node=thevenin_node)
+    add_synonym("Thevenin", node=thevenin_node)
     
-    n704 = add_node("Nortons Law", definition="", topic=topic_laws)
+    norton_node = add_node("Nortons Law", definition="", topic=topic_laws)
+    add_synonym("Nortons", node=norton_node)
+    add_synonym("Norton", node=norton_node)
     
-    n705 = add_node("Max Power Transfer", definition="", topic=topic_laws)
-    add_synonym("Power Transfer", node=n705)
+    max_power_node = add_node("Max Power Transfer", definition="", topic=topic_laws)
+    add_synonym("Power Transfer", node=max_power_node)
     
-    n706 = add_node("Node", definition="", topic=topic_laws)
-    add_synonym("Nodes", node=n706)
+    node_node = add_node("Node", definition="", topic=topic_laws)
+    add_synonym("Nodes", node=node_node)
     
-    n707 = add_node("Conservation", definition="", topic=topic_laws)
+    conservation_node = add_node("Conservation", definition="", topic=topic_laws)
     
-    n708 = add_node("Transformation", definition="", topic=topic_laws)
-    add_synonym("Conversion", node=n708)
+    transformation_node = add_node("Transformation", definition="", topic=topic_laws)
+    add_synonym("Conversion", node=transformation_node)
     
-    n709 = add_node("Superposition", definition="", topic=topic_laws)
-    add_synonym("Super Position", node=n709)
+    superposition_node = add_node("Superposition", definition="", topic=topic_laws)
+    add_synonym("Super Position", node=superposition_node)
     
-    n710 = add_node("Linear", definition="", topic=topic_laws)
+    linear_node = add_node("Linear", definition="", topic=topic_laws)
     
-    n711 = add_node("Nonlinear", definition="", topic=topic_laws)
-    add_synonym("Non Linear", node=n711)
+    nonlinear_node = add_node("Nonlinear", definition="", topic=topic_laws)
+    add_synonym("Non Linear", node=nonlinear_node)
     
-    n712 = add_node("Variable", definition="", topic=topic_laws)
+    variable_node = add_node("Variable", definition="", topic=topic_laws)
     
-    n713 = add_node("Direct Current", definition="", topic=topic_laws)
-    add_synonym("DC", node=n713)
+    dc_node = add_node("Direct Current", definition="", topic=topic_laws)
+    add_synonym("DC", node=dc_node)
     
-    n714 = add_node("Alternating Current", definition="", topic=topic_laws)
-    add_synonym("AC", node=n714)
-    add_synonym("Alternate", node=n714)
+    ac_node = add_node("Alternating Current", definition="", topic=topic_laws)
+    add_synonym("AC", node=ac_node)
+    add_synonym("Alternate", node=ac_node)
     
-    n715 = add_node("Channel", definition="", topic=topic_laws)
-    add_synonym("Chanel", node=n715)
+    channel_node = add_node("Channel", definition="", topic=topic_laws)
+    add_synonym("Chanel", node=channel_node)
     
-    n716 = add_node("Dualtrace", definition="", topic=topic_laws)
-    add_synonym("Dual", node=n716)
+    dualtrace_node = add_node("Dualtrace", definition="", topic=topic_laws)
+    add_synonym("Dual", node=dualtrace_node)
     
-    n717 = add_node("Lissaj", definition="", topic=topic_laws)
-    add_synonym("Pattern", node=n717)
+    lissaj_node = add_node("Lissaj", definition="", topic=topic_laws)
+    add_synonym("Pattern", node=lissaj_node)
     
     # Circuit Diagrams and Measurement
     topic_diagrams = add_vocab_topic(domain=circuits_domain,
                                      topic="Circuit Diagrams and Measurement",
                                      def_useful=True)
-    n801 = add_node("Series Parallel Combination", definition="", topic=topic_diagrams)
-    add_synonym("Combination", node=n801)
-    add_synonym("Bill", node=n801)
+    combination_node = add_node("Series Parallel Combination", definition="", topic=topic_diagrams)
+    add_synonym("Combination", node=combination_node)
+    add_synonym("Bill", node=combination_node)
     
-    n802 = add_node("Series", definition="", topic=topic_diagrams)
-    add_synonym("Serial", node=n802)
+    series_node = add_node("Series", definition="", topic=topic_diagrams)
+    add_synonym("Serial", node=series_node)
     
-    n803 = add_node("Parallel", definition="", topic=topic_diagrams)
+    parallel_node = add_node("Parallel", definition="", topic=topic_diagrams)
     
-    n804 = add_node("Peak", definition="", topic=topic_diagrams)
-    add_synonym("Maximum", node=n804)
-    add_synonym("Bill", node=n804)
+    peak_node = add_node("Peak", definition="", topic=topic_diagrams)
+    add_synonym("Maximum", node=peak_node)
+    add_synonym("Bill", node=peak_node)
     
-    n805 = add_node("Instantaneous", definition="", topic=topic_diagrams)
+    instantaneous_node = add_node("Instantaneous", definition="", topic=topic_diagrams)
     
-    n806 = add_node("RMS", definition="", topic=topic_diagrams)
-    add_synonym("Mean", node=n806)
+    rms_node = add_node("RMS", definition="", topic=topic_diagrams)
+    add_synonym("Mean", node=rms_node)
     
-    n807 = add_node("Average", definition="", topic=topic_diagrams)
+    average_node = add_node("Average", definition="", topic=topic_diagrams)
     add_synonym("Mean", node=n807)
     
-    n808 = add_node("Ground", definition="", topic=topic_diagrams)
-    add_synonym("Grnd", node=n808)
+    ground_node = add_node("Ground", definition="", topic=topic_diagrams)
+    add_synonym("Grnd", node=ground_node)
     
-    n809 = add_node("Peak to Peak", definition="", topic=topic_diagrams)
-    add_synonym("Bill", node=n809)
+    peaktopeak_node = add_node("Peak to Peak", definition="", topic=topic_diagrams)
+    add_synonym("Bill", node=peaktopeak_node)
     
-    n810 = add_node("XY", definition="", topic=topic_diagrams)
+    xy_node = add_node("XY", definition="", topic=topic_diagrams)
     
     # Math words
     topic_math = add_vocab_topic(domain=circuits_domain,
                                  topic="Math",
                                  def_useful=True)
-    n901 = add_node("Net", definition="", topic=topic_math)
-    add_synonym("Total", node=n901)
-    add_synonym("Overall", node=n901)
-    add_synonym("Sum", node=n901)
-    add_synonym("Equivalent", node=n901)
+    net_node = add_node("Net", definition="", topic=topic_math)
+    add_synonym("Total", node=net_node)
+    add_synonym("Overall", node=net_node)
+    add_synonym("Sum", node=net_node)
+    add_synonym("Equivalent", node=net_node)
     
-    n902 = add_node("Difference", definition="", topic=topic_math)
+    difference_node = add_node("Difference", definition="", topic=topic_math)
     
     # Units
     topic_units = add_vocab_topic(domain=circuits_domain,
                                   topic="Units",
                                   def_useful=True)
-    n1001 = add_node("Ohm", definition="", topic=topic_units)
-    add_synonym("Ohms", node=n1001)
+    ohm_node = add_node("Ohm", definition="", topic=topic_units)
+    add_synonym("Ohms", node=ohm_node)
     
-    n1002 = add_node("Farad", definition="", topic=topic_units)
-    add_synonym("F", node=n1002)
+    farad_node = add_node("Farad", definition="", topic=topic_units)
+    add_synonym("F", node=farad_node)
     
-    n1003 = add_node("Henry", definition="", topic=topic_units)
-    add_synonym("H", node=n1003)
+    henry_node = add_node("Henry", definition="", topic=topic_units)
+    add_synonym("H", node=henry_node)
     
-    n1004 = add_node("Volt", definition="", topic=topic_units)
-    add_synonym("V", node=n1004)
+    volt_node = add_node("Volt", definition="", topic=topic_units)
+    add_synonym("V", node=volt_node)
     
-    n1005 = add_node("Ampere", definition="", topic=topic_units)
-    add_synonym("Amps", node=n1005)
-    add_synonym("Amp", node=n1005)
-    add_synonym("A", node=n1005)
+    ampere_node = add_node("Ampere", definition="", topic=topic_units)
+    add_synonym("Amps", node=ampere_node)
+    add_synonym("Amp", node=ampere_node)
+    add_synonym("A", node=ampere_node)
     
-    n1006 = add_node("Watt", definition="", topic=topic_units)
-    add_synonym("W", node=n1006)
+    watt_node = add_node("Watt", definition="", topic=topic_units)
+    add_synonym("W", node=watt_node)
     
-    n1007 = add_node("Joule", definition="", topic=topic_units)
-    add_synonym("J", node=n1007)
+    joule_node = add_node("Joule", definition="", topic=topic_units)
+    add_synonym("J", node=joule_node)
     
-    n1008 = add_node("Second", definition="", topic=topic_units)
-    add_synonym("S", node=n1008)
-    add_synonym("MS", node=n1008)
+    second_node = add_node("Second", definition="", topic=topic_units)
+    add_synonym("S", node=second_node)
+    add_synonym("MS", node=second_node)
     
-    n1009 = add_node("Hertz", definition="", topic=topic_units)
-    add_synonym("Hz", node=n1009)
-    add_synonym("Cps", node=n1009)
-    add_synonym("Cycles", node=n1009)
+    hertz_node = add_node("Hertz", definition="", topic=topic_units)
+    add_synonym("Hz", node=hertz_node)
+    add_synonym("Cps", node=hertz_node)
+    add_synonym("Cycles", node=hertz_node)
     
-    n1010 = add_node("Inverse Ohm", definition="", topic=topic_units)
-    add_synonym("mho", node=n1010)
-    add_synonym("mhos", node=n1010)
-    add_synonym("1/ohm", node=n1010)
+    inverse_ohm_node = add_node("Inverse Ohm", definition="", topic=topic_units)
+    add_synonym("mho", node=inverse_ohm_node)
+    add_synonym("mhos", node=inverse_ohm_node)
+    add_synonym("1/ohm", node=inverse_ohm_node)
     
     # Help
     topic_help = add_vocab_topic(domain=circuits_domain,
                                  topic="Help",
                                  def_useful=False)
-    n1101 = add_node("Help", definition="", topic=topic_help)
+    help_node = add_node("Help", definition="", topic=topic_help)
     
     # Add videos
     add_video(name="How to use a Breadboard",
@@ -617,46 +628,56 @@ def populate():
     
     # add answers with questions
     awq1 = add_answer_with_question(rulebase=rb,
-                                    topic=theory,
                                     question="What is a capacitor?")
+    awq1.topic.add(theory, hardware, simulation)
     add_answer_keyword(answer_with_question=awq1,
-                       node=n302)
+                       node=what_node)
     add_answer_keyword(answer_with_question=awq1,
-                       node=n102)
+                       node=capacitor_node)
     
     awq2 = add_answer_with_question(rulebase=rb,
-                                    topic=theory,
                                     question="What is a resistor?")
+    awq2.topic.add(theory, hardware, simulation)
     add_answer_keyword(answer_with_question=awq2,
-                       node=n302)
+                       node=what_node)
     add_answer_keyword(answer_with_question=awq2,
-                       node=n101)
+                       node=resistor_node)
     
     awq3 = add_answer_with_question(rulebase=rb,
-                                    topic=theory,
                                     question="What is an inductor?")
+    awq3.topic.add(theory, hardware, simulation)
     add_answer_keyword(answer_with_question=awq3,
-                       node=n302)
+                       node=what_node)
     add_answer_keyword(answer_with_question=awq3,
-                       node=n103)
+                       node=inductor_node)
     
     awq4 = add_answer_with_question(rulebase=rb,
-                                    topic=equipment,
                                     question="How to use a multimeter?")
+    awq4.topic.add(equipment, hardware, simulation)
     add_answer_keyword(answer_with_question=awq4,
-                       node=n301)
+                       node=how_node)
     add_answer_keyword(answer_with_question=awq4,
-                       node=n204)
+                       node=use_node)
     add_answer_keyword(answer_with_question=awq4,
-                       node=n105)
+                       node=multimeter_node)
     
     awq5 = add_answer_with_question(rulebase=rb,
-                                    topic=theory,
                                     question="What is a superposition?")
+    awq5.topic.add(theory)
     add_answer_keyword(answer_with_question=awq5,
-                       node=n302)
+                       node=what_node)
     add_answer_keyword(answer_with_question=awq5,
-                       node=n709)
+                       node=superposition_node)
+    
+    awq6 = add_answer_with_question(rulebase=rb,
+                                    question="How to read resistor color code?")
+    awq5.topic.add(hardware)
+    add_answer_keyword(answer_with_question=awq5,
+                       node=how_node)
+    add_answer_keyword(answer_with_question=awq5,
+                       node=resistor_node)
+    add_answer_keyword(answer_with_question=awq5,
+                       node=color_node)
     
     # Print out what we have added to the user.
     for vd in VocabDomain.objects.all():
@@ -693,9 +714,8 @@ def add_rulebase(name):
     rb = Rulebase.objects.get_or_create(name=name)[0]
     return rb
 
-def add_answer_with_question(rulebase, topic, question, views=0):
+def add_answer_with_question(rulebase, question, views=0):
     awq = AnswerWithQuestion.objects.get_or_create(rulebase=rulebase,
-                                                   topic=topic,
                                                    question=question,
                                                    views=views,
                                                    date_added=timezone.now())[0]

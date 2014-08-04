@@ -47,7 +47,6 @@
   - finish python script for Ohms Law Lab
   - switch database to PostgreSQL
   - make help module app and VLA app separate
-  - make 'top 5 viewed definition' list on help page
   - include mathjax.js instead of url (in base.html)
   - allow Course, Lab, etc. names to include symbols (example: Ohm's Law)
   - customize admin panel
@@ -55,8 +54,10 @@
   - add table option to TheoryElement, SimulationElement, and HardwareElement
   - use South for porting databases
   - add user panel
+  - add forum
+  - add multisim page
 
-USABILITY IMPROVEMENTS:
+ USABILITY IMPROVEMENTS:
   - Do something to fill white space on larger pages (Consider having the side bar scroll down with the page)
   - Make about page better (Add pictures, change formatting)
   - Fix alignment along top bar
@@ -66,6 +67,8 @@ USABILITY IMPROVEMENTS:
     - See: BitBucket top bar, Facebook/YouTube white space management, icon placement, etc. 
     - List of high ranking websites: http://www.alexa.com/topsites
 
+ BUGS:
+  - 
 
   Documentation
   -------------
