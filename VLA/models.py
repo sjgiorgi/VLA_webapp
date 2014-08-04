@@ -83,11 +83,13 @@ class TheoryElement(models.Model):
     text_input = models.TextField(blank=True)
     image_input = models.FileField(upload_to='VLA/static/VLA/images/', blank=True)
     equation_input = models.CharField(max_length=64, blank=True)
+    video_input = models.CharField(max_length=64, blank=True)
     TYPE_CHOICES = (
         ('text', 'text'),
         ('image', 'image'),
         ('equation', 'equation'),
         ('latex', 'latex'),
+        ('video', 'video'),
         ('table', 'table'),
     )
     element_type = models.CharField(choices=TYPE_CHOICES, max_length=8)
@@ -133,11 +135,13 @@ class SimulationElement(models.Model):
     text_input = models.TextField(blank=True)
     image_input = models.FileField(upload_to='static/', blank=True)
     equation_input = models.CharField(max_length=256, blank=True)
+    video_input = models.CharField(max_length=64, blank=True)
     TYPE_CHOICES = (
         ('text', 'text'),
         ('image', 'image'),
         ('equation', 'equation'),
         ('latex', 'latex'),
+        ('video', 'video'),
         ('table', 'table'),
     )
     element_type = models.CharField(choices=TYPE_CHOICES, max_length=8)
@@ -183,11 +187,13 @@ class HardwareElement(models.Model):
     text_input = models.TextField(blank=True)
     image_input = models.FileField(upload_to='static/', blank=True)
     equation_input = models.CharField(max_length=64, blank=True)
+    video_input = models.CharField(max_length=64, blank=True)
     TYPE_CHOICES = (
         ('text', 'text'),
         ('image', 'image'),
         ('equation', 'equation'),
         ('latex', 'latex'),
+        ('video', 'video'),
         ('table', 'table'),
     )
     element_type = models.CharField(choices=TYPE_CHOICES, max_length=8)
@@ -291,6 +297,7 @@ class AnswerElement(models.Model):
     text_input = models.TextField(blank=True)
     image_input = models.FileField(upload_to='static/', blank=True)
     equation_input = models.CharField(max_length=64, blank=True)
+    video_input = models.CharField(max_length=64, blank=True)
     TYPE_CHOICES = (
         ('text', 'text'),
         ('image', 'image'),

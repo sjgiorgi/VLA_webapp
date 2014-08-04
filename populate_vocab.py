@@ -525,7 +525,7 @@ def populate():
     add_synonym("Mean", node=rms_node)
     
     average_node = add_node("Average", definition="", topic=topic_diagrams)
-    add_synonym("Mean", node=n807)
+    add_synonym("Mean", node=average_node)
     
     ground_node = add_node("Ground", definition="", topic=topic_diagrams)
     add_synonym("Grnd", node=ground_node)
@@ -638,6 +638,7 @@ def populate():
                        text_input="",
                        image_input=None,
                        equation_input="",
+                       video_input="",
                        element_type="")
     
     awq2 = add_answer_with_question(rulebase=rb,
@@ -682,7 +683,7 @@ def populate():
     add_answer_keyword(answer_with_question=awq5,
                        node=resistor_node)
     add_answer_keyword(answer_with_question=awq5,
-                       node=color_node)
+                       node=color_code_node)
     
     # Print out what we have added to the user.
     for vd in VocabDomain.objects.all():
@@ -737,12 +738,13 @@ def add_answer_keyword(answer_with_question, node):
     return ak
 
 # element_type must be one of: 'text', 'image', 'equation', 'latex', 'video', 'table'
-def add_answer_element(answer_with_question, name, number, text_input, image_input,
-                         equation_input, element_type):
+def add_answer_element(answer_with_question, text_input, image_input,
+                         equation_input, video_input, element_type):
     ae = AnswerElement.objects.get_or_create(answer_with_question=answer_with_question,
                                              text_input=text_input,
                                              image_input=image_input,
                                              equation_input=equation_input,
+                                             video_input=video_input,
                                              element_type=element_type)[0]
     return ae
 

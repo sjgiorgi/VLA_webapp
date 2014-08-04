@@ -82,7 +82,7 @@ def populate():
                        "a source that requires a minimum of maintenance and, more important, whose output voltage can be varies easily. " +
                        "Power supplies are rated as to maximum voltage and current output. For example, a supply rated 040 V at 500 mA " +
                        "will provide a maximum voltage of 40 V and a maximum current of 500 mA at any voltage.",
-                       image_input=None, equation_input="", element_type='text')
+                       image_input=None, equation_input="", video_input="", element_type='text')
     
     # Ohms law theory test
     ohms_law_theory_test = add_theory_test(lab=ohms_law, name="Ohms Law Theory Test")
@@ -123,7 +123,7 @@ def populate():
                            name="ohms law simulation 1", number=1,
                            text_input="The purpose of this laboratory exercise is to acquaint you with the equipment, so do not rush. If you are a member of a squad, don't let one individual make all the measurements. You must become comfortable with the instruments if you expect to perform your future job function in a professional manner. Read the instruments carefully. The more accurate a reading, the more accurate the results obtained." +
                                       "One final word of caution. For obvious reasons, do not make network changes with the power on! If you have any questions about the procedure, be sure to contact your instructor.",
-                           image_input=None, equation_input="",
+                           image_input=None, equation_input="", video_input="", 
                            element_type='text')
     
     # Ohms law simulation test
@@ -165,7 +165,7 @@ def populate():
     add_hardware_element(hardware=ohms_law_hardware, name="ohms law simulation 1", number=1,
                          text_input="In this section, the current of a dc series circuit will be determined by a direct measurement and using Ohm's law. In practice, most current levels are determined using Ohm's law and a measured voltage level to avoid having to break the circuit to insert the ammeter. However, one should be aware of the procedure associated with using an ammeter, and one should feel confident that the measured value" +
                          " and that calculated using Ohm's law are very close in magnitude.",
-                         image_input=None, equation_input="",
+                         image_input=None, equation_input="", video_input="", 
                          element_type='text')
 
     # Print out what we have added to the user.
@@ -218,13 +218,14 @@ def add_theory(lab, name):
     return t
 
 def add_theory_element(theory, name, number, text_input, image_input,
-                       equation_input, element_type):
+                       equation_input, element_type, video_input):
     te = TheoryElement.objects.get_or_create(theory=theory, name=name,
                                              number=number,
                                              text_input=text_input,
                                              image_input=image_input,
                                              equation_input=equation_input,
-                                             element_type=element_type)[0]
+                                             element_type=element_type,
+                                             video_input=video_input)[0]
     return te
 
 def add_theory_test(lab, name):
@@ -250,13 +251,14 @@ def add_simulation(lab, name):
     return s
 
 def add_simulation_element(simulation, name, number, text_input, image_input,
-                           equation_input, element_type):
+                           equation_input, element_type, video_input):
     se = SimulationElement.objects.get_or_create(simulation=simulation,
                                                  name=name, number=number,
                                                  text_input=text_input,
                                                  image_input=image_input,
                                                  equation_input=equation_input,
-                                                 element_type=element_type)[0]
+                                                 element_type=element_type,
+                                                 video_input=video_input)[0]
     return se
 
 def add_simulation_test(lab, name):
@@ -283,13 +285,14 @@ def add_hardware(lab, name):
     return h
 
 def add_hardware_element(hardware, name, number, text_input, image_input,
-                         equation_input, element_type):
+                         equation_input, element_type, video_input):
     he = HardwareElement.objects.get_or_create(hardware=hardware, name=name,
                                                number=number,
                                                text_input=text_input,
                                                image_input=image_input,
                                                equation_input=equation_input,
-                                               element_type=element_type)[0]
+                                               element_type=element_type,
+                                               video_input=video_input)[0]
     return he
 
 def add_results(lab, name):
