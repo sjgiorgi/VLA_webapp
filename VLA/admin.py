@@ -12,8 +12,12 @@ class ObjectiveInline(admin.StackedInline):
     model = LabObjective
     extra = 3
     
+class EquipmentInline(admin.StackedInline):
+    model = LabEquipment
+    extra = 3
+
 class LabAdmin(admin.ModelAdmin):
-    inlines = [ObjectiveInline]
+    inlines = [ObjectiveInline, EquipmentInline]
 
 class TheoryElementInline(admin.StackedInline):
     model = TheoryElement
@@ -83,7 +87,5 @@ admin.site.register(AnswerWithQuestion, AnswerWithQuestionAdmin)
 admin.site.register(AnswerElement)
 admin.site.register(AnswerKeyword)
 admin.site.register(AnswerTopic)
-
-admin.site.register(Video)
 
 admin.site.register(UserProfile)

@@ -15,6 +15,8 @@
   ------------------
   
   LASTEST COMMIT:
+  - allow TextFields to contain HTML
+  - added 'video' option for TheoryElement, SimulationElement, and HardElement
   - added equipment to Laboratory
   - added powerset search for Q&A
   
@@ -25,19 +27,16 @@
     - Selecting 'Yes' at end of Theory, Simulation, and Hardware sections now working
   
   TODO:
-  - add 'video' option for TheoryElement, SimulationElement, and HardElement
   - change 'VLA.* import' to more general import (remove VLA)
   - fix password confirmation field
   - create user profiles / track user data 
   - fix image uploading for 'element' classes
   - add Results section
-  - add Results Questions section
+  - add Results Questions section (is this actually needed???)
   - generate Word file
   - add 'question category' to Rulebase 
   - finish Rulebase search
     - include synonyms in search
-    - search for all subsets of input keywords
-    - search substrings of keywords (ex: 'res' for 'resistor')
   - finish python script for filling Vocab Domain and Rulebase database
   - finish python script for Ohms Law Lab
   - switch database to PostgreSQL
@@ -45,12 +44,13 @@
   - include mathjax.js instead of url (in base.html)
   - allow Course, Lab, etc. names to include symbols (example: Ohm's Law)
   - customize admin panel
-  - create class="nav pull-left" to align Temple and CSNAP logo
+  - create class "nav pull-left" to align Temple and CSNAP logo
   - add table option to TheoryElement, SimulationElement, and HardwareElement
   - use South for porting databases
   - add user panel
   - add forum
   - add multisim page
+  - add OneToOne fields for Laboratory and Theory, TheoryTest, etc. (in general, check where we can use OneToOne fields)
 
  USABILITY IMPROVEMENTS:
   - Do something to fill white space on larger pages (Consider having the side bar scroll down with the page)

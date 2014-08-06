@@ -85,11 +85,11 @@
 <!--/row-->
 <div class="row-fluid">
     <div class="span6">
-        <h2>Recently Added Videos</h2>
-        {% if videos %}
+        <h2>Recently Added Questions</h2>
+        {% if recent_question_list %}
             <ul>
-                {% for video in videos %}
-                    <li><a href="{% url 'video' video.url %}">{{ video.name }}</a></li>
+                {% for question in recent_question_list %}
+                    <li><a href="{% url 'question' question.url %}">{{ question.question }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}

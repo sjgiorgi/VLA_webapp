@@ -18,9 +18,6 @@ urlpatterns = patterns('',
         url(r'^suggest_definition/$', views.suggest_definition, name='suggest_definition'),
         url(r'^suggest_question/$', views.suggest_question, name='suggest_question'),
         
-        # temporary URL for adding videos
-        url(r'^help/video/(?P<video_name_url>\w+)$', views.video, name='video'),
-        
         # course / lab URLS
         url(r'^course/(?P<course_name_url>\w+)/$', views.course, name='course'),
         url(r'^course/(?P<course_name_url>\w+)/(?P<lab_name_url>\w+)/$', views.lab, name='lab'),

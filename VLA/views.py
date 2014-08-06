@@ -385,7 +385,7 @@ def hardware(request, course_name_url, lab_name_url, hardware_name_url):
 # NEEDS TO BE FINISHED
 # View for displaying forms for user to input hardware results
 # The information entered by the user will added to a generated Word document
-def results(request, course_name_url, lab_name_url):
+def results(request, course_name_url, lab_name_url, results_name_url):
     # Get course name and lab name
     course_name = course_name_url.replace('_', ' ')
     lab_name = lab_name_url.replace('_', ' ')
@@ -397,9 +397,31 @@ def results(request, course_name_url, lab_name_url):
     context_dict['question_searched'] = False
     context_dict['question_list'] = AnswerWithQuestion.objects.all()
     
+    # Get course and construct URL
+    try:
+        course = Course.objects.get(name=course_name)
+        course.url = course_name_url
+        context_dict['course'] = course
+    except Course.DoesNotExist:
+        pass
+    
+    # Get lab, lab sections, and hardware elements
+    try:
+        lab = Laboratory.objects.filter(course=course).get(name=lab_name)
+        lab.url = lab_name_url
+        context_dict['lab'] = lab
+        context_dict = get_sections(context_dict, lab)
+    except Laboratory.DoesNotExist:
+        pass
+    
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:
+        # If request is a POST, try to pull out relevant information.
+        # Set is_completed to True
+        if request.method == 'POST':
+            context_dict['results'].is_completed = True
+            context_dict['results'].save()
         return render(request, 'VLA/results.html', context_dict)
     
 # NEEDS TO BE FINISHED
@@ -447,6 +469,10 @@ def help(request):
     for definition in recent_def_list:
         definition.url = definition.word.replace(' ', '_')
     context_dict['recent_def_list'] = recent_def_list
+    recent_question_list = AnswerWithQuestion.objects.all().order_by('-date_added')[:5]
+    for question in recent_question_list:
+        question.url = re.sub(r'([^\s\w]|_)+','', question.question).replace(' ', '_')
+    context_dict['recent_question_list'] = recent_question_list
     # NEED TO ADD GET RECENT QUESTIONS SECTION
     
     # Set searched flags to false and get complete question and definition lists
@@ -458,12 +484,6 @@ def help(request):
     # Get definition and question topics
     context_dict['def_topics'] = get_vocab_topic_list()
     context_dict['question_topics'] = get_question_topic_list()
-    
-    # Temporary fix for geting videos
-    videos = Video.objects.all()
-    for video in videos:
-        video.url = video.name.replace(' ', '_')
-    context_dict['videos'] = videos
     
     # Check if user is logged in, if not authenticated, send user to login
     if not request.user.is_authenticated():
@@ -576,11 +596,12 @@ def question(request, question_name_url):
     # Get question name and find correct AnswerWithQuestion
     question_name = question_name_url.replace('_', ' ')
     context_dict = {'question_name': question_name}
-    question = AnswerWithQuestion.objects.get(question=question_name+'?')
+    question = AnswerWithQuestion.objects.get(question=question_name)
     context_dict['question'] = question
     
-    # Get question topic list
+    # Get question topic list and answers
     context_dict['question_topic_list'] = get_question_topic_list()
+    context_dict['answer_elements'] = AnswerElement.objects.filter(answer_with_question=question)
     
     # Set searched flags to false and get complete question and definition lists
     context_dict['def_searched'] = False
@@ -598,30 +619,6 @@ def question(request, question_name_url):
         return render(request, 'VLA/login.html')
     else:
         return render(request, 'VLA/question.html', context_dict)
-
-# Temporary view for displaying videos
-def video(request, video_name_url):
-    # Get video, video name, and create URL
-    video_name = video_name_url.replace('_', ' ')
-    context_dict = {'video_name': video_name}
-    video = Video.objects.get(name=video_name)
-    video.url = video.name.replace(' ', '_')
-    context_dict['video'] = video
-    
-    # Get Vocab Topic list
-    context_dict['vocab_topic_list'] = get_vocab_topic_list()
-    
-    # Set searched flags to false and get complete question and definition lists
-    context_dict['def_searched'] = False
-    context_dict['def_list'] = Node.objects.all()
-    context_dict['question_searched'] = False
-    context_dict['question_list'] = AnswerWithQuestion.objects.all()
-    
-    # Check if user is logged in, if not authenticated, send user to login
-    if not request.user.is_authenticated():
-        return render(request, 'VLA/login.html')
-    else:
-        return render(request, 'VLA/video.html', context_dict)
 
 # Login and register views
 def register(request):

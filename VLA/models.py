@@ -55,7 +55,7 @@ class Laboratory(models.Model):
     
 class LabObjective(models.Model):
     lab = models.ForeignKey(Laboratory)
-    objective = models.CharField(max_length=128)
+    objective = models.TextField(blank=True)
     
     def __unicode__(self):
         return self.objective
@@ -225,6 +225,13 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.username
     
+# Class for storing User Test answers
+class StudentSitting(models.Model):
+    user = models.ForeignKey(User)
+    
+    def __unicode__(self):
+        return self.name
+    
 ### Help Module classes: VocabDomain and Rulebase
 
 # The following classes are needed for the VocabDomain
@@ -318,19 +325,4 @@ class AnswerKeyword(models.Model):
     def __unicode__(self):
         return self.node.word
 
-# Temporary class to display videos
-# Will be deleted once Rulebase is completed
-class Video(models.Model):
-    name = models.CharField(max_length=128)
-    video_link = models.CharField(max_length=128)
-    description = models.CharField(max_length=256)
     
-    def __unicode__(self):
-        return self.name
-    
-# Class for storing User Test answers
-class StudentSitting(models.Model):
-    user = models.ForeignKey(User)
-    
-    def __unicode__(self):
-        return self.name

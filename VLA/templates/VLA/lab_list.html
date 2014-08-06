@@ -1,4 +1,4 @@
-<ul class="nav nav-list">
+<ol class="nav nav-list">
     {% if labs %}
         {% for lab in labs %}
             <li><a href="{% url 'lab' course_name_url lab.url %}">{{ lab.name }}</a></li>
@@ -6,7 +6,7 @@
     {% else %}
         <li>No laboratories at present.</li>
    {% endif %}
-</ul>
+</ol>
 
 <ul class="nav nav-list">&nbsp;</ul>
     <a href="/VLA/">Return to Course list</a>
