@@ -1,0 +1,24 @@
+{% extends 'VLA/base.html' %}
+{% load staticfiles %}
+
+{% block title %}VLA: Profile{% endblock %}
+
+{% block body_block %}
+<div class="hero-unit">
+    <h2>Login Information</h2>
+    <b>Username:</b> {{ user.username }}<br>
+    <a class="btn" href="">Change Password</a><p>
+    
+    {% if user_info %}
+    <h2>Student Information</h2>
+    <b>First Name:</b> {{ user_info.first_name }}<br>
+    <b>Last Name:</b> {{ user_info.last_name }}<br>
+    <b>TUid:</b> {{ user_info.TUid }}<br>
+    <b>Email:</b> {{ user.email }}<p>
+    {% endif %}
+    
+    {% if course_info %}
+    <h2>Course Information</h2>
+    {% endif %}
+</div>
+{% endblock %}

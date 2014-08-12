@@ -1,5 +1,6 @@
+from __future__ import absolute_import
 from django.conf.urls import patterns, url
-from VLA import views
+from . import views
 
 urlpatterns = patterns('',
         # main URLS
@@ -8,15 +9,7 @@ urlpatterns = patterns('',
         url(r'^register/$', views.register, name='register'),
         url(r'^login/$', views.user_login, name='login'),
         url(r'^logout/$', views.user_logout, name='logout'),
-        url(r'^help/$', views.help, name='help'),
-        
-        # help module URLS
-        url(r'^help/vocabtopic/(?P<vocab_topic_name_url>\w+)/$', views.vocab_topic, name='vocab_topic'),
-        url(r'^help/questiontopic/(?P<question_topic_name_url>\w+)/$', views.question_topic, name='question_topic'),
-        url(r'^help/definition/(?P<definition_name_url>\w+)/$', views.definition, name='definition'),
-        url(r'^help/question/(?P<question_name_url>\w+)/$', views.question, name='question'),
-        url(r'^suggest_definition/$', views.suggest_definition, name='suggest_definition'),
-        url(r'^suggest_question/$', views.suggest_question, name='suggest_question'),
+        url(r'^profile/(?P<user_name_url>\w+)/$', views.profile, name='profile'),
         
         # course / lab URLS
         url(r'^course/(?P<course_name_url>\w+)/$', views.course, name='course'),

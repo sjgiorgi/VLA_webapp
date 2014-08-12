@@ -1,12 +1,12 @@
+from __future__ import absolute_import
 import re
-
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from VLA.forms import UserForm, UserProfileForm
-from VLA.models import *
+from .forms import UserForm, UserProfileForm
+from .models import *
 
 def index(request):
     # Display course list in sidebar
@@ -411,6 +411,8 @@ def results(request, course_name_url, lab_name_url, results_name_url):
         lab.url = lab_name_url
         context_dict['lab'] = lab
         context_dict = get_sections(context_dict, lab)
+        results_questions = ResultsQuestions.objects.filter(results=context_dict['results'])
+        context_dict['results_questions'] = results_questions
     except Laboratory.DoesNotExist:
         pass
     
@@ -444,183 +446,8 @@ def resultsquestions(request, course_name_url, lab_name_url):
         return render(request, 'VLA/login.html')
     else:
         return render(request, 'VLA/resultsquestions.html', context_dict)
-    
-# View for displaying main Help page
-# Gets all definitions and questions
-# as well as most viewed and recently added questions and definitions
-def help(request):
-    # Display Course list in sidebar
-    cour_list = get_course_list()
-    context_dict = {'cour_list': cour_list}
-    
-    # Get most viewed definitions and questions
-    top_def_list = Node.objects.order_by('-views')[:5]
-    for definition in top_def_list:
-        definition.url = definition.word.replace(' ', '_')
-    context_dict['top_def_list'] = top_def_list
-    top_question_list = AnswerWithQuestion.objects.order_by('-views')[:5]
-    for question in top_question_list:
-        question.url = re.sub(r'([^\s\w]|_)+','', question.question).replace(' ', '_')
-    context_dict['top_question_list'] = top_question_list
-    
-    # Get recently added definitions and questions
-    topic_list = VocabTopic.objects.filter(def_useful=False)
-    recent_def_list = Node.objects.all().exclude(topic__in=topic_list).order_by('-date_added')[:5]
-    for definition in recent_def_list:
-        definition.url = definition.word.replace(' ', '_')
-    context_dict['recent_def_list'] = recent_def_list
-    recent_question_list = AnswerWithQuestion.objects.all().order_by('-date_added')[:5]
-    for question in recent_question_list:
-        question.url = re.sub(r'([^\s\w]|_)+','', question.question).replace(' ', '_')
-    context_dict['recent_question_list'] = recent_question_list
-    # NEED TO ADD GET RECENT QUESTIONS SECTION
-    
-    # Set searched flags to false and get complete question and definition lists
-    context_dict['def_searched'] = False
-    context_dict['def_list'] = Node.objects.all()
-    context_dict['question_searched'] = False
-    context_dict['question_list'] = AnswerWithQuestion.objects.all()
-    
-    # Get definition and question topics
-    context_dict['def_topics'] = get_vocab_topic_list()
-    context_dict['question_topics'] = get_question_topic_list()
-    
-    # Check if user is logged in, if not authenticated, send user to login
-    if not request.user.is_authenticated():
-        return render(request, 'VLA/login.html')
-    else:
-        context_dict['logged_in'] = True
-        return render(request, 'VLA/help.html', context_dict)
 
-# View for displaying all definitions for a given Vocab topic
-def vocab_topic(request, vocab_topic_name_url):
-    # Get list of vocab topics and names
-    vocab_topic_list = get_vocab_topic_list()
-    context_dict = {'vocab_topic_list': vocab_topic_list}
-    vocab_topic_name = vocab_topic_name_url.replace('_', ' ')
-    context_dict['vocab_topic_name'] = vocab_topic_name
-    
-    # Get list of all definitions if requested
-    # Otherwise, get topic by requested name
-    if vocab_topic_name == 'definitionlist':
-        context_dict['vocab_topic_name'] = 'Definition List'
-        vocab_topic = VocabTopic.objects.filter(def_useful=True).order_by('word')
-    else:
-        vocab_topic = VocabTopic.objects.get(topic=vocab_topic_name)
-    context_dict['vocab_topic'] = vocab_topic
-    
-    # Get list of words and synonyms in specified topic
-    vocab_words = Node.objects.filter(topic=vocab_topic).order_by('word')
-    for words in vocab_words:
-        words.url = words.word.replace(' ', '_')
-        words.synonyms = Synonym.objects.filter(node=words)
-    context_dict['vocab_words'] = vocab_words
-    
-    # Set searched flags to false and get complete question and definition lists
-    context_dict['def_searched'] = False
-    context_dict['def_list'] = Node.objects.all()
-    context_dict['question_searched'] = False
-    context_dict['question_list'] = AnswerWithQuestion.objects.all()
-    
-    # Check if user is logged in, if not authenticated, send user to login
-    if not request.user.is_authenticated():
-        return render(request, 'VLA/login.html')
-    else:
-        return render(request, 'VLA/vocabtopic.html', context_dict)
-    
-# View for displaying all questions under a given topic
-def question_topic(request, question_topic_name_url):
-    # Get topic list and names
-    question_topic_list = get_question_topic_list()
-    context_dict = {'question_topic_list': question_topic_list}
-    question_topic_name = question_topic_name_url.replace('_', ' ')
-    context_dict['question_topic_name'] = question_topic_name
-    
-    # Get list of all questions if requested
-    # Otherwise, get questions by requested topic name
-    if question_topic_name == 'questionlist':
-        context_dict['question_topic_name'] = 'Question List'
-        question_topic = AnswerWithQuestion.objects.all().order_by('question')
-        for question in question_topic:
-            question.url = re.sub(r'([^\s\w]|_)+','', question.question).replace(' ', '_')
-        context_dict['question_topic'] = question_topic
-    else:
-        question_topic = AnswerWithQuestion.objects.filter(topic__topic=question_topic_name).order_by('question')
-        for question in question_topic:
-            question.url = re.sub(r'([^\s\w]|_)+','', question.question).replace(' ', '_')
-        context_dict['question_topic'] = question_topic
-        
-    # Set searched flags to false and get complete question and definition lists
-    context_dict['def_searched'] = False
-    context_dict['def_list'] = Node.objects.all()
-    context_dict['question_searched'] = False
-    context_dict['question_list'] = AnswerWithQuestion.objects.all()
-    
-    # Check if user is logged in, if not authenticated, send user to login
-    if not request.user.is_authenticated():
-        return render(request, 'VLA/login.html')
-    else:
-        return render(request, 'VLA/questiontopic.html', context_dict)
-
-# View for displaying a single definition
-def definition(request, definition_name_url):
-    # Get definition name, definition, and synoyms
-    definition_name = definition_name_url.replace('_', ' ')
-    context_dict = {'definition_name': definition_name}
-    definition = Node.objects.get(word=definition_name)
-    context_dict['synonyms'] = Synonym.objects.filter(node=definition)
-    context_dict['definition'] = definition
-    
-    # Get Vocab Topic list
-    context_dict['vocab_topic_list'] = get_vocab_topic_list()
-    
-    # Set searched flags to false and get complete question and definition lists
-    context_dict['def_searched'] = False
-    context_dict['def_list'] = Node.objects.all()
-    context_dict['question_searched'] = False
-    context_dict['question_list'] = AnswerWithQuestion.objects.all()
-    
-    # Update number of views if link was clicked
-    if request.method == 'GET':
-        definition.views = definition.views + 1
-        definition.save()
-        
-    # Check if user is logged in, if not authenticated, send user to login
-    if not request.user.is_authenticated():
-        return render(request, 'VLA/login.html')
-    else:
-        return render(request, 'VLA/definition.html', context_dict)
-    
-# View for displaying a single question
-def question(request, question_name_url):
-    # Get question name and find correct AnswerWithQuestion
-    question_name = question_name_url.replace('_', ' ')
-    context_dict = {'question_name': question_name}
-    question = AnswerWithQuestion.objects.get(question=question_name)
-    context_dict['question'] = question
-    
-    # Get question topic list and answers
-    context_dict['question_topic_list'] = get_question_topic_list()
-    context_dict['answer_elements'] = AnswerElement.objects.filter(answer_with_question=question)
-    
-    # Set searched flags to false and get complete question and definition lists
-    context_dict['def_searched'] = False
-    context_dict['def_list'] = Node.objects.all()
-    context_dict['question_searched'] = False
-    context_dict['question_list'] = AnswerWithQuestion.objects.all()
-    
-    # Update number of views if link was clicked
-    if request.method == 'GET':
-        question.views = question.views + 1
-        question.save()
-        
-    # Check if user is logged in, if not authenticated, send user to login
-    if not request.user.is_authenticated():
-        return render(request, 'VLA/login.html')
-    else:
-        return render(request, 'VLA/question.html', context_dict)
-
-# Login and register views
+# Login, register, and profile views
 def register(request):
     # A boolean value for telling the template whether the registration was successful.
     # Set to False initially. Code changes value to True when registration succeeds.
@@ -649,11 +476,6 @@ def register(request):
             profile = profile_form.save(commit=False)
             profile.user = user
 
-            # Did the user provide a profile picture?
-            # If so, we need to get it from the input form and put it in the UserProfile model.
-            #if 'picture' in request.FILES:
-            #    profile.picture = request.FILES['picture']
-
             # Now we save the UserProfile model instance.
             profile.save()
 
@@ -664,7 +486,7 @@ def register(request):
         # Print problems to the terminal.
         # They'll also be shown to the user.
         else:
-            print user_form.errors#, profile_form.errors
+            print user_form.errors, profile_form.errors
 
     # Not a HTTP POST, so we render our form using two ModelForm instances.
     # These forms will be blank, ready for user input.
@@ -713,7 +535,37 @@ def user_login(request):
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render(request, 'VLA/login.html')
+
+def profile(request, user_name_url):
+    # Display course list in sidebar
+    cour_list = get_course_list()
+    context_dict = {'cour_list': cour_list}
+    user_name = user_name_url.replace('_', ' ')
     
+    
+    # Set searched flags to false and get complete question and definition lists
+    context_dict['def_searched'] = False
+    context_dict['def_list'] = Node.objects.all()
+    context_dict['question_searched'] = False
+    context_dict['question_list'] = AnswerWithQuestion.objects.all()
+    try:
+        if not User.objects.get(username=user_name):
+            return render(request, 'VLA/login.html')
+        else:
+            this_user = User.objects.get(username=user_name)
+    except User.DoesNotExist:
+        pass
+    
+    try: 
+        context_dict['user_info'] = UserProfile.objects.get(user=this_user)
+    except UserProfile.DoesNotExist:
+        context_dict['user_info'] = ''
+    # Check if user is logged in, if not authenticated, send user to login
+    if not request.user.is_authenticated():
+        return render(request, 'VLA/login.html')
+    else:
+        return render(request, 'VLA/profile.html', context_dict)
+
 
 @login_required
 def user_logout(request):
@@ -774,117 +626,9 @@ def get_sections(context_dict, lab):
         context_dict['results'] = results
     except Results.DoesNotExist:
         pass
-    try:
-        resultsquestions = ResultsQuestions.objects.filter(lab=lab).get(lab=lab)
-        resultsquestions.url = resultsquestions.name.replace(' ', '_')
-        context_dict['results_questions'] = resultsquestions
-    except ResultsQuestions.DoesNotExist:
-        pass
     return context_dict
 
-# Get complete question topic list and create URLs
-def get_question_topic_list():
-    question_topic_list = AnswerTopic.objects.all().order_by('topic')
-    for topic in question_topic_list:
-        topic.url = topic.topic.replace(' ', '_')
-        
-    return question_topic_list
 
-# Get complete defintiion topic list and create URLs
-def get_vocab_topic_list():
-    vocab_topic_list = VocabTopic.objects.filter(def_useful=True).order_by('topic')
-    for topic in vocab_topic_list:
-        topic.url = topic.topic.replace(' ', '_')
-        
-    return vocab_topic_list
-
-# Used in definition search
-# Get list of definitions that begin with starts_with
-# Return list of definitions of length max_results
-def get_definition_list(max_results=0, starts_with=''):
-    topic_list = VocabTopic.objects.filter(def_useful=False)
-    def_list = []
-    if starts_with:
-        def_list = Node.objects.filter(word__istartswith=starts_with).exclude(topic__in=topic_list)
-    
-    if max_results > 0:
-        if len(def_list) > max_results:
-            def_list = def_list[:max_results]
-
-    for definition in def_list:
-        definition.url = definition.word.replace(' ', '_')
-    
-    return def_list
-
-# Used in question search
-# Get list of questions that exactly match the keywords found in starts_with
-# Return list of definitions of length max_results
-def get_question_list(max_results=0, starts_with=''):
-    node_list = Node.objects.all()
-    exact_question = []
-    possible_questions = []
-    #suggested_question_list = []
-    def_list = []
-    keyword_node_list = []
-    for node in node_list:
-        def_list.append(node.word.lower())
-    
-    if starts_with:
-        keywords = re.sub(r'[^a-zA-Z0-9]',' ', starts_with).lower().split()
-        for word in keywords:
-            if word in def_list:
-                keyword_node_list.append(word.lower())
-    
-    for answer in AnswerWithQuestion.objects.all():
-        answer_keywords = []
-        for keyword in AnswerKeyword.objects.filter(answer_with_question=answer):
-            answer_keywords.append(keyword.node.word.lower())
-        if set(answer_keywords) == set(keyword_node_list):
-            exact_question.append(answer)
-        power = powerset(keyword_node_list)
-        for subset in power:
-            if subset and (set(answer_keywords) != set(keyword_node_list)) and set(subset).issubset(set(answer_keywords)):
-                possible_questions.append(answer)
-    
-     # Use set() to remove duplicates
-    possible_questions = set(possible_questions)
-    
-    for answer in exact_question:
-        answer.url = re.sub(r'([^\s\w]|_)+','', answer.question).replace(' ', '_')
-        
-    for answer in possible_questions:
-        answer.url = re.sub(r'([^\s\w]|_)+','', answer.question).replace(' ', '_')
-        
-    return {'exact_question': exact_question,
-            'possible_questions': possible_questions}
-
-# Used in definition search
-# Set searched flag to True
-# Call get_definition_list for searching and returning list of definitions
-def suggest_definition(request):
-    def_list = []
-    context_dict = {'def_searched': True}
-    starts_with = ''
-    if request.method == 'GET':
-        starts_with = request.GET['definition_suggestion']
-
-    context_dict['def_list'] = get_definition_list(8, starts_with)
-        
-    return render(request, 'VLA/definition_list.html', context_dict)
-
-# Used in question search
-# Set searched flag to True
-# Call get_question_list for searching and returning list of questions
-def suggest_question(request):
-    question_list = []
-    context_dict = {'question_searched': True}
-    starts_with = ''
-    if request.method == 'GET':
-        starts_with = request.GET['question_suggestion']
-
-    context_dict['question_list'] = get_question_list(8, starts_with)
-        
-    return render(request, 'VLA/question_list.html', context_dict)
 
 # NOT WORKING
 # Incomplete method used for extracting text elements from elements
@@ -907,16 +651,6 @@ def replace_with_definitions(elements):
         element.text_input = joined_words
     
     return elements
-
-# Returns all the subsets of the generator
-def powerset(generator):
-    if len(generator) <= 1:
-        yield generator
-        yield []
-    else:
-        for item in powerset(generator[1:]):
-            yield [generator[0]]+item
-            yield item
 
 ###
 #def GenerateDocument(request):

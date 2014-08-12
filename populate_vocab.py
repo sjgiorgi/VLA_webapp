@@ -590,6 +590,14 @@ def populate():
     add_synonym("Colorcode", node=color_code_node)
     add_synonym("Color", node=color_code_node)
     
+    multisim_node = add_node("Multisim",
+                               definition="MultiSIM is an electronic schematic capture and simulation program which is part of a suite of circuit design programs, along with NI Ultiboard. Multisim is one of the few " +
+                               "circuit design programs to employ the original Berkeley SPICE based software simulation. Multisim was originally created by a company named Electronics Workbench, which is " +
+                               "now a division of National Instruments. Multisim includes microcontroller simulation (formerly known as MultiMCU), as well as integrated import and export features to the " +
+                               "Printed Circuit Board layout software in the suite, NI Ultiboard. Multisim is widely used in academia and industry for circuits education, electronic schematic design and " +
+                               "SPICE simulation."
+                               , topic=topic_other)
+    
     # Circuit Laws
     topic_laws = add_vocab_topic(domain=circuits_domain,
                                  topic="Circuit Laws",
@@ -895,14 +903,12 @@ def populate():
                        element_type="video")
     
     awq4 = add_answer_with_question(rulebase=rb,
-                                    question="How to use a multimeter")
+                                    question="What is a potentiometer?")
     awq4.topic.add(equipment, hardware, simulation)
     add_answer_keyword(answer_with_question=awq4,
-                       node=how_node)
+                       node=what_node)
     add_answer_keyword(answer_with_question=awq4,
-                       node=use_node)
-    add_answer_keyword(answer_with_question=awq4,
-                       node=multimeter_node)
+                       node=potentiometer_node)
     
     awq5 = add_answer_with_question(rulebase=rb,
                                     question="What is superposition")
@@ -1088,6 +1094,22 @@ def populate():
                        video_input="",
                        element_type="text")
     
+    awq15 = add_answer_with_question(rulebase=rb,
+                                    question="How to use Multisim")
+    awq15.topic.add(simulation, VLA)
+    add_answer_keyword(answer_with_question=awq15,
+                       node=how_node)
+    add_answer_keyword(answer_with_question=awq15,
+                       node=use_node)
+    add_answer_keyword(answer_with_question=awq15,
+                       node=multisim_node)
+    add_answer_element(answer_with_question=awq15, 
+                       text_input="",
+                       image_input=None,
+                       equation_input="",
+                       video_input="http://www.youtube.com/embed/J8i3VLGJpQg",
+                       element_type="video")
+    
     # Print out what we have added to the user.
     for vd in VocabDomain.objects.all():
         for vt in VocabTopic.objects.filter(domain=vd):
@@ -1150,6 +1172,5 @@ def add_answer_element(answer_with_question, text_input, image_input,
 if __name__ == '__main__':
     print "Starting VOCAB DOMAIN population script..."
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'VLA_project.settings')
-    from VLA.models import VocabDomain, VocabTopic, Node, Synonym
-    from VLA.models import Rulebase, AnswerWithQuestion, AnswerTopic, AnswerElement, AnswerKeyword
+    from tutor.models import *
     populate()

@@ -12,20 +12,17 @@
 <div class="hero-unit">
     <h1>{{ course.subj }} {{ course.course_number }}: {{ course.name }}</h1>
     <h2>Lab {{ lab.lab_number }}: {{ results.name }}</h2>
-    {% if results_elements %}
-    {% for element in results_elements %}
-        {% if element.element_type == 'text' %}
-            <p>{{ element.text_input}}</p>
-        {% elif element.element_type == 'image' %}
-            <p><center><img src="{% static element.image_input %}"></center></p>
-        {% elif element.element_type == 'latex' %}
-            <p><center>$${{ element.equation_input}}$$</center></p>
-        {% elif element.element_type == 'equation' %}
-            <p><center>{{ element.equation_input}}</center></p>
-        {% endif %}
-    {% endfor %}
+    {% if results_questions %}
+        <ol>
+        {% for question in results_questions %}
+            {% if question.answer_type == 'text' %}
+                <li>{{ question.question}}</li>
+            {% elif question.answer_type == 'table' %}
+                <p>THIS SHOULD BE A TABLE</p>
+            {% endif %}
+        {% endfor %}
+        </ol>
     {% endif %}
-    
     {% if not results.is_completed %}
         <form method="post" action="{% url 'results' course.url lab.url results.url %}">
             {% csrf_token %}

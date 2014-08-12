@@ -12,16 +12,13 @@
     {% if question_topic %}
         <ul class="nav nav-list"class="nav nav-list">
         {% for question in question_topic %}
-            <b><a href="{% url 'question' question.url %}">{{ question.question }}</a></b>
-            <ul class="nav nav-list"class="nav nav-list">
-                <li>There is currently no answer for this question. </li>
-            </ul>
+            <p><b><a href="{% url 'question' question.url %}">{{ question.question }}?</a></b></p>
         {% endfor %}
         </ul>
     {% else %}
     There are no questions in this category.
     {% endif %}
     <ul class="nav nav-list"class="nav nav-list">&nbsp;</ul>
-    <a href="/VLA/help/">Go to Help</a>
+    <a class="btn" href="/VLA/help/">Go to Help</a>
 </div>
 {% endblock %}

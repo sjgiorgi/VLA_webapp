@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from tutor.models import Node, AnswerWithQuestion
 
 class Course(models.Model):
     # course info
@@ -43,7 +44,7 @@ class Course(models.Model):
     
 class Laboratory(models.Model):
     course = models.ForeignKey(Course)
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, unique=True)
     start_date = models.DateTimeField('Date Assigned', blank=True, null=True)
     due_date = models.DateTimeField('Date Due', blank=True, null=True)
     is_completed = models.BooleanField(default=False)
@@ -69,7 +70,7 @@ class LabEquipment(models.Model):
 
 # The following classes are needed for each Laboratory  
 class Theory(models.Model):
-    lab = models.ForeignKey(Laboratory)
+    lab = models.OneToOneField(Laboratory)
     name = models.CharField(max_length=128)
     is_completed = models.BooleanField(default=False)
     
@@ -82,7 +83,7 @@ class TheoryElement(models.Model):
     number = models.IntegerField(default=0)
     text_input = models.TextField(blank=True)
     image_input = models.FileField(upload_to='VLA/static/VLA/images/', blank=True)
-    equation_input = models.CharField(max_length=64, blank=True)
+    equation_input = models.CharField(max_length=128, blank=True)
     video_input = models.CharField(max_length=64, blank=True)
     TYPE_CHOICES = (
         ('text', 'text'),
@@ -91,6 +92,7 @@ class TheoryElement(models.Model):
         ('latex', 'latex'),
         ('video', 'video'),
         ('table', 'table'),
+        ('caption', 'caption'),
     )
     element_type = models.CharField(choices=TYPE_CHOICES, max_length=8)
     
@@ -98,7 +100,7 @@ class TheoryElement(models.Model):
         return self.name
     
 class TheoryTest(models.Model):
-    lab = models.ForeignKey(Laboratory)
+    lab = models.OneToOneField(Laboratory)
     name = models.CharField(max_length=128)
     is_completed = models.BooleanField(default=False)
     
@@ -121,7 +123,7 @@ class TheoryTestQuestion(models.Model):
         return self.question
     
 class Simulation(models.Model):
-    lab = models.ForeignKey(Laboratory)
+    lab = models.OneToOneField(Laboratory)
     name = models.CharField(max_length=128)
     is_completed = models.BooleanField(default=False)
     
@@ -134,7 +136,7 @@ class SimulationElement(models.Model):
     number = models.IntegerField(default=0)
     text_input = models.TextField(blank=True)
     image_input = models.FileField(upload_to='static/', blank=True)
-    equation_input = models.CharField(max_length=256, blank=True)
+    equation_input = models.CharField(max_length=128, blank=True)
     video_input = models.CharField(max_length=64, blank=True)
     TYPE_CHOICES = (
         ('text', 'text'),
@@ -143,6 +145,7 @@ class SimulationElement(models.Model):
         ('latex', 'latex'),
         ('video', 'video'),
         ('table', 'table'),
+        ('caption', 'caption'),
     )
     element_type = models.CharField(choices=TYPE_CHOICES, max_length=8)
     
@@ -150,7 +153,7 @@ class SimulationElement(models.Model):
         return self.name
     
 class SimulationTest(models.Model):
-    lab = models.ForeignKey(Laboratory)
+    lab = models.OneToOneField(Laboratory)
     name = models.CharField(max_length=128)
     is_completed = models.BooleanField(default=False)
     
@@ -173,7 +176,7 @@ class SimulationTestQuestion(models.Model):
         return self.question
     
 class Hardware(models.Model):
-    lab = models.ForeignKey(Laboratory)
+    lab = models.OneToOneField(Laboratory)
     name = models.CharField(max_length=128, unique=True)
     is_completed = models.BooleanField(default=False)
     
@@ -186,7 +189,7 @@ class HardwareElement(models.Model):
     number = models.IntegerField(default=0)
     text_input = models.TextField(blank=True)
     image_input = models.FileField(upload_to='static/', blank=True)
-    equation_input = models.CharField(max_length=64, blank=True)
+    equation_input = models.CharField(max_length=128, blank=True)
     video_input = models.CharField(max_length=64, blank=True)
     TYPE_CHOICES = (
         ('text', 'text'),
@@ -195,6 +198,7 @@ class HardwareElement(models.Model):
         ('latex', 'latex'),
         ('video', 'video'),
         ('table', 'table'),
+        ('caption', 'caption'),
     )
     element_type = models.CharField(choices=TYPE_CHOICES, max_length=8)
     
@@ -202,7 +206,7 @@ class HardwareElement(models.Model):
         return self.name
 
 class Results(models.Model):
-    lab = models.ForeignKey(Laboratory)
+    lab = models.OneToOneField(Laboratory)
     name = models.CharField(max_length=128)
     is_completed = models.BooleanField(default=False)
     
@@ -210,17 +214,28 @@ class Results(models.Model):
         return self.name
     
 class ResultsQuestions(models.Model):
-    lab = models.ForeignKey(Laboratory)
-    name = models.CharField(max_length=128)
-    is_completed = models.BooleanField(default=False)
+    results = models.ForeignKey(Results)
+    question = models.CharField(max_length=128)
+    answer_text = models.TextField(blank=True)
+    is_answered = models.BooleanField(default=False)
+    TYPE_CHOICES = (
+        ('text', 'text'),
+        ('table', 'table'),
+    )
+    answer_type = models.CharField(choices=TYPE_CHOICES, max_length=8)
     
     def __unicode__(self):
         return self.name
+    
 
 ### User Classes
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
+    
+    first_name = models.CharField(max_length=64, help_text="Please enter your first name.", blank=False)
+    last_name = models.CharField(max_length=64, help_text="Please enter your last name.", blank=False)
+    TUid =  models.PositiveIntegerField(help_text="Please enter your TUid.", blank=False)
     
     def __unicode__(self):
         return self.user.username
@@ -228,101 +243,9 @@ class UserProfile(models.Model):
 # Class for storing User Test answers
 class StudentSitting(models.Model):
     user = models.ForeignKey(User)
+    time_stamp = models.TimeField(blank=True, null=True)
     
     def __unicode__(self):
         return self.name
     
-### Help Module classes: VocabDomain and Rulebase
 
-# The following classes are needed for the VocabDomain
-class VocabDomain(models.Model):
-    name = models.CharField(max_length=128)
-    
-    def __unicode__(self):
-        return self.name
-
-class VocabTopic(models.Model):
-    topic = models.CharField(max_length=128)
-    domain = models.ForeignKey(VocabDomain)
-    def_useful = models.BooleanField(default=False)
-    
-    def __unicode__(self):
-        return self.topic
-    
-class Node(models.Model):
-    topic = models.ForeignKey(VocabTopic)
-    word = models.CharField(max_length=128)
-    definition = models.CharField(max_length=256)
-    views = models.IntegerField(default=0)
-    date_added = models.DateTimeField('date added')
-    
-    def __unicode__(self):
-        return self.word
-    
-class Synonym(models.Model):
-    word = models.CharField(max_length=128)
-    node = models.ForeignKey(Node)
-    
-    def __unicode__(self):
-        return self.word
-
-# The following classes are for the Rulebase
-class Rulebase(models.Model):
-    name = models.CharField(max_length=128)
-    
-    def __unicode__(self):
-        return self.name
-  
-class AnswerTopic(models.Model):
-    rulebase = models.ForeignKey(Rulebase)
-    TYPE_CHOICES = (
-        ('Safety', 'Safety'),
-        ('Equipment', 'Equipment'),
-        ('VLA', 'VLA'),
-        ('Simulation', 'Simulation'),
-        ('Hardware', 'Hardware'),
-        ('Theory', 'Theory'),
-        ('General', 'General'),
-    )
-    topic = models.CharField(choices=TYPE_CHOICES, max_length=10)
-    
-    def __unicode__(self):
-        return self.topic
-  
-class AnswerWithQuestion(models.Model):
-    rulebase = models.ForeignKey(Rulebase)
-    topic = models.ManyToManyField(AnswerTopic)
-    question = models.CharField(max_length=128)
-    views = models.IntegerField(default=0)
-    date_added = models.DateTimeField('date added')
-    
-    def __unicode__(self):
-        return self.question
-    
-class AnswerElement(models.Model):
-    answer_with_question = models.ForeignKey(AnswerWithQuestion)
-    text_input = models.TextField(blank=True)
-    image_input = models.FileField(upload_to='static/', blank=True)
-    equation_input = models.CharField(max_length=64, blank=True)
-    video_input = models.CharField(max_length=64, blank=True)
-    TYPE_CHOICES = (
-        ('text', 'text'),
-        ('image', 'image'),
-        ('equation', 'equation'),
-        ('latex', 'latex'),
-        ('table', 'table'),
-        ('video', 'video'),
-    )
-    element_type = models.CharField(choices=TYPE_CHOICES, max_length=8)
-    
-    def __unicode__(self):
-        return self.answer_with_question.question
-    
-class AnswerKeyword(models.Model):
-    answer_with_question = models.ForeignKey(AnswerWithQuestion)
-    node = models.ForeignKey(Node)
-    
-    def __unicode__(self):
-        return self.node.word
-
-    

@@ -1,4 +1,6 @@
+from __future__ import absolute_import
 from django.contrib import admin
+from tutor.models import *
 from VLA.models import *
 
 class SynonymInline(admin.StackedInline):

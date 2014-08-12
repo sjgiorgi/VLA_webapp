@@ -15,42 +15,41 @@
   ------------------
   
   LASTEST COMMIT:
+  - added South
+  - make help ('tutor') module app and VLA app separate
+  - changed question search to omit subsets consisting of just question words (what, how, etc.)
+  - added OneToOne fields for Laboratory and Theory, TheoryTest, etc.
+  - add Results section
+  - added Ohm's Law lab to EE1 and all of Dr. Obeid's labs to EE2
+  - add user profile page
+  - fixed password confirmation field
+  - change imports to explicit relative import type
+  
+  PREVIOUS COMMITS:
   - allow TextFields to contain HTML
-  - added 'video' option for TheoryElement, SimulationElement, and HardElement
+  - added 'video' option for TheoryElement, SimulationElement, and HardwareElement
   - added equipment to Laboratory
   - added powerset search for Q&A
   
-  PREVIOUS COMMITS:
-  - fully commented views.py
-  - fixed bugs found by Zach
-    - Size of green check marks
-    - Selecting 'Yes' at end of Theory, Simulation, and Hardware sections now working
-  
-  TODO:
-  - change 'VLA.* import' to more general import (remove VLA)
-  - fix password confirmation field
+  TODO (PRIORITY):
   - create user profiles / track user data 
-  - fix image uploading for 'element' classes
-  - add Results section
-  - add Results Questions section (is this actually needed???)
+  - add table option to TheoryElement, SimulationElement, and HardwareElement
   - generate Word file
-  - add 'question category' to Rulebase 
   - finish Rulebase search
     - include synonyms in search
+    - search for pairs of words, ex: 'function generator', 'dc source'
+                          (is this needed? will searching synonyms take care of this?)
+    
+  TODO:
+  - fix image uploading for 'element' classes
   - finish python script for filling Vocab Domain and Rulebase database
-  - finish python script for Ohms Law Lab
   - switch database to PostgreSQL
-  - make help module app and VLA app separate
   - include mathjax.js instead of url (in base.html)
-  - allow Course, Lab, etc. names to include symbols (example: Ohm's Law)
+  - allow Course, Lab, etc. names to include symbols, ex: Ohm's Law
   - customize admin panel
   - create class "nav pull-left" to align Temple and CSNAP logo
-  - add table option to TheoryElement, SimulationElement, and HardwareElement
-  - use South for porting databases
-  - add user panel
   - add forum
-  - add multisim page
-  - add OneToOne fields for Laboratory and Theory, TheoryTest, etc. (in general, check where we can use OneToOne fields)
+  - ability for user to change profile info and password
 
  USABILITY IMPROVEMENTS:
   - Do something to fill white space on larger pages (Consider having the side bar scroll down with the page)
@@ -70,6 +69,7 @@
   
   Python version 2.7.1
   Django version 1.6.5
+  South version 1.0
   
 
   Installation

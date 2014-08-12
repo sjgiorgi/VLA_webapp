@@ -22,6 +22,10 @@
             <p><center>$${{ element.equation_input}}$$</center></p>
         {% elif element.element_type == 'equation' %}
             <p><center>{{ element.equation_input}}</center></p>
+        {% elif element.element_type == 'table' %}
+            <p><center>THERE WILL BE A TABLE HERE</center></p>
+        {% elif element.element_type == 'caption' %}
+            <p><center><b>{{ element.text_input}}</b></center></p>
         {% endif %}
     {% endfor %}
     {% endif %}
