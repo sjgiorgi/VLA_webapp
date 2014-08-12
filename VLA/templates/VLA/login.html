@@ -1,7 +1,7 @@
 {% extends 'VLA/base.html' %}
 
 {% block title %}VLA: Login{% endblock %}
-
+{% block sidebar_block %}{% endblock %}
 {% block body_block %}
 <div class="hero-unit">
     <h1>Login to VLA</h1>
@@ -11,7 +11,7 @@
         <h2 class="form-signin-heading">Please sign in</h2>
         {% csrf_token %}
 
-        {% if bad_details %}
+        {% if error %}
         <p><strong>Your username and/or password were incorrect!</strong></p>
         {% elif disabled_account %}
         <p><strong>Your VLA account is currently disabled; we can't log you in!</strong></p>

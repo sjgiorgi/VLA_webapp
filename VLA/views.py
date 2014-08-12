@@ -523,18 +523,20 @@ def user_login(request):
                 return HttpResponseRedirect('/VLA/')
             else:
                 # An inactive account was used - no logging in!
-                return HttpResponse("Your VLA account is disabled.")
+                context_dict = {'disabled_account': True}
+                return render(request, 'VLA/login.html', context_dict)
         else:
             # Bad login details were provided. So we can't log the user in.
-            print "Invalid login details: {0}, {1}".format(username, password)
-            return HttpResponse("Invalid login details supplied.")
+            context_dict = {'error': True}
+            return render(request, 'VLA/login.html', context_dict)
 
     # The request is not a HTTP POST, so display the login form.
     # This scenario would most likely be a HTTP GET.
     else:
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
-        return render(request, 'VLA/login.html')
+        context_dict = {'error': False, 'disabled_account': False}
+        return render(request, 'VLA/login.html', context_dict)
 
 def profile(request, user_name_url):
     # Display course list in sidebar

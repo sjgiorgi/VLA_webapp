@@ -877,7 +877,12 @@ def populate():
                        node=what_node)
     add_answer_keyword(answer_with_question=awq1,
                        node=capacitor_node)
-
+    add_answer_element(answer_with_question=awq1, 
+                       text_input="",
+                       image_input=None,
+                       equation_input="",
+                       video_input="http://www.youtube.com/embed/CmII_BmOf0I",
+                       element_type="video")
 
     awq2 = add_answer_with_question(rulebase=rb,
                                     question="What is a resistor")
@@ -917,6 +922,12 @@ def populate():
                        node=what_node)
     add_answer_keyword(answer_with_question=awq5,
                        node=superposition_node)
+    add_answer_element(answer_with_question=awq5, 
+                       text_input="",
+                       image_input=None,
+                       equation_input="",
+                       video_input="https://www.youtube.com/embed/Szd7QqjP2-k",
+                       element_type="video")
     
     awq6 = add_answer_with_question(rulebase=rb,
                                     question="How to read resistor color code")
@@ -927,6 +938,12 @@ def populate():
                        node=resistor_node)
     add_answer_keyword(answer_with_question=awq6,
                        node=color_code_node)
+    add_answer_element(answer_with_question=awq6, 
+                       text_input="",
+                       image_input=None,
+                       equation_input="",
+                       video_input="https://www.youtube.com/embed/SjlnW5g9np4",
+                       element_type="video")
     
     awq7 = add_answer_with_question(rulebase=rb,
                                     question="How to use a Breadboard")

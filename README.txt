@@ -16,6 +16,8 @@
   
   LASTEST COMMIT:
   - added South
+  - Make it so login page doesn't redirect on failure to login
+  - Remove side bar on login page or add content to it
   - make help ('tutor') module app and VLA app separate
   - changed question search to omit subsets consisting of just question words (what, how, etc.)
   - added OneToOne fields for Laboratory and Theory, TheoryTest, etc.
