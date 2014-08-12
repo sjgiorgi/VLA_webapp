@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .models import *
-from VLA.models import *
+from VLA.models import Course
 
 # View for displaying main Help page
 # Gets all definitions and questions

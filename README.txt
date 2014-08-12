@@ -24,6 +24,7 @@
   - add user profile page
   - fixed password confirmation field
   - change imports to explicit relative import type
+  - Redirect /vla/ to /VLA/
   
   PREVIOUS COMMITS:
   - allow TextFields to contain HTML
@@ -55,7 +56,6 @@
   - Do something to fill white space on larger pages (Consider having the side bar scroll down with the page)
   - Make about page better (Add pictures, change formatting)
   - Fix alignment along top bar
-  - Redirect /vla/ to /VLA/ to reduce 404s
   - Reduce uneven or unsymmetrical white space
   - Analyze good ranking websites to get a good idea of what constitutes good design
     - See: BitBucket top bar, Facebook/YouTube white space management, icon placement, etc. 

@@ -6,6 +6,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', 'VLA_project.views.home', name='home'),
     url(r'^VLA/', include('VLA.urls')),
+    url(r'^vla/', include('VLA.urls')),
     url(r'^help/', include('tutor.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
