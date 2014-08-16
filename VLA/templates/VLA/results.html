@@ -23,7 +23,8 @@
         {% endfor %}
         </ol>
     {% endif %}
-    {% if not results.is_completed %}
+    <hr>
+    {% if not student_progress.results_finished %}
         <form method="post" action="{% url 'results' course.url lab.url results.url %}">
             {% csrf_token %}
             <h2>Are you finished with the Results? <input class="btn btn-primary" type="submit" name="submit" value="Yes"/></h2>

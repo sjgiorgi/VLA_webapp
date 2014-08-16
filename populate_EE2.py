@@ -95,7 +95,7 @@ def populate():
     digilent_board_hardware = add_hardware(lab=digilent_board_intro, name="Digilent Board Hardware")
     
     add_hardware_element(hardware=digilent_board_hardware, name="digilent board hardware 1", number=1,
-                         text_input="<h4>Part 1. MEET YOUR DILIGENT BOARD</h4>",
+                         text_input="<h4>Part 1. MEET YOUR DIGILENT BOARD</h4>",
                          image_input=None, equation_input="", video_input="", 
                          element_type='text')
     add_hardware_element(hardware=digilent_board_hardware, name="digilent board hardware 2", number=2,

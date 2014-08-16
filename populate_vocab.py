@@ -899,7 +899,6 @@ def populate():
                        node=what_node)
     add_answer_keyword(answer_with_question=awq3,
                        node=inductor_node)
-    
     add_answer_element(answer_with_question=awq3, 
                        text_input="",
                        image_input=None,
@@ -908,7 +907,7 @@ def populate():
                        element_type="video")
     
     awq4 = add_answer_with_question(rulebase=rb,
-                                    question="What is a potentiometer?")
+                                    question="What is a potentiometer")
     awq4.topic.add(equipment, hardware, simulation)
     add_answer_keyword(answer_with_question=awq4,
                        node=what_node)

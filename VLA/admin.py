@@ -2,6 +2,7 @@ from __future__ import absolute_import
 from django.contrib import admin
 from tutor.models import *
 from VLA.models import *
+from student.models import *
 
 class SynonymInline(admin.StackedInline):
     model = Synonym
@@ -91,3 +92,5 @@ admin.site.register(AnswerKeyword)
 admin.site.register(AnswerTopic)
 
 admin.site.register(UserProfile)
+admin.site.register(CoursePermission)
+admin.site.register(LabProgress)

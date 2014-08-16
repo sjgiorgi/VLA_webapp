@@ -14,7 +14,7 @@
     <h2>Lab {{ lab.lab_number }}: {{ theorytest.name }}</h2>
     
     {% if not questions_filled %}<h3>You must answer all questions!</h3>{% endif %}
-    {% if theorytest.is_completed and just_finished %}
+    {% if student_progress.theory_test_finished and just_finished %}
         {% if theorytest_questions %}
             <ol>
             {% for question in theorytest_questions %}
@@ -67,7 +67,7 @@
             {% endfor %}
             </ol>
         {% endif %}
-    {% elif theorytest.is_completed and not just_finished %}
+    {% elif student_progress.theory_test_finished and not just_finished %}
         {% if theorytest_questions %}
             <ol>
                 {% for question in theorytest_questions %}
@@ -121,8 +121,8 @@
             <input type="submit" value="Submit Answers" />
             </form>
     {% endif %}
-    <P>
     {% endif %}
+    <hr>
     <div class="row-fluid">
         {% if theory %}
             <div class="span6">

@@ -29,8 +29,8 @@
         {% endif %}
     {% endfor %}
     {% endif %}
-    
-    {% if not theory.is_completed %}
+    <hr>
+    {% if not student_progress.theory_finished %}
         <form method="post" action="{% url 'theory' course.url lab.url theory.url %}">
             {% csrf_token %}
             <h2>Are you finished with the Theory? <input class="btn btn-primary" type="submit" name="submit" value="Yes"/></h2>

@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'VLA',
     'tutor',
+    'student',
     'south',
 )
 
@@ -83,3 +84,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'VLA/media')#'/Users/salvatoregiorgi/Documents/django_examples/VLA_project/VLA/media/'
+MEDIA_URL = '/media/'

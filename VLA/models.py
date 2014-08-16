@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from tutor.models import Node, AnswerWithQuestion
 
+
 class Course(models.Model):
     # course info
     name = models.CharField(max_length=128, unique=True)
@@ -47,7 +48,6 @@ class Laboratory(models.Model):
     name = models.CharField(max_length=128, unique=True)
     start_date = models.DateTimeField('Date Assigned', blank=True, null=True)
     due_date = models.DateTimeField('Date Due', blank=True, null=True)
-    is_completed = models.BooleanField(default=False)
     lab_number = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
     
@@ -72,7 +72,6 @@ class LabEquipment(models.Model):
 class Theory(models.Model):
     lab = models.OneToOneField(Laboratory)
     name = models.CharField(max_length=128)
-    is_completed = models.BooleanField(default=False)
     
     def __unicode__(self):
         return self.name
@@ -102,7 +101,6 @@ class TheoryElement(models.Model):
 class TheoryTest(models.Model):
     lab = models.OneToOneField(Laboratory)
     name = models.CharField(max_length=128)
-    is_completed = models.BooleanField(default=False)
     
     def __unicode__(self):
         return self.name
@@ -125,7 +123,6 @@ class TheoryTestQuestion(models.Model):
 class Simulation(models.Model):
     lab = models.OneToOneField(Laboratory)
     name = models.CharField(max_length=128)
-    is_completed = models.BooleanField(default=False)
     
     def __unicode__(self):
         return self.name
@@ -155,7 +152,6 @@ class SimulationElement(models.Model):
 class SimulationTest(models.Model):
     lab = models.OneToOneField(Laboratory)
     name = models.CharField(max_length=128)
-    is_completed = models.BooleanField(default=False)
     
     def __unicode__(self):
         return self.name
@@ -178,7 +174,6 @@ class SimulationTestQuestion(models.Model):
 class Hardware(models.Model):
     lab = models.OneToOneField(Laboratory)
     name = models.CharField(max_length=128, unique=True)
-    is_completed = models.BooleanField(default=False)
     
     def __unicode__(self):
         return self.name
@@ -208,7 +203,6 @@ class HardwareElement(models.Model):
 class Results(models.Model):
     lab = models.OneToOneField(Laboratory)
     name = models.CharField(max_length=128)
-    is_completed = models.BooleanField(default=False)
     
     def __unicode__(self):
         return self.name
@@ -226,26 +220,3 @@ class ResultsQuestions(models.Model):
     
     def __unicode__(self):
         return self.name
-    
-
-### User Classes
-
-class UserProfile(models.Model):
-    user = models.OneToOneField(User)
-    
-    first_name = models.CharField(max_length=64, help_text="Please enter your first name.", blank=False)
-    last_name = models.CharField(max_length=64, help_text="Please enter your last name.", blank=False)
-    TUid =  models.PositiveIntegerField(help_text="Please enter your TUid.", blank=False)
-    
-    def __unicode__(self):
-        return self.user.username
-    
-# Class for storing User Test answers
-class StudentSitting(models.Model):
-    user = models.ForeignKey(User)
-    time_stamp = models.TimeField(blank=True, null=True)
-    
-    def __unicode__(self):
-        return self.name
-    
-

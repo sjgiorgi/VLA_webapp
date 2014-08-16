@@ -1,31 +1,17 @@
-from __future__ import absolute_import
 from django import forms
 from django.contrib.auth.models import User
-
-from .models import Laboratory, Course, UserProfile
-
-# Creates a User with usermane, email address, and password
-class UserForm(forms.ModelForm):
-    username = forms.CharField(max_length=50, help_text="Please enter a username.")
-    email = forms.CharField(help_text="Please enter your email.")
-    password = forms.CharField(max_length=50, widget=forms.PasswordInput(), help_text="Please enter a password.")
-    password2 = forms.CharField(max_length=50, widget=forms.PasswordInput(), help_text="Repeat your password")
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'password', 'password2')
-    
-    def clean_password(self):
-        if self.data['password'] != self.data['password2']:
-            raise forms.ValidationError('Passwords are not the same')
-        return self.data['password']
 
 
 # Creates a profile for the User with first name, last name, and TUid.
 # This profile information is used when generating a Word Document to
 # submit for an official Lab Report which is turned in to the TA.
-class UserProfileForm(forms.ModelForm):    
-    class Meta:
-        model = UserProfile
-        fields = ['first_name', 'last_name', 'TUid' ]
+class UserSimulationImage(forms.Form):
+    image = forms.FileField(label='Select a file',
+                            help_text='Must be a.png file')
     
-    
+    def clean_file(self):
+        file = self.cleaned_data.get("file", False)
+        filetype = magic.from_buffer(file.read())
+        if not "PNG" in filetype:
+            raise ValidationError("File is not PNG.")
+        return file

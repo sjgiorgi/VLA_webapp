@@ -15,10 +15,13 @@
   ------------------
   
   LASTEST COMMIT:
+  - finished Rulebase search (now includes synonyms in search)
+  - create user profiles / track user data
+  - added populate_users.py script
   - added South
   - Make it so login page doesn't redirect on failure to login
   - Remove side bar on login page or add content to it
-  - make help ('tutor') module app and VLA app separate
+  - separate apps (tutor, VLA, and student)
   - changed question search to omit subsets consisting of just question words (what, how, etc.)
   - added OneToOne fields for Laboratory and Theory, TheoryTest, etc.
   - add Results section
@@ -27,7 +30,8 @@
   - fixed password confirmation field
   - change imports to explicit relative import type
   - Redirect /vla/ to /VLA/
-  
+  - allow saving of simulation image to be dynamic (save to folder titled after username and lab name)
+
   PREVIOUS COMMITS:
   - allow TextFields to contain HTML
   - added 'video' option for TheoryElement, SimulationElement, and HardwareElement
@@ -35,24 +39,20 @@
   - added powerset search for Q&A
   
   TODO (PRIORITY):
-  - create user profiles / track user data 
   - add table option to TheoryElement, SimulationElement, and HardwareElement
   - generate Word file
-  - finish Rulebase search
-    - include synonyms in search
-    - search for pairs of words, ex: 'function generator', 'dc source'
-                          (is this needed? will searching synonyms take care of this?)
-    
+  - add forum
+  - add Zach's image processing script to the views
+   
   TODO:
-  - fix image uploading for 'element' classes
   - finish python script for filling Vocab Domain and Rulebase database
   - switch database to PostgreSQL
   - include mathjax.js instead of url (in base.html)
   - allow Course, Lab, etc. names to include symbols, ex: Ohm's Law
   - customize admin panel
   - create class "nav pull-left" to align Temple and CSNAP logo
-  - add forum
   - ability for user to change profile info and password
+  - add synonym for each word in multi-word nodes (ex: 'function' and 'generator' for 'function generator')
 
  USABILITY IMPROVEMENTS:
   - Do something to fill white space on larger pages (Consider having the side bar scroll down with the page)
@@ -64,7 +64,8 @@
     - List of high ranking websites: http://www.alexa.com/topsites
 
  BUGS:
-  - 
+  - Theory and Simulation Test don't store user responses when page is reloaded after test taken
+  - if Element of image type is uploaded through admin panel, url does not point correctly to image
 
   Documentation
   -------------

@@ -1,57 +1,60 @@
-from __future__ import absolute_import
+#from __future__ import absolute_import
 import re
-from django.shortcuts import render, get_object_or_404, get_list_or_404
-from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from django.contrib.auth import authenticate
 
 from .models import *
 from VLA.models import Course
+from student.models import CoursePermission
 
 # View for displaying main Help page
 # Gets all definitions and questions
 # as well as most viewed and recently added questions and definitions
 def help(request):
-    # Display Course list in sidebar
-    cour_list = get_course_list()
-    context_dict = {'cour_list': cour_list}
-    
-    # Get most viewed definitions and questions
-    top_def_list = Node.objects.order_by('-views')[:5]
-    for definition in top_def_list:
-        definition.url = definition.word.replace(' ', '_')
-    context_dict['top_def_list'] = top_def_list
-    top_question_list = AnswerWithQuestion.objects.order_by('-views')[:5]
-    for question in top_question_list:
-        question.url = re.sub(r'([^\s\w]|_)+','', question.question).replace(' ', '_')
-    context_dict['top_question_list'] = top_question_list
-    
-    # Get recently added definitions and questions
-    topic_list = VocabTopic.objects.filter(def_useful=False)
-    recent_def_list = Node.objects.all().exclude(topic__in=topic_list).order_by('-date_added')[:5]
-    for definition in recent_def_list:
-        definition.url = definition.word.replace(' ', '_')
-    context_dict['recent_def_list'] = recent_def_list
-    recent_question_list = AnswerWithQuestion.objects.all().order_by('-date_added')[:5]
-    for question in recent_question_list:
-        question.url = re.sub(r'([^\s\w]|_)+','', question.question).replace(' ', '_')
-    context_dict['recent_question_list'] = recent_question_list
-    # NEED TO ADD GET RECENT QUESTIONS SECTION
-    
-    # Set searched flags to false and get complete question and definition lists
-    context_dict['def_searched'] = False
-    context_dict['def_list'] = Node.objects.all()
-    context_dict['question_searched'] = False
-    context_dict['question_list'] = AnswerWithQuestion.objects.all()
-    
-    # Get definition and question topics
-    context_dict['def_topics'] = get_vocab_topic_list()
-    context_dict['question_topics'] = get_question_topic_list()
-    
     # Check if user is logged in, if not authenticated, send user to login
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:
+        # Get user and username
+        user = request.user
+        username = request.user.username
+        
+        # Display Course list in sidebar
+        cour_list = get_course_list(user)
+        context_dict = {'cour_list': cour_list}
+        
+        # Get most viewed definitions and questions
+        top_def_list = Node.objects.order_by('-views')[:5]
+        for definition in top_def_list:
+            definition.url = definition.word.replace(' ', '_')
+        context_dict['top_def_list'] = top_def_list
+        top_question_list = AnswerWithQuestion.objects.order_by('-views')[:5]
+        for question in top_question_list:
+            question.url = re.sub(r'([^\s\w]|_)+','', question.question).replace(' ', '_')
+        context_dict['top_question_list'] = top_question_list
+        
+        # Get recently added definitions and questions
+        topic_list = VocabTopic.objects.filter(def_useful=False)
+        recent_def_list = Node.objects.all().exclude(topic__in=topic_list).order_by('-date_added')[:5]
+        for definition in recent_def_list:
+            definition.url = definition.word.replace(' ', '_')
+        context_dict['recent_def_list'] = recent_def_list
+        recent_question_list = AnswerWithQuestion.objects.all().order_by('-date_added')[:5]
+        for question in recent_question_list:
+            question.url = re.sub(r'([^\s\w]|_)+','', question.question).replace(' ', '_')
+        context_dict['recent_question_list'] = recent_question_list
+        # NEED TO ADD GET RECENT QUESTIONS SECTION
+        
+        # Set searched flags to false and get complete question and definition lists
+        context_dict['def_searched'] = False
+        context_dict['def_list'] = Node.objects.all()
+        context_dict['question_searched'] = False
+        context_dict['question_list'] = AnswerWithQuestion.objects.all()
+        
+        # Get definition and question topics
+        context_dict['def_topics'] = get_vocab_topic_list()
+        context_dict['question_topics'] = get_question_topic_list()
+    
         context_dict['logged_in'] = True
         return render(request, 'VLA/help.html', context_dict)
 
@@ -224,18 +227,27 @@ def get_question_list(max_results=0, starts_with=''):
     node_list = Node.objects.all()
     exact_question = []
     possible_questions = []
-    #suggested_question_list = []
+    syn_list = []
     def_list = []
     keyword_node_list = []
     for node in node_list:
         def_list.append(node.word.lower())
     
+    # Find Nodes/Synonyms which correspond to keywords entered by user
+    # If found, add Node.word to keyword_node_list
     if starts_with:
         keywords = re.sub(r'[^a-zA-Z0-9]',' ', starts_with).lower().split()
-        for word in keywords:
-            if word in def_list:
-                keyword_node_list.append(word.lower())
-    
+        for node in node_list:
+            # Check if nodes are in keyword set
+            if node.word.lower() in keywords:
+                keyword_node_list.append(node.word.lower())
+            else:
+                # Check if any synonyms are in the keyword set
+                syn_list = Synonym.objects.filter(node=node)
+                for syn in syn_list:
+                    if syn.word.lower() in keywords:
+                        keyword_node_list.append(node.word.lower())
+            
     for answer in AnswerWithQuestion.objects.all():
         answer_keywords = []
         for keyword in AnswerKeyword.objects.filter(answer_with_question=answer):
@@ -244,7 +256,9 @@ def get_question_list(max_results=0, starts_with=''):
             exact_question.append(answer)
         power = powerset(keyword_node_list)
         for subset in power:
+            # ignore singleton sets which consist of action words
             if not (len(subset) == 1 and set(subset).issubset(set(['what', 'how', 'why', 'where']))):
+                # ignore the empty set and consider only proper subsets
                 if subset and (set(answer_keywords) != set(keyword_node_list)) and set(subset).issubset(set(answer_keywords)):
                     possible_questions.append(answer)
     
@@ -288,9 +302,12 @@ def suggest_question(request):
         
     return render(request, 'VLA/question_list.html', context_dict)
 
-# Get complete course list and create URLs
-def get_course_list():
-    cour_list = Course.objects.all().order_by('subj', 'course_number')
+# Get permissible course list and create URLs
+def get_course_list(user):
+    permissions = CoursePermission.objects.filter(user=user)
+    cour_list = []
+    for permission in permissions:
+        cour_list.append(permission.course)
 
     for cour in cour_list:
         cour.url = cour.name.replace(' ', '_')

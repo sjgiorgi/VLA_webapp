@@ -17,26 +17,39 @@
     {% if simulation_elements %}
     {% for element in simulation_elements %}
         {% if element.element_type == 'text' %}
-            <p>{{ element.text_input}}</p>
+            <p>{{ element.text_input }}</p>
         {% elif element.element_type == 'image' %}
             <p><center><img src="{% static element.image_input %}"></center></p>
         {% elif element.element_type == 'latex' %}
-            <p><center>$${{ element.equation_input}}$$</center></p>
+            <p><center>$${{ element.equation_input }}$$</center></p>
         {% elif element.element_type == 'equation' %}
-            <p><center>{{ element.equation_input}}</center></p>
+            <p><center>{{ element.equation_input }}</center></p>
         {% elif element.element_type == 'table' %}
             <p><center>THERE WILL BE A TABLE HERE</center></p>
         {% elif element.element_type == 'caption' %}
-            <p><center><b>{{ element.text_input}}</b></center></p>
+            <p><center><b>{{ element.text_input }}</b></center></p>
         {% endif %}
     {% endfor %}
     {% endif %}
     
-    {% if not simulation.is_completed %}
-        <form method="post" action="{% url 'simulation' course.url lab.url simulation.url %}">
+    <hr>
+    
+    {% if not student_progress.simulation_finished %}
+        <h2>Are you finished with the Simulation?</h2>
+        {% if error_message %} <h3>*You must select a PNG file*</h3>{% endif %}
+        <h4>If you used a circuit simulator other than MultiSim, please take a screen shot of your
+        circuit and upload the image to VLA's Circuit Recognizer.</h4>
+        <form action="{% url 'simulation' course.url lab.url simulation.url %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <h2>Are you finished with the Simulation? <input class="btn btn-primary" type="submit" name="submit" value="Yes"/></h2>
+            {{ image_form }}
+            <p><input type="submit" value="Upload" /></p>
         </form>
+        
+        
+    {% endif %}
+    {% if student_progress.simulation_finished %}
+        <h4>Here is your processed circuit: </h4>
+        <center><img src="{{ student_progress.sim_image.url }}"></center><P>
     {% endif %}
     <div class="row-fluid">
         {% if theorytest %}
