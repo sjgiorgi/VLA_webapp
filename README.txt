@@ -15,6 +15,10 @@
   ------------------
   
   LASTEST COMMIT:
+  - added a Lab test
+  - added prerequisites
+
+  PREVIOUS COMMITS:
   - finished Rulebase search (now includes synonyms in search)
   - create user profiles / track user data
   - added populate_users.py script
@@ -31,12 +35,6 @@
   - change imports to explicit relative import type
   - Redirect /vla/ to /VLA/
   - allow saving of simulation image to be dynamic (save to folder titled after username and lab name)
-
-  PREVIOUS COMMITS:
-  - allow TextFields to contain HTML
-  - added 'video' option for TheoryElement, SimulationElement, and HardwareElement
-  - added equipment to Laboratory
-  - added powerset search for Q&A
   
   TODO (PRIORITY):
   - add table option to TheoryElement, SimulationElement, and HardwareElement
