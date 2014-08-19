@@ -1,7 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
-from tutor.models import Node, AnswerWithQuestion
-
 
 class Course(models.Model):
     # course info
@@ -37,8 +34,6 @@ class Course(models.Model):
     TA_office_days = models.CharField(max_length=50, blank=True)
     TA_office_location = models.CharField(max_length=50, blank=True)
     TA_phone = models.CharField(max_length=128, blank=True)
-    views = models.IntegerField(default=0)
-    likes = models.IntegerField(default=0)
     
     def __unicode__(self):
         return self.name
@@ -49,7 +44,6 @@ class Laboratory(models.Model):
     start_date = models.DateTimeField('Date Assigned', blank=True, null=True)
     due_date = models.DateTimeField('Date Due', blank=True, null=True)
     lab_number = models.IntegerField(default=0)
-    views = models.IntegerField(default=0)
     
     def __unicode__(self):
         return self.name
@@ -220,3 +214,26 @@ class ResultsQuestions(models.Model):
     
     def __unicode__(self):
         return self.name
+    
+class LabTest(models.Model):
+    lab = models.OneToOneField(Laboratory)
+    name = models.CharField(max_length=128)
+    
+    def __unicode__(self):
+        return self.name
+
+class LabTestQuestion(models.Model):
+    labtest = models.ForeignKey(LabTest)
+    question = models.CharField(max_length=128)
+    answer_one = models.CharField(max_length=128)
+    answer_two = models.CharField(max_length=128)
+    answer_three = models.CharField(max_length=128, blank=True)
+    answer_four = models.CharField(max_length=128, blank=True)
+    correct_answer_number = models.IntegerField(blank=True)
+    correct_response = models.CharField(max_length=128, blank=True)
+    incorrect_response = models.CharField(max_length=128, blank=True)
+    is_answered = models.BooleanField(default=False)
+    
+    def __unicode__(self):
+        return self.question
+    

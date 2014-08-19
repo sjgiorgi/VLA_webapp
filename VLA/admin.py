@@ -57,6 +57,13 @@ class SimulationQuestionInline(admin.StackedInline):
 class SimulationTestAdmin(admin.ModelAdmin):
     inlines = [SimulationQuestionInline]
     
+class LabQuestionInline(admin.StackedInline):
+    model = LabTestQuestion
+    extra = 4
+
+class LabTestAdmin(admin.ModelAdmin):
+    inlines = [LabQuestionInline]
+    
 class AnswerKeywordInline(admin.StackedInline):
     model = AnswerKeyword
     extra = 5
@@ -79,6 +86,8 @@ admin.site.register(Hardware, HardwareAdmin)
 admin.site.register(HardwareElement)
 admin.site.register(Results)
 admin.site.register(ResultsQuestions)
+admin.site.register(LabTestQuestion)
+admin.site.register(LabTest, LabTestAdmin)
 
 admin.site.register(VocabDomain)
 admin.site.register(VocabTopic)

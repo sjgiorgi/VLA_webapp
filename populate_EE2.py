@@ -774,6 +774,25 @@ def add_results_questions(lab, name):
     rq = ResultsQuestions.objects.get_or_create(lab=lab, name=name)[0]
     return rq
 
+def add_lab_test(lab, name):
+    lt = LabTest.objects.get_or_create(lab=lab, name=name)[0]
+    return lt
+
+def add_lab_test_question(labtest, question, answer_one,
+                                 answer_two, answer_three, answer_four,
+                                 correct_answer_number, correct_response,
+                                 incorrect_response):
+    ltq = LabTestQuestion.objects.get_or_create(labtest=labtest,
+                                                       question=question,
+                                                       answer_one=answer_one,
+                                                       answer_two=answer_two,
+                                                       answer_three=answer_three,
+                                                       answer_four=answer_four,
+                                                       correct_answer_number=correct_answer_number,
+                                                       correct_response= correct_response,
+                                                       incorrect_response=incorrect_response)[0]
+    return ltq
+
 # Start execution here!
 if __name__ == '__main__':
     print "Starting VLA population script..."

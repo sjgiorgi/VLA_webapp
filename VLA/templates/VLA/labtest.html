@@ -1,7 +1,7 @@
 {% extends 'VLA/base.html' %}
 {% load staticfiles %}
 
-{% block title %}VLA: {{ lab_name }} Theory Test{% endblock %}
+{% block title %}VLA: {{ lab_name }} Laboratory Test{% endblock %}
 
 {% block sidetitle %}{{ lab_name }} Sections{% endblock %}
 {% block sidebar %}
@@ -11,16 +11,16 @@
 {% block body_block %}
 <div class="hero-unit">
     <h1>{{ course.subj }} {{ course.course_number }}: {{ course.name }}</h1>
-    <h2>Lab {{ lab.lab_number }}: {{ theorytest.name }}</h2>
+    <h2>Lab {{ lab.lab_number }}: {{ labtest.name }}</h2>
     
     {% if not questions_filled %}<h3>You must answer all questions!</h3>{% endif %}
-    {% if student_progress.theory_test_finished %}
+    {% if student_progress.lab_test_finished %}
         <h4>You have completed the test. Your score has been recorded, but does not count toward your final grade.</h4>
     {% else %}
-        {% if theorytest_questions %}
-            <form method="post" action="{% url 'theorytest' course.url lab.url theorytest.url %}">
+        {% if labtest_questions %}
+            <form method="post" action="{% url 'labtest' course.url lab.url labtest.url %}">
             <ol>
-                {% for question in theorytest_questions %}
+                {% for question in labtest_questions %}
                     <li>{{ question.question }}</li>
                     
                     {% csrf_token %}
@@ -33,19 +33,12 @@
             <input type="submit" value="Submit Answers" />
             </form>
     {% endif %}
-    {% endif %}
     <hr>
+    {% endif %}
     <div class="row-fluid">
-        {% if theory %}
+        {% if results %}
             <div class="span6">
-                <a class="btn" href="{% url 'theory' course.url lab.url theory.url %}">Go to Theory</a>
-            </div>
-        {% endif %}
-        {% if simulation %}
-            <div class="span6">
-                <ul class="nav pull-right">
-                    <a class="btn" href="{% url 'simulation' course.url lab.url simulation.url %}">Go to Simulation</a>
-                </ul>
+                <a class="btn" href="{% url 'results' course.url lab.url results.url %}">Go to Results</a>
             </div>
         {% endif %}
     </div>

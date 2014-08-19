@@ -16,5 +16,6 @@ urlpatterns = patterns('',
         url(r'^course/(?P<course_name_url>\w+)/(?P<lab_name_url>\w+)/simulationtest/(?P<simulationtest_name_url>\w+)/$', views.simulationtest, name='simulationtest'),
         url(r'^course/(?P<course_name_url>\w+)/(?P<lab_name_url>\w+)/hardware/(?P<hardware_name_url>\w+)/$', views.hardware, name='hardware'),
         url(r'^course/(?P<course_name_url>\w+)/(?P<lab_name_url>\w+)/results/(?P<results_name_url>\w+)/$', views.results, name='results'),
-        url(r'^course/(?P<course_name_url>\w+)/(?P<lab_name_url>\w+)/resultsquestions/(?P<resultsquestions_name_url>\w+)/$', views.resultsquestions, name='resultsquestions'),
+        #url(r'^course/(?P<course_name_url>\w+)/(?P<lab_name_url>\w+)/resultsquestions/(?P<resultsquestions_name_url>\w+)/$', views.resultsquestions, name='resultsquestions'),
+        url(r'^course/(?P<course_name_url>\w+)/(?P<lab_name_url>\w+)/labtest/(?P<labtest_name_url>\w+)/$', views.labtest, name='labtest'),
         )

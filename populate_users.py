@@ -50,8 +50,10 @@ def add_lab_progress(user, lab):
                                            sim_test_finished=False,
                                            hardware_finished=False,
                                            results_finished=False,
+                                           lab_test_finished=False,
                                            lab_finished=False,
                                            theory_test_score=0,
+                                           lab_test_score=0,
                                            sim_test_score=0)[0]
     return lp
 

@@ -110,9 +110,22 @@
         {% endif %}
     </div>
     <!--/span-->
-    
-    
 </div>
 <!--/row-->
+<div class="row-fluid">
+    <div class="span6">
+        <h2>External Help Resources</h2>
+        {% if recent_question_list %}
+            <ul>
+                <li><a href="https://www.khanacademy.org/science/physics/electricity-and-magnetism" target="new">Khan Academy: Electricity and magnetism</a></li>
+                <li><a href="https://www.khanacademy.org/math/linear-algebra" target="new">Khan Academy: Linear Algebra</a></li>
+                <li><a href="https://www.khanacademy.org/math/integral-calculus" target="new">Khan Academy: Integral Calculus</a></li>
+            </ul>
+        {% else %}
+            <ul><li>There are no videos present</li></ul>
+        {% endif %}
+    </div>
+    <!--/span-->
+</div>
 {% endblock %}
 

@@ -34,17 +34,18 @@ class CoursePermission(models.Model):
 class LabProgress(models.Model):
     user = models.ForeignKey(User)
     lab = models.ForeignKey(Laboratory)
-    # cartodb, postgis
     theory_finished = models.BooleanField(default=False)
     theory_test_finished = models.BooleanField(default=False)
     simulation_finished = models.BooleanField(default=False)
     sim_test_finished = models.BooleanField(default=False)
     hardware_finished = models.BooleanField(default=False)
     results_finished = models.BooleanField(default=False)
+    lab_test_finished = models.BooleanField(default=False)
     lab_finished = models.BooleanField(default=False)
     
     theory_test_score = models.FloatField(blank=True)
     sim_test_score = models.FloatField(blank=True)
+    lab_test_score = models.FloatField(blank=True)
 
     sim_image = models.FileField(upload_to=get_file_path, blank=True)
 

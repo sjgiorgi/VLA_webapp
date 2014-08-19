@@ -32,6 +32,7 @@
                             <th><center>Simulation Test</center></th>
                             <th><center>Hardware</center></th>
                             <th><center>Results</center></th>
+                            <th><center>Laboratory Test</center></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,6 +45,7 @@
                             <td><center>{% if lab.sim_test_finished %}<font color="#009900"> &#x2713; </font>{% else %} <font color="993333"> &#x2717;</font> {% endif %}</center></td>
                             <td><center>{% if lab.hardware_finished %}<font color="#009900"> &#x2713; </font>{% else %} <font color="993333"> &#x2717;</font> {% endif %}</center></td>
                             <td><center>{% if lab.results_finished %}<font color="#009900"> &#x2713; </font>{% else %} <font color="993333"> &#x2717;</font> {% endif %}</center></td>
+                            <td><center>{% if lab.lab_test_finished %}<font color="#009900"> &#x2713; </font>{% else %} <font color="993333"> &#x2717;</font> {% endif %}</center></td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -60,6 +62,7 @@
                             <th><center>Lab</center></th>
                             <th><center>Theory Test Score</center></th>
                             <th><center>Simulation Test Score</center></th>
+                            <th><center>Laboratory Test Score</center></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,6 +71,7 @@
                             <td>{{ lab.lab }}</td>
                             <td><center>{% if lab.theory_test_finished %} {{ lab.theory_test_score }} {% else %} Not Taken {% endif %} </center></td>
                             <td><center>{% if lab.sim_test_finished %}  {{ lab.sim_test_score }} {% else %} Not Taken {% endif %} </center></td>
+                            <td><center>{% if lab.lab_test_finished %}  {{ lab.lab_test_score }} {% else %} Not Taken {% endif %} </center></td>
                         </tr>
                         {% endfor %}
                     </tbody>

@@ -252,7 +252,7 @@ def theorytest(request, course_name_url, lab_name_url, theorytest_name_url):
                     num_of_correct = num_of_correct + 1
                     
             # Calculate test score            
-            context_dict['student_progress'].theory_test_score = num_of_correct/num_of_questions
+            context_dict['student_progress'].theory_test_score = num_of_correct/num_of_questions*100
 
             # Set just_finished and is_completed to True and save
             context_dict['just_finished'] = True
@@ -319,9 +319,10 @@ def simulation(request, course_name_url, lab_name_url, simulation_name_url):
             # check if form is valid and image has been selected and is of type PNG
             if form.is_valid() and request.FILES['image'] and request.FILES['image'].name.endswith('.png'):
                 context_dict['student_progress'].sim_image = request.FILES['image']
+                # Run image processing on uploaded images and return processed image
+                # context_dict['student_progress'].sim_image = circuit_recognizer(request.FILES['image'])
                 context_dict['student_progress'].simulation_finished = True
                 context_dict['student_progress'].save()
-                
             else:
                 # User did not select an image
                 context_dict['error_message'] = True
@@ -395,7 +396,7 @@ def simulationtest(request, course_name_url, lab_name_url, simulationtest_name_u
                     num_of_correct = num_of_correct + 1
                     
             # Calculate test score            
-            context_dict['student_progress'].sim_test_score = num_of_correct/num_of_questions
+            context_dict['student_progress'].sim_test_score = num_of_correct/num_of_questions*100
             
             # Set just_finished and is_completed to True and save
             context_dict['just_finished'] = True
@@ -502,27 +503,84 @@ def results(request, course_name_url, lab_name_url, results_name_url):
             context_dict['student_progress'].results_finished = True
             context_dict['student_progress'].save()
         return render(request, 'VLA/results.html', context_dict)
-    
-# NEEDS TO BE FINISHED
-# View for displaying questions about results
-# These questions and their given answers will added to a generated Word document
-def resultsquestions(request, course_name_url, lab_name_url):
-    # Get course name and lab name
-    course_name = course_name_url.replace('_', ' ')
-    lab_name = lab_name_url.replace('_', ' ')
-    context_dict = {'lab_name': lab_name}
-    
-    # Set searched flags to false and get complete question and definition lists
-    context_dict['def_searched'] = False
-    context_dict['def_list'] = Node.objects.all()
-    context_dict['question_searched'] = False
-    context_dict['question_list'] = AnswerWithQuestion.objects.all()
-    
+
+# View used for giving test on simulation
+# Questions are multiple choice, with at least two choices needed
+def labtest(request, course_name_url, lab_name_url, labtest_name_url):
     # Check if user is logged in, if not authenticated, send user to login
     if not request.user.is_authenticated():
         return render(request, 'VLA/login.html')
     else:
-        return render(request, 'VLA/resultsquestions.html', context_dict)
+        # Get user and username
+        user = request.user
+        username = request.user.username
+        
+        # Get lab name, course name, an simulation test name
+        lab_name = lab_name_url.replace('_', ' ')
+        course_name = course_name_url.replace('_', ' ')
+        context_dict = {'lab_name': lab_name}
+        
+        # Set to true before test is taken, in order to surpress error message
+        # If all questions are not answered will be set to false
+        context_dict['questions_filled'] = True
+        
+        # Set searched flags to false and get complete question and definition lists
+        context_dict['def_searched'] = False
+        context_dict['def_list'] = Node.objects.all()
+        context_dict['question_searched'] = False
+        context_dict['question_list'] = AnswerWithQuestion.objects.all()
+        
+        # Get course and construct URL
+        try:
+            course = Course.objects.get(name=course_name)
+            course.url = course_name_url
+            context_dict['course'] = course
+        except Course.DoesNotExist:
+            pass
+        
+        # Get lab, lab sections, and simulation test questions
+        try:
+            lab = Laboratory.objects.filter(course=course).get(name=lab_name)
+            lab.url = lab_name_url
+            context_dict['lab'] = lab
+            context_dict['student_progress'] = LabProgress.objects.filter(user=user).get(lab=lab)
+            context_dict = get_sections(context_dict, lab)
+            labtest_questions = LabTestQuestion.objects.filter(labtest=context_dict['labtest'])
+            context_dict['labtest_questions'] = labtest_questions
+        except Laboratory.DoesNotExist:
+            pass
+        
+        # If request is a POST, try to pull out relevant information.
+        # Checks to see if each question is answered
+        # if not return questions_filled=False and send to theorytest.html
+        # Assigns each answer to question.given_answer
+        if request.method == 'POST':
+            num_of_questions = 0
+            num_of_correct = 0
+            for question in labtest_questions:
+                num_of_questions = num_of_questions + 1
+                name = 'choice' + str(num_of_questions)
+                if name in request.POST:
+                    question.given_answer = int(request.POST[name])
+                    question.is_answered = True
+                    question.save()
+                else:
+                    context_dict['questions_filled'] = False
+                    context_dict['test_complete'] = False
+                    return render(request, 'VLA/labtest.html', context_dict)
+                if question.given_answer == question.correct_answer_number:
+                    num_of_correct = num_of_correct + 1
+                    
+            # Calculate test score            
+            context_dict['student_progress'].lab_test_score = num_of_correct/num_of_questions*100
+            
+            # Set just_finished and is_completed to True and save
+            context_dict['just_finished'] = True
+            context_dict['labtest_questions'] = labtest_questions
+            context_dict['student_progress'].lab_test_finished = True
+            context_dict['student_progress'].save()
+    
+        return render(request, 'VLA/labtest.html', context_dict)
 
 
 # Get permissible course list and create URLs
@@ -587,6 +645,13 @@ def get_sections(context_dict, lab):
         context_dict['results'] = results
     except Results.DoesNotExist:
         pass
+    try:
+        labtest = LabTest.objects.filter(lab=lab).get(lab=lab)
+        labtest.url = labtest.name.replace(' ', '_')
+        context_dict['labtest'] = labtest
+    except LabTest.DoesNotExist:
+        pass
+    
     return context_dict
 
 

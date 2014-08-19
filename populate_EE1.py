@@ -651,6 +651,38 @@ def populate():
                           question="Which two terminals of a DC power supply must always be connected to obtain the desired voltage?",
                           answer_text="",
                           answer_type='text')
+    
+    # Ohms law Lab test
+    ohms_law_lab_test = add_lab_test(lab=ohms_law, name="Ohms Law Laboratory Test")
+    
+    add_lab_test_question(labtest=ohms_law_lab_test,
+                             question="A common DC power supply usually has how many terminals?",
+                             answer_one="1", answer_two="2",
+                             answer_three="3", answer_four="4",
+                             correct_answer_number=1,
+                             correct_response="This is why...",
+                             incorrect_response="This is a hint why...")
+    add_lab_test_question(labtest=ohms_law_lab_test,
+                             question="When using a voltmeter, measurments should be taken in...",
+                             answer_one="Series", answer_two="Parallel",
+                             answer_three="", answer_four="",
+                             correct_answer_number=2,
+                             correct_response="This is why...",
+                             incorrect_response="This is a hint why...")
+    add_lab_test_question(labtest=ohms_law_lab_test,
+                             question="When using an ammeter, measurements should be taken in...",
+                             answer_one="Series", answer_two="Parallel",
+                             answer_three="", answer_four="",
+                             correct_answer_number=1,
+                             correct_response="This is why...",
+                             incorrect_response="This is a hint why...")
+    add_lab_test_question(labtest=ohms_law_lab_test,
+                             question="Which one of these variables is not found in Ohm's Law?",
+                             answer_one="Current", answer_two="Power",
+                             answer_three="Resistance", answer_four="Voltage",
+                             correct_answer_number=2,
+                             correct_response="This is why...",
+                             incorrect_response="This is a hint why...")
 
     # Print out what we have added to the user.
     for c in Course.objects.all():
@@ -788,6 +820,25 @@ def add_results_questions(results, question, answer_text, answer_type):
                                                 answer_text=answer_text,
                                                 answer_type=answer_type)[0]
     return rq
+
+def add_lab_test(lab, name):
+    lt = LabTest.objects.get_or_create(lab=lab, name=name)[0]
+    return lt
+
+def add_lab_test_question(labtest, question, answer_one,
+                                 answer_two, answer_three, answer_four,
+                                 correct_answer_number, correct_response,
+                                 incorrect_response):
+    ltq = LabTestQuestion.objects.get_or_create(labtest=labtest,
+                                                       question=question,
+                                                       answer_one=answer_one,
+                                                       answer_two=answer_two,
+                                                       answer_three=answer_three,
+                                                       answer_four=answer_four,
+                                                       correct_answer_number=correct_answer_number,
+                                                       correct_response= correct_response,
+                                                       incorrect_response=incorrect_response)[0]
+    return ltq
 
 # Start execution here!
 if __name__ == '__main__':
