@@ -1,4 +1,5 @@
 from django.db import models
+from tutor.models import AnswerWithQuestion
 
 class Course(models.Model):
     # course info
@@ -38,6 +39,14 @@ class Course(models.Model):
     def __unicode__(self):
         return self.name
     
+class Prereq(models.Model):
+    name = models.CharField(max_length=128, unique=True)
+    course = models.ForeignKey(Course)
+    topic = models.ManyToManyField(AnswerWithQuestion)
+
+    def __unicode__(self):
+        return self.name
+
 class Laboratory(models.Model):
     course = models.ForeignKey(Course)
     name = models.CharField(max_length=128, unique=True)
@@ -62,7 +71,9 @@ class LabEquipment(models.Model):
     def __unicode__(self):
         return self.equipment
 
-# The following classes are needed for each Laboratory  
+
+# The following classes are needed for each Laboratory
+
 class Theory(models.Model):
     lab = models.OneToOneField(Laboratory)
     name = models.CharField(max_length=128)

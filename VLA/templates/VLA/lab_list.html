@@ -1,6 +1,6 @@
 <ol class="nav nav-list">
-    {% if prereqs %}
-        <li><a href="{% url 'lab' course_name_url prereq.url %}">0: Prequisites</a></li>
+    {% if prereq %}
+        <li><a href="{% url 'prereq' course_name_url prereq_name_url %}">0: Prequisites</a></li>
     {% endif %}
     {% if labs %}
         {% for lab in labs %}

@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate
 from .models import *
 from .forms import UserSimulationImage
 from student.models import UserProfile, CoursePermission, LabProgress
+from tutor.models import Node, AnswerWithQuestion, AnswerElement
 
 
 def index(request):
@@ -79,6 +80,14 @@ def course(request, course_name_url):
             context_dict['course'] = course
         except Course.DoesNotExist:
             pass
+
+        # Get prereq information for selected course
+        try:
+            prereq = Prereq.objects.get(course = course)
+            context_dict['prereq_name_url'] = prereq.name.replace(' ','_')  
+            context_dict['prereq'] = prereq
+        except Prereq.DoesNotExist:
+            pass
         
         # Display all course related labs in the sidebar
         try:
@@ -87,6 +96,59 @@ def course(request, course_name_url):
             pass
     
         return render(request, 'VLA/course.html', context_dict)
+
+
+# View used to present Prereqs for a given course
+def prereq(request, course_name_url, prereq_name_url):
+    # Check if user is logged in, if not authenticated, send user to login
+    if not request.user.is_authenticated():
+        return render(request, 'VLA/login.html')
+    else:
+        # Get user and username
+        user = request.user
+        username = request.user.username
+        
+        # Get course name and prereq name and set course url
+        course_name = course_name_url.replace('_', ' ')
+        prereq_name = prereq_name_url.replace('_', ' ')
+        context_dict = {'course_name': course_name, 'course_name_url': course_name_url,
+                        'prereq_name': prereq_name, 'prereq_name_url': prereq_name_url}
+        
+        # Set searched flags to false and get complete question and definition lists
+        context_dict['def_searched'] = False
+        context_dict['def_list'] = Node.objects.all()
+        context_dict['question_searched'] = False
+        context_dict['question_list'] = AnswerWithQuestion.objects.all()
+        
+        # Get all course information for selected course
+        try:
+            course = Course.objects.get(name=course_name)
+            course.url = course_name_url
+            context_dict['course'] = course
+        except Course.DoesNotExist:
+            pass
+
+        # Get all prereq information for selected course
+        # prereq info consists of AnswerWithQuestion object with associated AnswerElement 
+        try:
+            prereq = Prereq.objects.get(course = course)
+            context_dict['prereq'] = prereq
+            prereq_topics = prereq.topic.all()
+            for topic in prereq_topics:
+                topic.answer = AnswerElement.objects.filter(answer_with_question=topic)
+            context_dict['prereq_topics']= prereq_topics
+
+        except Prereq.DoesNotExist:
+            pass
+            
+        # Display all course related labs in the sidebar
+        try:
+            context_dict['labs'] = get_lab_list(course, user)
+        except Laboratory.DoesNotExist:
+            pass
+    
+        return render(request, 'VLA/prereq.html', context_dict)
+
     
 # View used to present Laboratory and Objectives for a given Course
 def lab(request, course_name_url, lab_name_url):

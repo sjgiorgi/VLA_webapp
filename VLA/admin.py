@@ -72,6 +72,7 @@ class AnswerWithQuestionAdmin(admin.ModelAdmin):
     inlines = [AnswerKeywordInline]
 
 admin.site.register(Course)
+admin.site.register(Prereq)
 admin.site.register(Laboratory, LabAdmin)
 admin.site.register(LabObjective)
 admin.site.register(LabEquipment)

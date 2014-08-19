@@ -56,6 +56,8 @@ def populate():
                                  TA_office_location="ENGR 703d",
                                  TA_phone="(999) 999-9999")
 
+    ee_science_ii_prereq = add_prereq(course=ee_science_ii, name="EE Science II Prerequisites")
+
     ###
     # EE Science II Lab 1: Digilent Board Intro & RC Time Constant
     ###
@@ -644,7 +646,7 @@ def populate():
         for l in Laboratory.objects.filter(course=c):
             print "- {0} - {1}".format(str(c), str(l))
 
-# Add course, lab, lab section (theory, simulation, hardware)
+# Add course, prerq, lab, lab section (theory, simulation, hardware)
 def add_course(name, crn, subj, course_number, section_number, start_date,
                end_date, lecture_time, lecture_days, lecture_location,
                lab_time, lab_days, lab_location, course_description,
@@ -668,6 +670,10 @@ def add_course(name, crn, subj, course_number, section_number, start_date,
                                      TA_office_days=TA_office_days,
                                      TA_office_location=TA_office_location, TA_phone=TA_phone)[0]
     return c
+
+def add_prereq(course, name):
+    p = Prereq.objects.get_or_create(course=course, name=name)[0]
+    return p
 
 def add_lab(course, name, start_date, due_date, lab_number):
     l = Laboratory.objects.get_or_create(course=course, name=name,
