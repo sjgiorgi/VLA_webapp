@@ -3,11 +3,7 @@ import os
 '''
 Script to populate VLA with:
 
-COURSES:
-EE Science I Course
-
-LABORATORIES:
-Ohm's Law Laboratory
+Vocab, EE Science I, EE Science II, and Users
 '''
 
 

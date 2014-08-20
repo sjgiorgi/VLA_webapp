@@ -4,19 +4,20 @@
   What is it?
   -----------
 
-  The Virtual Lab Assistant is designed to be an intelligent Electrical
-  Engineering laboratory assistant. The goal is to introduce students to,
-  and guide them through theory and simulations BEFORE entering the lab,
-  where they will be exposed to hardware. This should give them a better
-  understanding of the hardware and free up the instructor to focus more
-  on presenting the hardware and debugging any problems.
+  Open laboratory allows students to access the engineering labs 24/7.
+  The Virtual Lab Assistant (VLA) is a software tool currently under development
+  by Temple University’s Control, Sensor, Network, and Perception (CSNAP)
+  laboratory to support open laboratory. The VLA project aims to create an
+  interactive and intelligent framework for laboratory course work. VLA is a
+  new way to present laboratory work to students, and features an intelligent
+  help module and a circuit recognition module. This project is sponsored by the NSF.
 
   The Latest Version
   ------------------
   
   LASTEST COMMIT:
-  - added a Lab test
-  - added prerequisites
+  - added a Lab test to each lab
+  - added prerequisites to each course
 
   PREVIOUS COMMITS:
   - finished Rulebase search (now includes synonyms in search)
@@ -37,19 +38,19 @@
   - allow saving of simulation image to be dynamic (save to folder titled after username and lab name)
   
   TODO (PRIORITY):
+  - switch database to PostgreSQL
   - add table option to TheoryElement, SimulationElement, and HardwareElement
-  - generate Word file
+  - generate Word file which contains user's responses
   - add forum
-  - add Zach's image processing script to the views
-   
+  - add image processing script to the views
+  - ability for user to change profile info and password   
+
   TODO:
   - finish python script for filling Vocab Domain and Rulebase database
-  - switch database to PostgreSQL
   - include mathjax.js instead of url (in base.html)
   - allow Course, Lab, etc. names to include symbols, ex: Ohm's Law
   - customize admin panel
   - create class "nav pull-left" to align Temple and CSNAP logo
-  - ability for user to change profile info and password
   - add synonym for each word in multi-word nodes (ex: 'function' and 'generator' for 'function generator')
 
  USABILITY IMPROVEMENTS:
@@ -62,7 +63,6 @@
     - List of high ranking websites: http://www.alexa.com/topsites
 
  BUGS:
-  - Theory and Simulation Test don't store user responses when page is reloaded after test taken
   - if Element of image type is uploaded through admin panel, url does not point correctly to image
 
   Documentation
