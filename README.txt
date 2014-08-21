@@ -16,6 +16,7 @@
   ------------------
   
   LASTEST COMMIT:
+  - ability for user to change password   
   - added a Lab test to each lab
   - added prerequisites to each course
 
@@ -43,7 +44,6 @@
   - generate Word file which contains user's responses
   - add forum
   - add image processing script to the views
-  - ability for user to change profile info and password   
 
   TODO:
   - finish python script for filling Vocab Domain and Rulebase database

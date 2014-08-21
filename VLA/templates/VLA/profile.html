@@ -6,9 +6,10 @@
 {% block body_block %}
 <div class="hero-unit">
     {% if correct_user %}
+        <h1>Profile</h1>
         <h2>Login Information</h2>
         <b>Username:</b> {{ user.username }}<br>
-        <a class="btn" href="">Change Password</a><p>
+        <a class="btn" href="{% url 'password_change' %}">Change Password</a><p>
         
         {% if user_info %}
             <h2>Student Information</h2>

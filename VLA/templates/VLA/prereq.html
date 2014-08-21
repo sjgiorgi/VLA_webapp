@@ -1,7 +1,6 @@
 {% extends 'VLA/base.html' %}
 {% load staticfiles %}
 
-
 {% block title %}VLA: {{ course_name }}{% endblock %}
 {% block sidetitle %}{{ course_name }} Laboratories{% endblock %}
 {% block sidebar %}
@@ -15,7 +14,7 @@
 	<h2>Prerequisites</h2>
 	{% if prereq_topics %}
 		{% for topic in prereq_topics %}
-		<h3> Topic {{forloop.counter}}: {{topic.question}}? </h3>
+		<h3> Topic {{forloop.counter}}: {{topic.question}} </h3>
 			{% for answer in topic.answer %}
 				{% if answer.element_type == 'text' %}
 					<p>{{ answer.text_input}}</p>
