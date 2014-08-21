@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, include, url, handler404
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -14,3 +14,5 @@ urlpatterns = patterns('',
     url(r'^student/', include('student.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'VLA.views.error404'

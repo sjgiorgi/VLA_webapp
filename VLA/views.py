@@ -9,6 +9,8 @@ from .forms import UserSimulationImage
 from student.models import UserProfile, CoursePermission, LabProgress
 from tutor.models import Node, AnswerWithQuestion, AnswerElement
 
+def error404(request):
+    return render(request,'VLA/404.html')
 
 def index(request):
     # Check if user is logged in, if not authenticated, send user to login
